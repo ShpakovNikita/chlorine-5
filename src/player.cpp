@@ -29,6 +29,11 @@ player::player(float x, float y, float z_index, int speed, int size)
     frames_in_texture = 12;
     frames_in_animation = 12;
     tilesets_in_texture = 5;
+
+    steps_source =
+        CHL::create_new_source(manager.get_sound("move_sound"), this);
+    blink_source =
+        CHL::create_new_source(manager.get_sound("blink_sound"), this);
 }
 
 player::~player() {
@@ -51,6 +56,8 @@ void update_delay(player* p, float dt) {
         p->super_delay -= dt;
     if (p->blink_delay > 0)
         p->blink_delay -= dt;
+    if (p->delay_after_blink > 0)
+        p->delay_after_blink -= dt;
 }
 
 float change_sprite(player* p, change_mode mode) {
@@ -157,12 +164,27 @@ void player::register_keys(CHL::event up,
     key_attack = static_cast<uint32_t>(attack);
 }
 
+static float pitch_value = 1.0f;
+
 void player::blink() {
     if (blink_delay <= 0 && !blinking) {
+        std::cout << delay_after_blink << std::endl;
+        if (delay_after_blink > 0) {
+            pitch_value += 0.1f;
+            std::cout << pitch_value << std::endl;
+        } else {
+            std::cout << pitch_value << std::endl;
+            pitch_value = 1.0f;
+        }
+
         blinking = true;
-        blink_delay = 1.0f;
+        blink_delay = 0.2f;
         blinking_path = 32;
         blinking_alpha = change_sprite(this, change_mode::blink);
+
+        CHL::set_pos_s(blink_source, CHL::vec3(position.x, position.y, 0.0f));
+        CHL::pitch_s(blink_source, pitch_value);
+        CHL::play_s(blink_source);
     }
 }
 
@@ -171,6 +193,10 @@ void player::blink_to(const CHL::point& p) {
         blinking = true;
         blinking_path = CHL::get_distance(position.x, position.y, p.x, p.y);
         blinking_alpha = CHL::get_direction(p.x, p.y, position.x, position.y);
+
+        CHL::set_pos_s(blink_source, CHL::vec3(position.x, position.y, 0.0f));
+        CHL::pitch_s(blink_source, 1.0f);
+        CHL::play_s(blink_source);
     }
 }
 
@@ -209,6 +235,8 @@ void player::super_fire() {
 void player::move(float dt) {
     position.z_index = position.y;
 
+    CHL::listener_update(CHL::vec3(position.x, position.y, 0.0f));
+
     delta_x = 0;
     delta_y = 0;
 
@@ -225,6 +253,7 @@ void player::move(float dt) {
             blinking = false;
             selected_tileset = 0;
             change_sprite(this, change_mode::regular);
+            delay_after_blink = 0.2f;
             return;
         }
         non_material_quads.insert(
@@ -238,6 +267,12 @@ void player::move(float dt) {
             tilesets_in_texture;
         (*(non_material_quads.end() - 1))->selected_tileset = selected_tileset;
         (*(non_material_quads.end() - 1))->selected_frame = selected_frame;
+
+        CHL::set_pos_s(
+            steps_source,
+            CHL::vec3(position.x + 50 * sign((int)(delta_x / 0.1) * 0.1),
+                      position.y + 50 * sign((int)(delta_y / 0.1) * 0.1),
+                      0.0f));
 
         return;
     }
@@ -255,7 +290,7 @@ void player::move(float dt) {
         moving = true;
         std::cout << "play anim" << std::endl;
         loop_animation(0.04f);
-        manager.get_sound("move_sound")->play_always();
+        CHL::play_always_s(steps_source);
     }
 
     if (delta_x == 0 && delta_y == 0 && moving) {
@@ -263,8 +298,13 @@ void player::move(float dt) {
         std::cout << "stop anim" << std::endl;
         loop_animation(0.0f);
         selected_tileset = 0;
-        manager.get_sound("move_sound")->stop();
+        CHL::stop_s(steps_source);
     }
+
+    CHL::set_pos_s(
+        steps_source,
+        CHL::vec3(position.x + 50 * sign((int)(delta_x / 0.1) * 0.1),
+                  position.y + 50 * sign((int)(delta_y / 0.1) * 0.1), 0.0f));
 
     position.y += delta_y;
     position.x += delta_x;

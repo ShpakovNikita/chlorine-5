@@ -4,6 +4,7 @@
 #include "headers/engine.hxx"
 #include <iostream>
 #include <assert.h>
+#include <math.h>
 
 namespace CHL {
 void play_s(uint32_t source) {
@@ -29,6 +30,25 @@ void delete_source(uint32_t source) {
     alDeleteSources(1, &source);
 }
 
+void set_pos_s(uint32_t source, const vec3& sourcePos) {
+    alSource3f(source, AL_POSITION, sourcePos.x, sourcePos.y, sourcePos.z);
+}
+
+void set_velocity_s(uint32_t source, const vec3& velocityPos) {
+    alSource3f(source, AL_VELOCITY, velocityPos.x, velocityPos.y,
+               velocityPos.z);
+}
+
+void set_volume_s(uint32_t source, float volume) {
+    volume = std::min(std::max(0.0f, volume), 1.0f);
+    alSourcef(source, AL_GAIN, volume);
+}
+
+void pitch_s(uint32_t source, float value) {
+    value = std::min(std::max(0.0f, value), 2.0f);
+    alSourcef(source, AL_PITCH, value);
+}
+
 uint32_t create_new_source(sound* s, instance* i) {
     ALuint source;
     alGenSources(1, &source);
@@ -41,8 +61,17 @@ uint32_t create_new_source(sound* s, instance* i) {
     alSourcef(source, AL_GAIN, 1.0f);
     alSource3f(source, AL_POSITION, sourcePos.x, sourcePos.y, sourcePos.z);
     alSource3f(source, AL_VELOCITY, sourceVel.x, sourceVel.y, sourcePos.z);
+    alSourcef(source, AL_MAX_GAIN, 1.0f);
+    alSourcef(source, AL_MIN_GAIN, 0.0f);
+    alSourcef(source, AL_REFERENCE_DISTANCE, 100.0f);
+    alSourcef(source, AL_ROLLOFF_FACTOR, 20.0f);
+    alSourcef(source, AL_MAX_DISTANCE, 180.0f);
     alSourcei(source, AL_LOOPING, AL_FALSE);
     return source;
+}
+
+void listener_update(const vec3& listenerPos) {
+    alListener3f(AL_POSITION, listenerPos.x, listenerPos.y, listenerPos.z);
 }
 
 sound::sound(const std::string& file)

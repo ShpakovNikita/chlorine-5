@@ -44,11 +44,15 @@ class player : public CHL::life_form {
                        CHL::event attack);
 
    private:
+    uint32_t steps_source = 0;
+    uint32_t blink_source = 0;
+
     float keys_registred = false;
 
     float shoot_delay = 0.7f;
     float super_delay = 5.0f;
     float blink_delay = 1.0f;
+    float delay_after_blink = 0.2f;
 
     float blinking_path = 32;
     float blinking_alpha = 0;

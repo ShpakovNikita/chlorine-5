@@ -45,6 +45,9 @@ class enemy : public CHL::life_form {
     void (*state)(enemy*);
     CHL::point step_dest;
     float delta_time;
+
+    uint32_t fire_source = 0;
+    uint32_t steps_source = 0;
 };
 
 #endif /* ENEMY_H_ */

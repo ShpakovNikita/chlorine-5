@@ -546,15 +546,17 @@ class engine_impl final : public engine {
         vec3 listenerVel(0, 0, 0);    // listern's velocity
 
         // listeners orientation (forward, up)
-        //        float listenerOri[] = {0, 0, -1, 0, 1, 0};
-        //
-        //        alListener3f(AL_POSITION, listenerPos.x, listenerPos.y,
-        //        listenerPos.z); alListener3f(AL_VELOCITY, listenerVel.x,
-        //        listenerVel.y, listenerVel.z); alListenerfv(AL_ORIENTATION,
-        //        listenerOri); if (alGetError() != AL_NO_ERROR) {
-        //            std::cerr << "openal error: " << std::endl;
-        //            return EXIT_FAILURE;
-        //        }
+        float listenerOri[] = {0, 0, -1, 0, 1, 0};
+
+        alListener3f(AL_POSITION, listenerPos.x, listenerPos.y, listenerPos.z);
+        alListener3f(AL_VELOCITY, listenerVel.x, listenerVel.y, listenerVel.z);
+        alListenerfv(AL_ORIENTATION, listenerOri);
+        if (alGetError() != AL_NO_ERROR) {
+            std::cerr << "openal error: " << std::endl;
+            return EXIT_FAILURE;
+        }
+
+        alDistanceModel(AL_EXPONENT_DISTANCE);
         /* Glew */
 
 #ifndef __ANDROID__

@@ -29,6 +29,11 @@ enemy::enemy(float x, float y, float z, int _speed, int s)
     state = smart_move;
     step_dest.x = position.x;
     step_dest.y = position.y;
+
+    fire_source = CHL::create_new_source(manager.get_sound("shot_sound"), this);
+    steps_source =
+        CHL::create_new_source(manager.get_sound("move_sound"), this);
+    //    CHL::play_always_s(steps_source);
 }
 
 enemy::~enemy() {
@@ -168,5 +173,9 @@ void enemy::fire() {
         (*(bullets.end() - 1))->rotation_point =
             CHL::point(position.x + TILE_SIZE / 2, position.y - TILE_SIZE / 2);
         (*(bullets.end() - 1))->creator = bullet_creator::enemy;
+
+        CHL::set_pos_s(fire_source, CHL::vec3(position.x, position.y, 1.0f));
+        CHL::pitch_s(fire_source, 1 + (rand() % 100 - 50) / 200.0f);
+        CHL::play_s(fire_source);
     }
 }

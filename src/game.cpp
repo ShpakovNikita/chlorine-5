@@ -41,13 +41,19 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
     /* loading textures */
 
-    manager.add_texture("textures/brick", new texture("test.png"));
-    manager.add_texture("textures/hero", new texture("hero.png"));
-    manager.add_texture("textures/tank", new texture("tank.png"));
-    manager.add_texture("textures/floor", new texture("tiles.png"));
-    manager.add_texture("textures/bullet", new texture("bullet.png"));
-    manager.add_texture("textures/explosion", new texture("explosion.png"));
-    manager.add_texture("textures/obelisk", new texture("obelisk.png"));
+    manager.add_texture("brick", new texture("textures/test.png"));
+    manager.add_texture("hero", new texture("textures/hero.png"));
+    manager.add_texture("tank", new texture("textures/tank.png"));
+    manager.add_texture("floor", new texture("textures/tiles.png"));
+    manager.add_texture("bullet", new texture("textures/bullet.png"));
+    manager.add_texture("explosion", new texture("textures/explosion.png"));
+    manager.add_texture("obelisk", new texture("textures/obelisk.png"));
+
+    manager.add_sound("start_music", new sound(SND_FOLDER + START_MUSIC));
+    manager.add_sound("move_sound", new sound(SND_FOLDER + MOVE_SOUND));
+    manager.add_sound("shot_sound", new sound(SND_FOLDER + "shot.wav"));
+    manager.add_sound("blink_sound", new sound(SND_FOLDER + "blink.wav"));
+    //    manager.get_sound("start_music")->play_always();
 
     DungeonGenerator generator(x_size, y_size);
     auto map = generator.Generate();
@@ -137,10 +143,6 @@ int main(int /*argc*/, char* /*argv*/ []) {
             count++;
         }
     }
-    manager.add_sound("start_music", new sound(SND_FOLDER + START_MUSIC));
-    manager.add_sound("move_sound", new sound(SND_FOLDER + MOVE_SOUND));
-    manager.add_sound("shot_sound", new sound(SND_FOLDER + "shot.wav"));
-    manager.get_sound("start_music")->play_always();
 
     float prev_frame = eng->GL_time();
     bool quit = false;

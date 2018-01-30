@@ -203,12 +203,18 @@ class life_form : public instance {
 
 instance* create_wall(float x, float y, float z, int size);
 
+void set_pos_s(uint32_t source, const vec3&);
+void set_velocity_s(uint32_t source, const vec3&);
+void set_volume_s(uint32_t source, float volume);
+void pitch_s(uint32_t source, float value);
+
 void play_s(uint32_t source);
 void play_always_s(uint32_t source);
 void stop_s(uint32_t source);
 void pause_s(uint32_t source);
 
 void delete_source(uint32_t source);
+void listener_update(const vec3&);
 
 class sound {
    public:
@@ -229,6 +235,8 @@ class sound {
     uint32_t al_buffer;
     uint32_t al_source;
 };
+
+uint32_t create_new_source(sound*, instance*);
 
 class user_interface {
    public:
