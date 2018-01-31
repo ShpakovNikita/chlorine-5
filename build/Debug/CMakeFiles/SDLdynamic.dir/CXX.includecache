@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/bullet.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/bullet.cpp
 headers/bullet.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/bullet.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/bullet.h
 iostream
 -
 math.h
 -
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/dungeon.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/dungeon.cpp
 iostream
 -
 string
@@ -26,23 +26,23 @@ cassert
 time.h
 -
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/enemy.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/enemy.cpp
 headers/enemy.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/enemy.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/enemy.h
 math.h
 -
 iostream
 -
 headers/pathfinders.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/pathfinders.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/pathfinders.h
 headers/game_constants.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/game_constants.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_constants.h
 headers/game_functions.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/game_functions.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_functions.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/engine.cxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/engine.cxx
 headers/engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 GL/glew.h
 -
 GL/glu.h
@@ -96,9 +96,9 @@ AL/alc.h
 windows.h
 -
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/font.cxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/font.cxx
 headers/engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 iostream
 -
 map
@@ -112,7 +112,7 @@ GL/gl.h
 ft2build.h
 -
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/game.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/game.cpp
 algorithm
 -
 array
@@ -138,45 +138,45 @@ chrono
 thread
 -
 headers/engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 dungeon.cpp
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/dungeon.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/dungeon.cpp
 headers/bullet.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/bullet.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/bullet.h
 headers/enemy.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/enemy.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/enemy.h
 headers/special_effect.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/special_effect.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/special_effect.h
 headers/autotile.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/autotile.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/autotile.hxx
 headers/pathfinders.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/pathfinders.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/pathfinders.h
 headers/collision_solves.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/collision_solves.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/collision_solves.hxx
 headers/player.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/player.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/player.h
 headers/game_constants.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/game_constants.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_constants.h
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/autotile.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/autotile.hxx
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/bullet.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/bullet.h
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/collision_solves.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/collision_solves.hxx
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 game_functions.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/game_functions.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_functions.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/enemy.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/enemy.h
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 stdio.h
 -
 vector
@@ -188,11 +188,11 @@ memory
 map
 -
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/game_constants.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_constants.h
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 bullet.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/bullet.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/bullet.h
 string
 -
 vector
@@ -200,19 +200,19 @@ vector
 math.h
 -
 resource_manager.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/resource_manager.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/resource_manager.h
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/game_functions.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_functions.hxx
 math.h
 -
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/pathfinders.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/pathfinders.h
 vector
 -
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/picopng.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/picopng.hxx
 vector
 -
 fstream
@@ -220,21 +220,21 @@ fstream
 iostream
 -
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/player.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/player.h
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/resource_manager.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/resource_manager.h
 map
 -
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/special_effect.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/special_effect.h
 engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/pathfinders.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/pathfinders.cpp
 vector
 -
 queue
@@ -248,25 +248,25 @@ climits
 random
 -
 headers/pathfinders.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/pathfinders.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/pathfinders.h
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/player.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/player.cpp
 headers/player.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/player.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/player.h
 headers/game_constants.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/game_constants.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_constants.h
 math.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/math.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/math.h
 iostream
 -
 headers/game_functions.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/game_functions.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_functions.hxx
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/resource_manager.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/resource_manager.cpp
 headers/resource_manager.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/resource_manager.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/resource_manager.h
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/sound.cxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/sound.cxx
 SDL2/SDL.h
 -
 AL/al.h
@@ -274,19 +274,21 @@ AL/al.h
 AL/alc.h
 -
 headers/engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 iostream
 -
 assert.h
 -
+math.h
+-
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/special_effect.cpp
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/special_effect.cpp
 headers/special_effect.h
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/special_effect.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/special_effect.h
 
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/texture.cxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/texture.cxx
 headers/engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 GL/glew.h
 -
 GL/glu.h
@@ -296,5 +298,5 @@ GL/gl.h
 iostream
 -
 headers/picopng.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine/src/headers/picopng.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/picopng.hxx
 

@@ -557,6 +557,9 @@ class engine_impl final : public engine {
         }
 
         alDistanceModel(AL_EXPONENT_DISTANCE);
+
+        alDopplerFactor(5.0f);
+        alDopplerVelocity(50.0f);
         /* Glew */
 
 #ifndef __ANDROID__

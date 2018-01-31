@@ -1,62 +1,62 @@
 [
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\game.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\game.cpp",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/game.cpp"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\game.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\game.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/game.cpp"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\engine.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\engine.cxx",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/engine.cxx"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\engine.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\engine.cxx",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/engine.cxx"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\sound.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\sound.cxx",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/sound.cxx"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\sound.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\sound.cxx",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/sound.cxx"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\bullet.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\bullet.cpp",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/bullet.cpp"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\bullet.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\bullet.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/bullet.cpp"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\texture.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\texture.cxx",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/texture.cxx"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\texture.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\texture.cxx",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/texture.cxx"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\enemy.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\enemy.cpp",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/enemy.cpp"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\enemy.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\enemy.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/enemy.cpp"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\dungeon.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\dungeon.cpp",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/dungeon.cpp"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\dungeon.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\dungeon.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/dungeon.cpp"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\special_effect.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\special_effect.cpp",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/special_effect.cpp"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\special_effect.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\special_effect.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/special_effect.cpp"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\pathfinders.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\pathfinders.cpp",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/pathfinders.cpp"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\pathfinders.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\pathfinders.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/pathfinders.cpp"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\player.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\player.cpp",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/player.cpp"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\player.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\player.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/player.cpp"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\resource_manager.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\resource_manager.cpp",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/resource_manager.cpp"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\resource_manager.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\resource_manager.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/resource_manager.cpp"
 },
 {
-  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug",
-  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\font.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine\\src\\font.cxx",
-  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine/src/font.cxx"
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\font.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\font.cxx",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/font.cxx"
 }
 ]

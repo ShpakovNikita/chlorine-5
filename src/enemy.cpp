@@ -133,8 +133,8 @@ void chase(enemy* e) {
 }
 
 void smart_move(enemy* e) {
-    if (std::fabs(e->position.x - e->step_dest.x) < 3.0f &&
-        std::fabs(e->position.y - e->step_dest.y) < 3.0f) {
+    if (std::fabs(e->position.x - e->step_dest.x) < 1.0f &&
+        std::fabs(e->position.y - e->step_dest.y) < 1.0f) {
         pathfind(e);
     }
     float path = e->speed * e->delta_time;
@@ -174,7 +174,13 @@ void enemy::fire() {
             CHL::point(position.x + TILE_SIZE / 2, position.y - TILE_SIZE / 2);
         (*(bullets.end() - 1))->creator = bullet_creator::enemy;
 
-        CHL::set_pos_s(fire_source, CHL::vec3(position.x, position.y, 1.0f));
+        float gain = powf(
+            (CHL::get_distance(position.x, position.y, CHL::get_listener().x,
+                               CHL::get_listener().y) /
+             50.0f),
+            -2.0f);
+
+        CHL::set_volume_s(fire_source, gain);
         CHL::pitch_s(fire_source, 1 + (rand() % 100 - 50) / 200.0f);
         CHL::play_s(fire_source);
     }

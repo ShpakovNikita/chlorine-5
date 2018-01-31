@@ -42,10 +42,10 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine\src
+CMAKE_SOURCE_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine-5\src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug
+CMAKE_BINARY_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/SDLdynamic.dir/depend.make
@@ -57,17 +57,17 @@ include CMakeFiles/SDLdynamic.dir/progress.make
 include CMakeFiles/SDLdynamic.dir/flags.make
 
 CMakeFiles/SDLdynamic.dir/game.cpp.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/game.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SDLdynamic.dir/game.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\game.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\game.cpp
+CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/game.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/SDLdynamic.dir/game.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\game.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\game.cpp
 
 CMakeFiles/SDLdynamic.dir/game.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/game.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\game.cpp > CMakeFiles\SDLdynamic.dir\game.cpp.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\game.cpp > CMakeFiles\SDLdynamic.dir\game.cpp.i
 
 CMakeFiles/SDLdynamic.dir/game.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/game.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\game.cpp -o CMakeFiles\SDLdynamic.dir\game.cpp.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\game.cpp -o CMakeFiles\SDLdynamic.dir\game.cpp.s
 
 CMakeFiles/SDLdynamic.dir/game.cpp.obj.requires:
 
@@ -81,17 +81,17 @@ CMakeFiles/SDLdynamic.dir/game.cpp.obj.provides.build: CMakeFiles/SDLdynamic.dir
 
 
 CMakeFiles/SDLdynamic.dir/engine.cxx.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/engine.cxx.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/engine.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SDLdynamic.dir/engine.cxx.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\engine.cxx.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\engine.cxx
+CMakeFiles/SDLdynamic.dir/engine.cxx.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/engine.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/SDLdynamic.dir/engine.cxx.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\engine.cxx.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\engine.cxx
 
 CMakeFiles/SDLdynamic.dir/engine.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/engine.cxx.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\engine.cxx > CMakeFiles\SDLdynamic.dir\engine.cxx.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\engine.cxx > CMakeFiles\SDLdynamic.dir\engine.cxx.i
 
 CMakeFiles/SDLdynamic.dir/engine.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/engine.cxx.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\engine.cxx -o CMakeFiles\SDLdynamic.dir\engine.cxx.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\engine.cxx -o CMakeFiles\SDLdynamic.dir\engine.cxx.s
 
 CMakeFiles/SDLdynamic.dir/engine.cxx.obj.requires:
 
@@ -105,17 +105,17 @@ CMakeFiles/SDLdynamic.dir/engine.cxx.obj.provides.build: CMakeFiles/SDLdynamic.d
 
 
 CMakeFiles/SDLdynamic.dir/sound.cxx.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/sound.cxx.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/sound.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SDLdynamic.dir/sound.cxx.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\sound.cxx.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\sound.cxx
+CMakeFiles/SDLdynamic.dir/sound.cxx.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/sound.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/SDLdynamic.dir/sound.cxx.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\sound.cxx.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\sound.cxx
 
 CMakeFiles/SDLdynamic.dir/sound.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/sound.cxx.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\sound.cxx > CMakeFiles\SDLdynamic.dir\sound.cxx.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\sound.cxx > CMakeFiles\SDLdynamic.dir\sound.cxx.i
 
 CMakeFiles/SDLdynamic.dir/sound.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/sound.cxx.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\sound.cxx -o CMakeFiles\SDLdynamic.dir\sound.cxx.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\sound.cxx -o CMakeFiles\SDLdynamic.dir\sound.cxx.s
 
 CMakeFiles/SDLdynamic.dir/sound.cxx.obj.requires:
 
@@ -129,17 +129,17 @@ CMakeFiles/SDLdynamic.dir/sound.cxx.obj.provides.build: CMakeFiles/SDLdynamic.di
 
 
 CMakeFiles/SDLdynamic.dir/bullet.cpp.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/bullet.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/bullet.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SDLdynamic.dir/bullet.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\bullet.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\bullet.cpp
+CMakeFiles/SDLdynamic.dir/bullet.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/bullet.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/SDLdynamic.dir/bullet.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\bullet.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\bullet.cpp
 
 CMakeFiles/SDLdynamic.dir/bullet.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/bullet.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\bullet.cpp > CMakeFiles\SDLdynamic.dir\bullet.cpp.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\bullet.cpp > CMakeFiles\SDLdynamic.dir\bullet.cpp.i
 
 CMakeFiles/SDLdynamic.dir/bullet.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/bullet.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\bullet.cpp -o CMakeFiles\SDLdynamic.dir\bullet.cpp.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\bullet.cpp -o CMakeFiles\SDLdynamic.dir\bullet.cpp.s
 
 CMakeFiles/SDLdynamic.dir/bullet.cpp.obj.requires:
 
@@ -153,17 +153,17 @@ CMakeFiles/SDLdynamic.dir/bullet.cpp.obj.provides.build: CMakeFiles/SDLdynamic.d
 
 
 CMakeFiles/SDLdynamic.dir/texture.cxx.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/texture.cxx.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/texture.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SDLdynamic.dir/texture.cxx.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\texture.cxx.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\texture.cxx
+CMakeFiles/SDLdynamic.dir/texture.cxx.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/texture.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/SDLdynamic.dir/texture.cxx.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\texture.cxx.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\texture.cxx
 
 CMakeFiles/SDLdynamic.dir/texture.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/texture.cxx.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\texture.cxx > CMakeFiles\SDLdynamic.dir\texture.cxx.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\texture.cxx > CMakeFiles\SDLdynamic.dir\texture.cxx.i
 
 CMakeFiles/SDLdynamic.dir/texture.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/texture.cxx.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\texture.cxx -o CMakeFiles\SDLdynamic.dir\texture.cxx.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\texture.cxx -o CMakeFiles\SDLdynamic.dir\texture.cxx.s
 
 CMakeFiles/SDLdynamic.dir/texture.cxx.obj.requires:
 
@@ -177,17 +177,17 @@ CMakeFiles/SDLdynamic.dir/texture.cxx.obj.provides.build: CMakeFiles/SDLdynamic.
 
 
 CMakeFiles/SDLdynamic.dir/enemy.cpp.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/enemy.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/enemy.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SDLdynamic.dir/enemy.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\enemy.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\enemy.cpp
+CMakeFiles/SDLdynamic.dir/enemy.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/enemy.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/SDLdynamic.dir/enemy.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\enemy.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\enemy.cpp
 
 CMakeFiles/SDLdynamic.dir/enemy.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/enemy.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\enemy.cpp > CMakeFiles\SDLdynamic.dir\enemy.cpp.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\enemy.cpp > CMakeFiles\SDLdynamic.dir\enemy.cpp.i
 
 CMakeFiles/SDLdynamic.dir/enemy.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/enemy.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\enemy.cpp -o CMakeFiles\SDLdynamic.dir\enemy.cpp.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\enemy.cpp -o CMakeFiles\SDLdynamic.dir\enemy.cpp.s
 
 CMakeFiles/SDLdynamic.dir/enemy.cpp.obj.requires:
 
@@ -201,17 +201,17 @@ CMakeFiles/SDLdynamic.dir/enemy.cpp.obj.provides.build: CMakeFiles/SDLdynamic.di
 
 
 CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/dungeon.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\dungeon.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\dungeon.cpp
+CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/dungeon.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\dungeon.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\dungeon.cpp
 
 CMakeFiles/SDLdynamic.dir/dungeon.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/dungeon.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\dungeon.cpp > CMakeFiles\SDLdynamic.dir\dungeon.cpp.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\dungeon.cpp > CMakeFiles\SDLdynamic.dir\dungeon.cpp.i
 
 CMakeFiles/SDLdynamic.dir/dungeon.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/dungeon.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\dungeon.cpp -o CMakeFiles\SDLdynamic.dir\dungeon.cpp.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\dungeon.cpp -o CMakeFiles\SDLdynamic.dir\dungeon.cpp.s
 
 CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj.requires:
 
@@ -225,17 +225,17 @@ CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj.provides.build: CMakeFiles/SDLdynamic.
 
 
 CMakeFiles/SDLdynamic.dir/special_effect.cpp.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/special_effect.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/special_effect.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/SDLdynamic.dir/special_effect.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\special_effect.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\special_effect.cpp
+CMakeFiles/SDLdynamic.dir/special_effect.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/special_effect.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/SDLdynamic.dir/special_effect.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\special_effect.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\special_effect.cpp
 
 CMakeFiles/SDLdynamic.dir/special_effect.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/special_effect.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\special_effect.cpp > CMakeFiles\SDLdynamic.dir\special_effect.cpp.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\special_effect.cpp > CMakeFiles\SDLdynamic.dir\special_effect.cpp.i
 
 CMakeFiles/SDLdynamic.dir/special_effect.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/special_effect.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\special_effect.cpp -o CMakeFiles\SDLdynamic.dir\special_effect.cpp.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\special_effect.cpp -o CMakeFiles\SDLdynamic.dir\special_effect.cpp.s
 
 CMakeFiles/SDLdynamic.dir/special_effect.cpp.obj.requires:
 
@@ -249,17 +249,17 @@ CMakeFiles/SDLdynamic.dir/special_effect.cpp.obj.provides.build: CMakeFiles/SDLd
 
 
 CMakeFiles/SDLdynamic.dir/pathfinders.cpp.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/pathfinders.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/pathfinders.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/SDLdynamic.dir/pathfinders.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\pathfinders.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\pathfinders.cpp
+CMakeFiles/SDLdynamic.dir/pathfinders.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/pathfinders.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/SDLdynamic.dir/pathfinders.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\pathfinders.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\pathfinders.cpp
 
 CMakeFiles/SDLdynamic.dir/pathfinders.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/pathfinders.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\pathfinders.cpp > CMakeFiles\SDLdynamic.dir\pathfinders.cpp.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\pathfinders.cpp > CMakeFiles\SDLdynamic.dir\pathfinders.cpp.i
 
 CMakeFiles/SDLdynamic.dir/pathfinders.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/pathfinders.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\pathfinders.cpp -o CMakeFiles\SDLdynamic.dir\pathfinders.cpp.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\pathfinders.cpp -o CMakeFiles\SDLdynamic.dir\pathfinders.cpp.s
 
 CMakeFiles/SDLdynamic.dir/pathfinders.cpp.obj.requires:
 
@@ -273,17 +273,17 @@ CMakeFiles/SDLdynamic.dir/pathfinders.cpp.obj.provides.build: CMakeFiles/SDLdyna
 
 
 CMakeFiles/SDLdynamic.dir/player.cpp.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/player.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/player.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/SDLdynamic.dir/player.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\player.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\player.cpp
+CMakeFiles/SDLdynamic.dir/player.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/player.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/SDLdynamic.dir/player.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\player.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\player.cpp
 
 CMakeFiles/SDLdynamic.dir/player.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/player.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\player.cpp > CMakeFiles\SDLdynamic.dir\player.cpp.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\player.cpp > CMakeFiles\SDLdynamic.dir\player.cpp.i
 
 CMakeFiles/SDLdynamic.dir/player.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/player.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\player.cpp -o CMakeFiles\SDLdynamic.dir\player.cpp.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\player.cpp -o CMakeFiles\SDLdynamic.dir\player.cpp.s
 
 CMakeFiles/SDLdynamic.dir/player.cpp.obj.requires:
 
@@ -297,17 +297,17 @@ CMakeFiles/SDLdynamic.dir/player.cpp.obj.provides.build: CMakeFiles/SDLdynamic.d
 
 
 CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/resource_manager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\resource_manager.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\resource_manager.cpp
+CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/resource_manager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\resource_manager.cpp.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\resource_manager.cpp
 
 CMakeFiles/SDLdynamic.dir/resource_manager.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/resource_manager.cpp.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\resource_manager.cpp > CMakeFiles\SDLdynamic.dir\resource_manager.cpp.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\resource_manager.cpp > CMakeFiles\SDLdynamic.dir\resource_manager.cpp.i
 
 CMakeFiles/SDLdynamic.dir/resource_manager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/resource_manager.cpp.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\resource_manager.cpp -o CMakeFiles\SDLdynamic.dir\resource_manager.cpp.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\resource_manager.cpp -o CMakeFiles\SDLdynamic.dir\resource_manager.cpp.s
 
 CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj.requires:
 
@@ -321,17 +321,17 @@ CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj.provides.build: CMakeFiles/SD
 
 
 CMakeFiles/SDLdynamic.dir/font.cxx.obj: CMakeFiles/SDLdynamic.dir/flags.make
-CMakeFiles/SDLdynamic.dir/font.cxx.obj: C:/Users/Shaft/Documents/GitHub/Chlorine/src/font.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/SDLdynamic.dir/font.cxx.obj"
-	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\font.cxx.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine\src\font.cxx
+CMakeFiles/SDLdynamic.dir/font.cxx.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/font.cxx
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/SDLdynamic.dir/font.cxx.obj"
+	C:\mingw-w64\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\SDLdynamic.dir\font.cxx.obj -c C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\font.cxx
 
 CMakeFiles/SDLdynamic.dir/font.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/SDLdynamic.dir/font.cxx.i"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine\src\font.cxx > CMakeFiles\SDLdynamic.dir\font.cxx.i
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\font.cxx > CMakeFiles\SDLdynamic.dir\font.cxx.i
 
 CMakeFiles/SDLdynamic.dir/font.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/SDLdynamic.dir/font.cxx.s"
-	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine\src\font.cxx -o CMakeFiles\SDLdynamic.dir\font.cxx.s
+	C:\mingw-w64\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Shaft\Documents\GitHub\Chlorine-5\src\font.cxx -o CMakeFiles\SDLdynamic.dir\font.cxx.s
 
 CMakeFiles/SDLdynamic.dir/font.cxx.obj.requires:
 
@@ -378,7 +378,7 @@ SDLdynamic.exe: CMakeFiles/SDLdynamic.dir/build.make
 SDLdynamic.exe: CMakeFiles/SDLdynamic.dir/linklibs.rsp
 SDLdynamic.exe: CMakeFiles/SDLdynamic.dir/objects1.rsp
 SDLdynamic.exe: CMakeFiles/SDLdynamic.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable SDLdynamic.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking CXX executable SDLdynamic.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\SDLdynamic.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -406,6 +406,6 @@ CMakeFiles/SDLdynamic.dir/clean:
 .PHONY : CMakeFiles/SDLdynamic.dir/clean
 
 CMakeFiles/SDLdynamic.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Shaft\Documents\GitHub\Chlorine\src C:\Users\Shaft\Documents\GitHub\Chlorine\src C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles\SDLdynamic.dir\DependInfo.cmake --color=$(COLOR)
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\Shaft\Documents\GitHub\Chlorine-5\src C:\Users\Shaft\Documents\GitHub\Chlorine-5\src C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles\SDLdynamic.dir\DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/SDLdynamic.dir/depend
 

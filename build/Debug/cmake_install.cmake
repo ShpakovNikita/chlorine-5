@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Shaft/Documents/GitHub/Chlorine/src
+# Install script for directory: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,5 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/Shaft/Documents/GitHub/Chlorine/build/Debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

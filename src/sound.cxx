@@ -49,6 +49,18 @@ void pitch_s(uint32_t source, float value) {
     alSourcef(source, AL_PITCH, value);
 }
 
+vec3 get_listener() {
+    float x, y, z;
+    alGetListener3f(AL_POSITION, &x, &y, &z);
+    return vec3(x, y, z);
+}
+
+vec3 get_source_pos(uint32_t source) {
+    float x, y, z;
+    alGetSource3f(source, AL_POSITION, &x, &y, &z);
+    return vec3(x, y, z);
+}
+
 uint32_t create_new_source(sound* s, instance* i) {
     ALuint source;
     alGenSources(1, &source);
@@ -57,14 +69,15 @@ uint32_t create_new_source(sound* s, instance* i) {
     vec3 sourceVel(0, 0, 0);
 
     alSourcei(source, AL_BUFFER, s->al_buffer);
+    //    alSourcei(source, AL_SOURCE_RELATIVE, AL_TRUE);
     alSourcef(source, AL_PITCH, 1.0f);
     alSourcef(source, AL_GAIN, 1.0f);
     alSource3f(source, AL_POSITION, sourcePos.x, sourcePos.y, sourcePos.z);
     alSource3f(source, AL_VELOCITY, sourceVel.x, sourceVel.y, sourcePos.z);
     alSourcef(source, AL_MAX_GAIN, 1.0f);
     alSourcef(source, AL_MIN_GAIN, 0.0f);
-    alSourcef(source, AL_REFERENCE_DISTANCE, 100.0f);
-    alSourcef(source, AL_ROLLOFF_FACTOR, 20.0f);
+    alSourcef(source, AL_REFERENCE_DISTANCE, 40.0f);
+    alSourcef(source, AL_ROLLOFF_FACTOR, 2.0f);
     alSourcef(source, AL_MAX_DISTANCE, 180.0f);
     alSourcei(source, AL_LOOPING, AL_FALSE);
     return source;

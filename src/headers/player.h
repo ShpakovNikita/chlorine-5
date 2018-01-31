@@ -46,6 +46,7 @@ class player : public CHL::life_form {
    private:
     uint32_t steps_source = 0;
     uint32_t blink_source = 0;
+    uint32_t fire_source = 0;
 
     float keys_registred = false;
 

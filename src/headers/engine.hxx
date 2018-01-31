@@ -207,6 +207,8 @@ void set_pos_s(uint32_t source, const vec3&);
 void set_velocity_s(uint32_t source, const vec3&);
 void set_volume_s(uint32_t source, float volume);
 void pitch_s(uint32_t source, float value);
+vec3 get_listener();
+vec3 get_source_pos(uint32_t source);
 
 void play_s(uint32_t source);
 void play_always_s(uint32_t source);

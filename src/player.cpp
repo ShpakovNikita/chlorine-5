@@ -34,6 +34,7 @@ player::player(float x, float y, float z_index, int speed, int size)
         CHL::create_new_source(manager.get_sound("move_sound"), this);
     blink_source =
         CHL::create_new_source(manager.get_sound("blink_sound"), this);
+    fire_source = CHL::create_new_source(manager.get_sound("shot_sound"), this);
 }
 
 player::~player() {
@@ -195,6 +196,8 @@ void player::blink_to(const CHL::point& p) {
         blinking_alpha = CHL::get_direction(p.x, p.y, position.x, position.y);
 
         CHL::set_pos_s(blink_source, CHL::vec3(position.x, position.y, 0.0f));
+        //        CHL::set_velocity_s(blink_source, CHL::vec3(0.0f, 0.0f,
+        //        -50.0f));
         CHL::pitch_s(blink_source, 1.0f);
         CHL::play_s(blink_source);
     }
@@ -202,7 +205,6 @@ void player::blink_to(const CHL::point& p) {
 
 void player::fire() {
     if (shoot_delay <= 0.0f && !blinking) {
-        manager.get_sound("shot_sound")->play();
         shoot_delay = 0.4f;
         bullets.insert(bullets.end(), new bullet(position.x + shooting_point.x,
                                                  position.y + shooting_point.y,
@@ -213,12 +215,16 @@ void player::fire() {
         (*(bullets.end() - 1))->rotation_point =
             CHL::point(position.x + TILE_SIZE / 2, position.y - TILE_SIZE / 2);
         (*(bullets.end() - 1))->creator = bullet_creator::player;
+
+        CHL::set_pos_s(fire_source, CHL::vec3(position.x, position.y, 0.0f));
+        CHL::play_s(fire_source);
     }
 }
 
 void player::super_fire() {
     if (super_delay <= 0.0f && !blinking) {
-        manager.get_sound("shot_sound")->play();
+        CHL::set_pos_s(fire_source, CHL::vec3(position.x, position.y, 0.0f));
+        CHL::play_s(fire_source);
         for (int i = 0; i < 32; i++) {
             bullets.insert(bullets.end(), new bullet(position.x + TILE_SIZE / 2,
                                                      position.y - TILE_SIZE / 2,
@@ -305,6 +311,9 @@ void player::move(float dt) {
         steps_source,
         CHL::vec3(position.x + 50 * sign((int)(delta_x / 0.1) * 0.1),
                   position.y + 50 * sign((int)(delta_y / 0.1) * 0.1), 0.0f));
+
+    std::cout << "hero itself" << CHL::get_listener().x << " "
+              << CHL::get_listener().y << std::endl;
 
     position.y += delta_y;
     position.x += delta_x;

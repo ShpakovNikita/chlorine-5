@@ -53,10 +53,10 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine\src
+CMAKE_SOURCE_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine-5\src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug
+CMAKE_BINARY_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug
 
 #=============================================================================
 # Target rules for target CMakeFiles/SDLdynamic.dir
@@ -65,7 +65,7 @@ CMAKE_BINARY_DIR = C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug
 CMakeFiles/SDLdynamic.dir/all:
 	$(MAKE) -f CMakeFiles\SDLdynamic.dir\build.make CMakeFiles/SDLdynamic.dir/depend
 	$(MAKE) -f CMakeFiles\SDLdynamic.dir\build.make CMakeFiles/SDLdynamic.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13 "Built target SDLdynamic"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13 "Built target SDLdynamic"
 .PHONY : CMakeFiles/SDLdynamic.dir/all
 
 # Include target in all.
@@ -75,9 +75,9 @@ all: CMakeFiles/SDLdynamic.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/SDLdynamic.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles 13
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles 13
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/SDLdynamic.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Shaft\Documents\GitHub\Chlorine\build\Debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\Shaft\Documents\GitHub\Chlorine-5\build\Debug\CMakeFiles 0
 .PHONY : CMakeFiles/SDLdynamic.dir/rule
 
 # Convenience name for target.
