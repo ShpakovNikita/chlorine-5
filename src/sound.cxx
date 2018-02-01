@@ -61,6 +61,46 @@ vec3 get_source_pos(uint32_t source) {
     return vec3(x, y, z);
 }
 
+float calculate_gain(gain_algorithm algo, uint32_t source) {
+    float listener_pos_x, listener_pos_y, source_pos_x, source_pos_y, _z;
+
+    alGetListener3f(AL_POSITION, &listener_pos_x, &listener_pos_y, &_z);
+    alGetSource3f(source, AL_POSITION, &source_pos_x, &source_pos_y, &_z);
+
+    float reference_distance, rolloff_factor;
+    alGetSourcef(source, AL_REFERENCE_DISTANCE, &reference_distance);
+    alGetSourcef(source, AL_ROLLOFF_FACTOR, &rolloff_factor);
+
+    float distance = get_distance(listener_pos_x, listener_pos_y, source_pos_x,
+                                  source_pos_y);
+
+    switch (algo) {
+        case gain_algorithm::exponent_distance: {
+            return powf(distance / reference_distance, -rolloff_factor);
+        }
+
+        case gain_algorithm::inverse_distance: {
+            return reference_distance /
+                   (reference_distance +
+                    rolloff_factor * (distance - reference_distance));
+        }
+
+        case gain_algorithm::linear_distance: {
+            float max_distance;
+            alGetSourcef(source, AL_MAX_DISTANCE, &max_distance);
+            distance = std::min(distance, max_distance);
+            return (1 - rolloff_factor * (distance - reference_distance) /
+                            (max_distance - reference_distance));
+        }
+
+        case gain_algorithm::none:
+            return 1;
+
+        default:
+            return -1;
+    }
+}
+
 uint32_t create_new_source(sound* s, instance* i) {
     ALuint source;
     alGenSources(1, &source);
@@ -76,9 +116,9 @@ uint32_t create_new_source(sound* s, instance* i) {
     alSource3f(source, AL_VELOCITY, sourceVel.x, sourceVel.y, sourcePos.z);
     alSourcef(source, AL_MAX_GAIN, 1.0f);
     alSourcef(source, AL_MIN_GAIN, 0.0f);
-    alSourcef(source, AL_REFERENCE_DISTANCE, 40.0f);
+    alSourcef(source, AL_REFERENCE_DISTANCE, 100.0f);
     alSourcef(source, AL_ROLLOFF_FACTOR, 2.0f);
-    alSourcef(source, AL_MAX_DISTANCE, 180.0f);
+    alSourcef(source, AL_MAX_DISTANCE, 250.0f);
     alSourcei(source, AL_LOOPING, AL_FALSE);
     return source;
 }

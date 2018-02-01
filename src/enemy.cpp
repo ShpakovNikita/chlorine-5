@@ -119,7 +119,6 @@ void chase(enemy* e) {
 
     e->position.y += e->delta_y;
     e->position.x += e->delta_x;
-    e->update_points();
 
     if (!CHL::ray_cast(e, e->destination, bricks)) {
         e->step_dest.x = e->position.x;
@@ -146,7 +145,6 @@ void smart_move(enemy* e) {
 
     e->position.y += e->delta_y;
     e->position.x += e->delta_x;
-    e->update_points();
 
     if (CHL::ray_cast(e, e->destination, bricks)) {
         e->state = chase;
@@ -157,6 +155,7 @@ void enemy::move(float dt) {
     delta_time = dt;
 
     state(this);
+    update_points();
     if (shoot_delay > 0)
         shoot_delay -= dt;
 }
@@ -174,11 +173,9 @@ void enemy::fire() {
             CHL::point(position.x + TILE_SIZE / 2, position.y - TILE_SIZE / 2);
         (*(bullets.end() - 1))->creator = bullet_creator::enemy;
 
-        float gain = powf(
-            (CHL::get_distance(position.x, position.y, CHL::get_listener().x,
-                               CHL::get_listener().y) /
-             50.0f),
-            -2.0f);
+        CHL::set_pos_s(fire_source, CHL::vec3(position.x, position.y, 0.0f));
+        float gain = CHL::calculate_gain(CHL::gain_algorithm::linear_distance,
+                                         fire_source);
 
         CHL::set_volume_s(fire_source, gain);
         CHL::pitch_s(fire_source, 1 + (rand() % 100 - 50) / 200.0f);

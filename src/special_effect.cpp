@@ -18,6 +18,7 @@ special_effect::~special_effect() {
 }
 
 void special_effect::update_frame() {
+    update_data();
     if (!is_end) {
         delay -= 1;
         if (!delay) {

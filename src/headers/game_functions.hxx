@@ -29,6 +29,10 @@ inline int sign(T val) {
     return (T(0) < val) - (val < T(0));
 }
 
+inline float precise(float value, float precision) {
+    return (int)(value / precision) * precision;
+}
+
 inline void render(CHL::engine* eng) {
     //    eng->GL_clear_color();
     //

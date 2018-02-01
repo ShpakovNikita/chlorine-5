@@ -401,6 +401,12 @@ void autotile(int** map_grid, CHL::instance*** grid, int x_size, int y_size) {
             }
         }
     }
+    for (int y = 0; y < y_size; y++) {
+        for (int x = 0; x < x_size; x++) {
+            if (grid[y][x] != nullptr)
+                grid[y][x]->update_points();
+        }
+    }
 }
 
 #endif /* HEADERS_AUTOTILE_HXX_ */

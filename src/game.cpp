@@ -48,6 +48,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
     manager.add_texture("bullet", new texture("textures/bullet.png"));
     manager.add_texture("explosion", new texture("textures/explosion.png"));
     manager.add_texture("obelisk", new texture("textures/obelisk.png"));
+    manager.add_texture("dialog", new texture("textures/dialog.png"));
 
     manager.add_sound("start_music", new sound(SND_FOLDER + START_MUSIC));
     manager.add_sound("move_sound", new sound(SND_FOLDER + MOVE_SOUND));
@@ -55,12 +56,18 @@ int main(int /*argc*/, char* /*argv*/ []) {
     manager.add_sound("blink_sound", new sound(SND_FOLDER + "blink.wav"));
     //    manager.get_sound("start_music")->play_always();
 
+    user_interface* ui = new user_interface();
+    ui->add_instance(new ui_element(400, WINDOW_HEIGHT, MIN_DEPTH, 1000, 400,
+                                    manager.get_texture("dialog"),
+                                    "GET READY!!!!! ", f));
+
     DungeonGenerator generator(x_size, y_size);
     auto map = generator.Generate();
     std::vector<int> tile_set = map.Print();
 
     bool placed = false;
     player* hero = new player(0.0f, 7.0f, 0.0f, P_SPEED, TILE_SIZE);
+
     hero->weight = 2;
     hero->register_keys(CHL::event::up_pressed, CHL::event::down_pressed,
                         CHL::event::left_pressed, CHL::event::right_pressed,
@@ -97,6 +104,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
                 (*(bricks.end() - 1))->tilesets_in_texture = 3;
                 (*(bricks.end() - 1))->selected_frame = default_frame;
                 (*(bricks.end() - 1))->selected_tileset = default_tileset;
+                (*(bricks.end() - 1))->update_data();
                 grid[y][x] = *(bricks.end() - 1);
             } else {
                 floor.insert(floor.end(), create_wall(x * TILE_SIZE,
@@ -104,6 +112,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
                                                       MAX_DEPTH, TILE_SIZE));
                 (*(floor.end() - 1))->frames_in_texture = 4;
                 (*(floor.end() - 1))->selected_frame = rand() % 4;
+                (*(floor.end() - 1))->update_data();
             }
             if (!placed && *(tile_set.begin() + y * x_size + x) == 0) {
                 hero->position.x = x * TILE_SIZE;
@@ -365,6 +374,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
         int j = 0;
         for (auto quad : non_material_quads) {
+            quad->update_data();
             eng->add_object(quad, main_camera);
             quad->alpha_channel -= delta_time * 5;
             eng->draw(manager.get_texture("hero"), main_camera, quad);
@@ -374,6 +384,8 @@ int main(int /*argc*/, char* /*argv*/ []) {
                 continue;
             }
         }
+
+        eng->render_ui(ui);
 
         animated_block->update();
         eng->add_object(animated_block, main_camera);

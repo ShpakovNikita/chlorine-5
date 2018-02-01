@@ -208,6 +208,7 @@ engine::~engine() {
 }
 
 static int t_size;
+static int w_w, w_h;
 
 bool check_collision(instance* one,
                      instance* two)    // AABB - AABB collision
@@ -268,6 +269,7 @@ instance::instance(float x, float y, float z, int s) {
     collision_box = point(s, s);
 
     update_points();
+    update_data();
 }
 
 instance::instance(float x, float y, float z, int size_x, int size_y)
@@ -309,11 +311,13 @@ void instance::get_points() {
 }
 
 void instance::update_points() {
+    update_data();
     get_points();
 }
 
 void instance::update() {
     if ((animation_playing || animation_loop) && delay <= 0) {
+        update_data();
         delay = delta_frame * FPS;
         selected_frame += 1;
         if (selected_frame == frames_in_animation) {
@@ -350,9 +354,12 @@ void instance::loop_animation(float seconds_betweeen_frames, int tileset) {
     animation_loop ^= 1;
 }
 
-std::vector<float> instance::get_vector() {
-    std::vector<float> v;
-    v = quad_data;
+std::vector<float> instance::get_data() {
+    return data;
+}
+
+void instance::update_data() {
+    data = quad_data;
     float k_x = 1.0f / frames_in_texture;
     float k_y = 1.0f / tilesets_in_texture;
 
@@ -362,32 +369,93 @@ std::vector<float> instance::get_vector() {
                             -alpha, glm::vec3(0.0f, 0.0f, 1.0f));
 
     for (int i = 0; i < quad_data.size(); i += STRIDE_ELEMENTS) {
-        v[i] *= (size.x / t_size);
-        v[i + 1] *= (size.y / t_size);
+        data[i] *= (size.x / t_size);
+        data[i + 1] *= (size.y / t_size);
         if (alpha != 0) {
             glm::vec4 vector =
-                glm::vec4(v[i], v[i + 1], 0.0f, 0.0f) * transform;
+                glm::vec4(data[i], data[i + 1], 0.0f, 0.0f) * transform;
 
-            v[i] = vector.x;
-            v[i + 1] = vector.y;
+            data[i] = vector.x;
+            data[i + 1] = vector.y;
 
-            v[i] += position.x / t_size;
-            v[i + 1] -= position.y / t_size;
+            data[i] += position.x / t_size;
+            data[i + 1] -= position.y / t_size;
         } else {
-            v[i] += position.x / t_size;
-            v[i + 1] -= position.y / t_size;
+            data[i] += position.x / t_size;
+            data[i + 1] -= position.y / t_size;
         }
-        v[i + 2] = glm::clamp(position.z_index, MAX_DEPTH, MIN_DEPTH) / 2.0f /
-                   MAX_DEPTH;
+        data[i + 2] = glm::clamp(position.z_index, MAX_DEPTH, MIN_DEPTH) /
+                      2.0f / MAX_DEPTH;
 
-        v[i + 3] *= k_x;
-        v[i + 3] += k_x * (selected_frame % frames_in_texture);
+        data[i + 3] *= k_x;
+        data[i + 3] += k_x * (selected_frame % frames_in_texture);
 
-        v[i + 4] *= k_y;
-        v[i + 4] += k_y * (selected_tileset % tilesets_in_texture);
+        data[i + 4] *= k_y;
+        data[i + 4] += k_y * (selected_tileset % tilesets_in_texture);
     }
-    return v;
 }
+
+void ui_element::update_data() {
+    data = quad_data;
+    float k_x = 1.0f / frames_in_texture;
+    float k_y = 1.0f / tilesets_in_texture;
+
+    glm::mat4 transform;
+    transform = glm::rotate(transform,
+                            /*(GLfloat)GL_time() * */
+                            -alpha, glm::vec3(0.0f, 0.0f, 1.0f));
+
+    for (int i = 0; i < quad_data.size(); i += STRIDE_ELEMENTS) {
+        data[i] *= (size.x / w_w);
+        data[i + 1] *= (size.y / w_h);
+        if (alpha != 0) {
+            glm::vec4 vector =
+                glm::vec4(data[i], data[i + 1], 0.0f, 0.0f) * transform;
+
+            data[i] = vector.x;
+            data[i + 1] = vector.y;
+
+            data[i] += position.x / w_w;
+            data[i + 1] -= position.y / w_h;
+        } else {
+            data[i] += position.x / w_w;
+            data[i + 1] -= position.y / w_h;
+        }
+        data[i + 2] = glm::clamp(position.z_index, MAX_DEPTH, MIN_DEPTH) /
+                      2.0f / MAX_DEPTH;
+
+        data[i + 3] *= k_x;
+        data[i + 3] += k_x * (selected_frame % frames_in_texture);
+
+        data[i + 4] *= k_y;
+        data[i + 4] += k_y * (selected_tileset % tilesets_in_texture);
+    }
+}
+
+ui_element::ui_element(float x,
+                       float y,
+                       float z,
+                       int size_x,
+                       int size_y,
+                       texture* texture)
+    : instance(x, y, z, size_x, size_y) {
+    tex = texture;
+}
+
+ui_element::ui_element(float x,
+                       float y,
+                       float z,
+                       int size_x,
+                       int size_y,
+                       texture* texture,
+                       const std::string& t,
+                       font* font)
+    : ui_element(x, y, z, size_x, size_y, texture) {
+    f = font;
+    text = t;
+}
+
+ui_element::~ui_element() {}
 
 life_form::life_form(float x, float y, float z, int _speed, int size)
     : instance(x, y, z, size) {
@@ -418,9 +486,6 @@ class engine_impl final : public engine {
     GLuint text_shader_program;
 
     std::vector<float> vertex_buffer;
-
-    int w_h;
-    int w_w;
 
     int virtual_w = 0;
     int virtual_h = 0;
@@ -618,9 +683,6 @@ class engine_impl final : public engine {
         glAlphaFunc(GL_GREATER, 0.03);
         glEnable(GL_ALPHA_TEST);
 
-        glEnable(GL_SCISSOR_TEST);
-        glScissor(0, 0, w_w, w_h);
-
         t_size = size;
 
         return EXIT_SUCCESS;
@@ -650,8 +712,8 @@ class engine_impl final : public engine {
              in->position.y - in->size.y > cam->get_center().y + cam->height)) {
             return;
         }
-        std::vector<float> data = in->get_vector();
-        for (float f : data)
+
+        for (float f : in->get_data())
             vertex_buffer.insert(vertex_buffer.end(), f);
     }
 
@@ -824,6 +886,69 @@ class engine_impl final : public engine {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
+    virtual void render_ui(user_interface* ui) {
+        GLuint vbo;
+        glGenBuffers(1, &vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 5, nullptr,
+                     GL_DYNAMIC_DRAW);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
+        glEnableVertexAttribArray(0);
+
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
+                              (GLvoid*)(3 * sizeof(GLfloat)));
+        glEnableVertexAttribArray(1);
+        GL_CHECK();
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glUseProgram(shader_program);
+        GL_CHECK();
+
+        glm::mat4 transform;
+        transform = glm::translate(transform, glm::vec3(-1.0f, 1.0f, 0.0f));
+        transform = glm::scale(transform, glm::vec3(2.0f, 2.0f, 1.0f));
+        GLint transformLoc = glGetUniformLocation(shader_program, "transform");
+        glUniformMatrix4fv(transformLoc, 1, GL_FALSE,
+                           glm::value_ptr(transform));
+
+        glm::mat4 projection;
+        GLint projectionLoc =
+            glGetUniformLocation(shader_program, "projection");
+        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE,
+                           glm::value_ptr(projection));
+
+        for (ui_element* e : ui->user_interface_elements) {
+            e->tex->bind();
+
+            GL_CHECK();
+            glUniform1i(glGetUniformLocation(shader_program, "our_texture"), 0);
+            GL_CHECK();
+            // Update content of VBO memory
+            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+            GL_CHECK();
+            e->update_data();
+            std::vector<float> vertices = e->get_data();
+
+            glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 5 * 6,
+                            vertices.data());
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            GL_CHECK();
+            // Render quad
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+            GL_CHECK();
+            if (!e->text.empty())
+                render_text(e->text, e->f, e->position.x + e->offset,
+                            e->position.y - e->size.y + e->offset, e->offset,
+                            MIN_DEPTH, vec3(1.0f, 0.0f, 0.0f));
+        }
+        glUseProgram(0);
+        GL_CHECK();
+        glBindTexture(GL_TEXTURE_2D, 0);
+        GL_CHECK();
+        glDeleteBuffers(1, &vbo);
+        GL_CHECK();
+    }
+
     void CHL_exit() final {
         SDL_DestroyWindow(window);
         SDL_Quit();
@@ -887,16 +1012,18 @@ class engine_impl final : public engine {
     }
 };
 
-user_interface::user_interface(camera* cam) {
-    focus_camera = cam;
-}
+user_interface::user_interface() {}
 
 user_interface::~user_interface() {
-    std::vector<instance*>::iterator e = user_interface_elements.begin();
+    std::vector<ui_element*>::iterator e = user_interface_elements.begin();
     for (; e != user_interface_elements.end(); e++) {
         delete *e;
         user_interface_elements.erase(e);
     }
+}
+
+void user_interface::add_instance(ui_element* e) {
+    user_interface_elements.insert(user_interface_elements.end(), e);
 }
 
 bool already_exist = false;

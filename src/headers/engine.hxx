@@ -29,7 +29,12 @@
 
 namespace CHL    // chlorine-5
 {
-enum class sound_type { effect, music };
+enum class gain_algorithm {
+    inverse_distance,
+    linear_distance,
+    exponent_distance,
+    none
+};
 
 enum class event {
     /// input events
@@ -171,7 +176,8 @@ class instance {
     void get_points();
 
     void update_points();
-    std::vector<float> get_vector();
+    virtual void update_data();
+    std::vector<float> get_data();
 
     void update();    // !
     void play_animation(float seconds_betweeen_frames,
@@ -186,6 +192,7 @@ class instance {
     bool animation_loop = false;       //!
     int delay;                         //!
     float delta_frame;
+    std::vector<float> data;
 
    private:
     int prev_tileset;
@@ -201,8 +208,33 @@ class life_form : public instance {
     float delta_x = 0, delta_y = 0;
 };
 
+class ui_element : public instance {
+   public:
+    ui_element(float x,
+               float y,
+               float z,
+               int size_x,
+               int size_y,
+               texture* texture);
+    ui_element(float x,
+               float y,
+               float z,
+               int size_x,
+               int size_y,
+               texture* texture,
+               const std::string& t,
+               font* font);
+    virtual ~ui_element();
+    texture* tex;
+    void update_data() override;
+    font* f = nullptr;
+    std::string text = "";
+    int offset = 100;
+};
+
 instance* create_wall(float x, float y, float z, int size);
 
+/* sound procedures */
 void set_pos_s(uint32_t source, const vec3&);
 void set_velocity_s(uint32_t source, const vec3&);
 void set_volume_s(uint32_t source, float volume);
@@ -214,6 +246,8 @@ void play_s(uint32_t source);
 void play_always_s(uint32_t source);
 void stop_s(uint32_t source);
 void pause_s(uint32_t source);
+
+float calculate_gain(gain_algorithm, uint32_t source);
 
 void delete_source(uint32_t source);
 void listener_update(const vec3&);
@@ -242,13 +276,10 @@ uint32_t create_new_source(sound*, instance*);
 
 class user_interface {
    public:
-    user_interface(camera*);
+    user_interface();
     virtual ~user_interface();
-    void add_instance();
-
-   private:
-    camera* focus_camera;
-    std::vector<instance*> user_interface_elements;
+    void add_instance(ui_element*);
+    std::vector<ui_element*> user_interface_elements;
 };
 
 class engine {
@@ -274,6 +305,7 @@ class engine {
                              float offset,
                              int z_pos,
                              vec3 color) = 0;
+    virtual void render_ui(user_interface*) = 0;
     virtual void set_virtual_pixel(int, int) = 0;
     //    virtual bool load_texture(std::string) = 0;
     virtual event_type get_event_type() = 0;

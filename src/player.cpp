@@ -276,9 +276,8 @@ void player::move(float dt) {
 
         CHL::set_pos_s(
             steps_source,
-            CHL::vec3(position.x + 50 * sign((int)(delta_x / 0.1) * 0.1),
-                      position.y + 50 * sign((int)(delta_y / 0.1) * 0.1),
-                      0.0f));
+            CHL::vec3(position.x + 50 * sign(precise(delta_x, 0.1)),
+                      position.y + 50 * sign(precise(delta_y, 0.1)), 0.0f));
 
         return;
     }
@@ -309,11 +308,8 @@ void player::move(float dt) {
 
     CHL::set_pos_s(
         steps_source,
-        CHL::vec3(position.x + 50 * sign((int)(delta_x / 0.1) * 0.1),
-                  position.y + 50 * sign((int)(delta_y / 0.1) * 0.1), 0.0f));
-
-    std::cout << "hero itself" << CHL::get_listener().x << " "
-              << CHL::get_listener().y << std::endl;
+        CHL::vec3(position.x + 50 * sign(precise(delta_x, 0.1)),
+                  position.y + 50 * sign(precise(delta_y, 0.1)), 0.0f));
 
     position.y += delta_y;
     position.x += delta_x;
