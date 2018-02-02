@@ -17,7 +17,7 @@ CHL::camera* main_camera;
 player::player(float x, float y, float z_index, int speed, int size)
     : life_form(x, y, z_index, speed, size) {
     // TODO Auto-generated constructor stub
-    health = 10;
+    health = 5;
     shooting_point = CHL::point(15, -8);
     selected_frame = 0;
 
@@ -208,7 +208,7 @@ void player::fire() {
         shoot_delay = 0.4f;
         bullets.insert(bullets.end(), new bullet(position.x + shooting_point.x,
                                                  position.y + shooting_point.y,
-                                                 0.0f, 4, 0, 2));
+                                                 0.0f, 4, 2, 0, 2));
         (*(bullets.end() - 1))->alpha =
             calculate_alpha_precision(shooting_alpha);
         (*(bullets.end() - 1))->speed = B_SPEED;
@@ -228,7 +228,7 @@ void player::super_fire() {
         for (int i = 0; i < 32; i++) {
             bullets.insert(bullets.end(), new bullet(position.x + TILE_SIZE / 2,
                                                      position.y - TILE_SIZE / 2,
-                                                     0.0f, 4, 0, 2));
+                                                     0.0f, 4, 2, 0, 2));
             (*(bullets.end() - 1))->alpha = 2 * M_PI * i / 32.0f;
             (*(bullets.end() - 1))->speed = B_SPEED;
             (*(bullets.end() - 1))->rotation_point = CHL::point(

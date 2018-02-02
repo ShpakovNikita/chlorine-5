@@ -49,17 +49,27 @@ int main(int /*argc*/, char* /*argv*/ []) {
     manager.add_texture("explosion", new texture("textures/explosion.png"));
     manager.add_texture("obelisk", new texture("textures/obelisk.png"));
     manager.add_texture("dialog", new texture("textures/dialog.png"));
+    manager.add_texture("health", new texture("textures/health.png"));
 
     manager.add_sound("start_music", new sound(SND_FOLDER + START_MUSIC));
     manager.add_sound("move_sound", new sound(SND_FOLDER + MOVE_SOUND));
     manager.add_sound("shot_sound", new sound(SND_FOLDER + "shot.wav"));
     manager.add_sound("blink_sound", new sound(SND_FOLDER + "blink.wav"));
-    //    manager.get_sound("start_music")->play_always();
+    manager.get_sound("start_music")->play_always();
 
     user_interface* ui = new user_interface();
-    ui->add_instance(new ui_element(400, WINDOW_HEIGHT, MIN_DEPTH, 1000, 400,
-                                    manager.get_texture("dialog"),
-                                    "GET READY!!!!! ", f));
+    ui_element* health_bar = new ui_element(100, 200, MIN_DEPTH, 200, 40,
+                                            manager.get_texture("health"));
+    health_bar->tilesets_in_texture = 6;
+    health_bar->selected_tileset = 5;
+    ui->add_instance(new ui_element(
+        400, WINDOW_HEIGHT, MIN_DEPTH, 1000, 400, manager.get_texture("dialog"),
+        "GET READY!!!!! "
+        "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
+        "hhhhhhhhhhhhhhh",
+        f));
+
+    ui->add_instance(health_bar);
 
     DungeonGenerator generator(x_size, y_size);
     auto map = generator.Generate();
@@ -273,6 +283,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
                         delete *(bullets.begin() + i);
                         bullets.erase(bullets.begin() + i);
 
+                        health_bar->selected_tileset--;
                         se.insert(se.end(),
                                   new special_effect(
                                       intersection_point->x - TILE_SIZE / 4 - 1,
@@ -372,6 +383,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
         if (!se.empty())
             eng->draw(manager.get_texture("explosion"), main_camera, nullptr);
 
+        eng->render_ui(ui);
         int j = 0;
         for (auto quad : non_material_quads) {
             quad->update_data();
@@ -384,8 +396,6 @@ int main(int /*argc*/, char* /*argv*/ []) {
                 continue;
             }
         }
-
-        eng->render_ui(ui);
 
         animated_block->update();
         eng->add_object(animated_block, main_camera);

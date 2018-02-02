@@ -10,8 +10,14 @@
 
 #include <math.h>
 
-bullet::bullet(float x, float y, float z, int _size, int _damage, float _alpha)
-    : instance(x, y, z, _size) {
+bullet::bullet(float x,
+               float y,
+               float z,
+               int _size_x,
+               int _size_y,
+               int _damage,
+               float _alpha)
+    : instance(x, y, z, _size_x, _size_y) {
     damage = _damage;
     alpha = _alpha;
     speed = 1;

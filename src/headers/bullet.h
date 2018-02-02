@@ -9,7 +9,13 @@ class bullet : public CHL::instance {
    public:
     int damage;
     int speed;
-    bullet(float x, float y, float z, int _size, int _damage, float _alpha);
+    bullet(float x,
+           float y,
+           float z,
+           int _size_x,
+           int _size_y,
+           int _damage,
+           float _alpha);
     ~bullet();
 
     bullet_creator creator = bullet_creator::allmighty;

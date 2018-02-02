@@ -276,6 +276,8 @@ instance::instance(float x, float y, float z, int size_x, int size_y)
     : instance(x, y, z, 0) {
     size.x = size_x;
     size.y = size_y;
+
+    collision_box = point(size_x, size_y);
 }
 
 void instance::get_points() {
@@ -887,38 +889,42 @@ class engine_impl final : public engine {
     }
 
     virtual void render_ui(user_interface* ui) {
-        GLuint vbo;
-        glGenBuffers(1, &vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 5, nullptr,
-                     GL_DYNAMIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), 0);
-        glEnableVertexAttribArray(0);
-
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
-                              (GLvoid*)(3 * sizeof(GLfloat)));
-        glEnableVertexAttribArray(1);
-        GL_CHECK();
-
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glUseProgram(shader_program);
-        GL_CHECK();
-
-        glm::mat4 transform;
-        transform = glm::translate(transform, glm::vec3(-1.0f, 1.0f, 0.0f));
-        transform = glm::scale(transform, glm::vec3(2.0f, 2.0f, 1.0f));
-        GLint transformLoc = glGetUniformLocation(shader_program, "transform");
-        glUniformMatrix4fv(transformLoc, 1, GL_FALSE,
-                           glm::value_ptr(transform));
-
-        glm::mat4 projection;
-        GLint projectionLoc =
-            glGetUniformLocation(shader_program, "projection");
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE,
-                           glm::value_ptr(projection));
-
         for (ui_element* e : ui->user_interface_elements) {
+            GLuint vbo;
+            glGenBuffers(1, &vbo);
+            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+            glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 5, nullptr,
+                         GL_DYNAMIC_DRAW);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
+                                  0);
+            glEnableVertexAttribArray(0);
+
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
+                                  (GLvoid*)(3 * sizeof(GLfloat)));
+            glEnableVertexAttribArray(1);
+            GL_CHECK();
+
+            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            glUseProgram(shader_program);
+            GL_CHECK();
+
+            glm::mat4 transform;
+            transform = glm::translate(transform, glm::vec3(-1.0f, 1.0f, 0.0f));
+            transform = glm::scale(transform, glm::vec3(2.0f, 2.0f, 1.0f));
+            GLint transformLoc =
+                glGetUniformLocation(shader_program, "transform");
+            glUniformMatrix4fv(transformLoc, 1, GL_FALSE,
+                               glm::value_ptr(transform));
+
+            glm::mat4 projection;
+            GLint projectionLoc =
+                glGetUniformLocation(shader_program, "projection");
+            glUniformMatrix4fv(projectionLoc, 1, GL_FALSE,
+                               glm::value_ptr(projection));
+
             e->tex->bind();
+
+            std::cout << e->tex->alpha << std::endl;
 
             GL_CHECK();
             glUniform1i(glGetUniformLocation(shader_program, "our_texture"), 0);
@@ -935,18 +941,19 @@ class engine_impl final : public engine {
             GL_CHECK();
             // Render quad
             glDrawArrays(GL_TRIANGLES, 0, 6);
+
+            glUseProgram(0);
+            GL_CHECK();
+            glBindTexture(GL_TEXTURE_2D, 0);
+            GL_CHECK();
+            glDeleteBuffers(1, &vbo);
             GL_CHECK();
             if (!e->text.empty())
                 render_text(e->text, e->f, e->position.x + e->offset,
-                            e->position.y - e->size.y + e->offset, e->offset,
+                            e->position.y - e->size.y + e->offset,
+                            w_w - e->position.x - e->size.x + e->offset,
                             MIN_DEPTH, vec3(1.0f, 0.0f, 0.0f));
         }
-        glUseProgram(0);
-        GL_CHECK();
-        glBindTexture(GL_TEXTURE_2D, 0);
-        GL_CHECK();
-        glDeleteBuffers(1, &vbo);
-        GL_CHECK();
     }
 
     void CHL_exit() final {

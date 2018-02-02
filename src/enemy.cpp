@@ -165,7 +165,7 @@ void enemy::fire() {
         shoot_delay = 1;
         bullets.insert(bullets.end(), new bullet(position.x + shooting_point.x,
                                                  position.y + shooting_point.y,
-                                                 0.0f, 4, 0, 2));
+                                                 0.0f, 4, 2, 0, 2));
         (*(bullets.end() - 1))->alpha =
             calculate_alpha_precision(shooting_alpha);
         (*(bullets.end() - 1))->speed = B_SPEED;
