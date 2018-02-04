@@ -17,14 +17,13 @@ CHL::camera* main_camera;
 player::player(float x, float y, float z_index, int speed, int size)
     : life_form(x, y, z_index, speed, size) {
     // TODO Auto-generated constructor stub
-    health = 5;
+    health = 500;
     shooting_point = CHL::point(15, -8);
     selected_frame = 0;
 
     for (int i = 0; i < 18; i++)
         keys[i] = false;
 
-    collision_box.y = TILE_SIZE / 2;
     collision_box.x = TILE_SIZE / 2 + 4;
     frames_in_texture = 12;
     frames_in_animation = 12;
@@ -255,6 +254,11 @@ void player::move(float dt) {
         position.y += delta_y;
         position.x += delta_x;
 
+        if (position.x < 0 || position.x > VIRTUAL_WIDTH)
+            position.x -= delta_x;
+        if (position.y - TILE_SIZE < 0 || position.y > VIRTUAL_HEIGHT)
+            position.y -= delta_y;
+
         if (blinking_path <= 0) {
             blinking = false;
             selected_tileset = 0;
@@ -314,9 +318,9 @@ void player::move(float dt) {
     position.y += delta_y;
     position.x += delta_x;
 
-    if (position.x < 0 || position.x > WINDOW_WIDTH / 2)
+    if (position.x < 0 || position.x > VIRTUAL_WIDTH)
         position.x -= delta_x;
-    if (position.y - TILE_SIZE < 0 || position.y > WINDOW_HEIGHT / 2)
+    if (position.y - TILE_SIZE < 0 || position.y > VIRTUAL_HEIGHT)
         position.y -= delta_y;
 
     do_actions(this);

@@ -32,12 +32,11 @@ int main(int /*argc*/, char* /*argv*/ []) {
                                                    destroy_engine);
 
     eng->CHL_init(WINDOW_WIDTH, WINDOW_HEIGHT, TILE_SIZE, FPS);
-    eng->set_virtual_pixel(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
-
-    eng->GL_clear_color();
-    eng->GL_swap_buffers();
+    eng->set_virtual_world(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+    eng->snap_tile_to_screen_pixels(1920 / 15.0f);
 
     font* f = new font("fonts/INVASION2000.ttf");
+    light* l = new light();
 
     /* loading textures */
 
@@ -50,26 +49,39 @@ int main(int /*argc*/, char* /*argv*/ []) {
     manager.add_texture("obelisk", new texture("textures/obelisk.png"));
     manager.add_texture("dialog", new texture("textures/dialog.png"));
     manager.add_texture("health", new texture("textures/health.png"));
+    manager.add_texture("load", new texture("textures/load.png"));
+    manager.add_texture("icon", new texture("textures/icon.png"));
 
     manager.add_sound("start_music", new sound(SND_FOLDER + START_MUSIC));
     manager.add_sound("move_sound", new sound(SND_FOLDER + MOVE_SOUND));
     manager.add_sound("shot_sound", new sound(SND_FOLDER + "shot.wav"));
     manager.add_sound("blink_sound", new sound(SND_FOLDER + "blink.wav"));
-    manager.get_sound("start_music")->play_always();
+    //    manager.get_sound("start_music")->play_always();
 
     user_interface* ui = new user_interface();
+    user_interface* load_screen = new user_interface();
+    load_screen->add_instance(new ui_element(100, 200, MIN_DEPTH, 200, 40,
+                                             manager.get_texture("load")));
     ui_element* health_bar = new ui_element(100, 200, MIN_DEPTH, 200, 40,
                                             manager.get_texture("health"));
     health_bar->tilesets_in_texture = 6;
     health_bar->selected_tileset = 5;
     ui->add_instance(new ui_element(
-        400, WINDOW_HEIGHT, MIN_DEPTH, 1000, 400, manager.get_texture("dialog"),
-        "GET READY!!!!! "
-        "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"
-        "hhhhhhhhhhhhhhh",
+        400, WINDOW_HEIGHT - 100, MIN_DEPTH, 1000, 350,
+        manager.get_texture("dialog"),
+        "When the world is doomed, there is only one hope... And you have to "
+        "be it. Save this city, and all your crimes will be forgiven.",
         f));
 
     ui->add_instance(health_bar);
+    ui->add_instance(new ui_element(60, WINDOW_HEIGHT - 100, MIN_DEPTH, 350,
+                                    500, manager.get_texture("icon")));
+
+    for (auto e : ui->user_interface_elements)
+        if (e == health_bar)
+            std::cout << "true" << std::endl;
+        else
+            std::cout << "false" << std::endl;
 
     DungeonGenerator generator(x_size, y_size);
     auto map = generator.Generate();
@@ -85,7 +97,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
                         CHL::event::button1_pressed,
                         CHL::event::button2_pressed, CHL::event::turn_off);
 
-    camera* main_camera = new camera(VIRTUAL_WIDTH / 4, VIRTUAL_HEIGHT / 4,
+    camera* main_camera = new camera(WINDOW_WIDTH / 8, WINDOW_HEIGHT / 8,
                                      VIRTUAL_WIDTH, VIRTUAL_HEIGHT, hero);
     entities.insert(entities.end(), hero);
     /* generate dungeon and place character */
@@ -120,8 +132,8 @@ int main(int /*argc*/, char* /*argv*/ []) {
                 floor.insert(floor.end(), create_wall(x * TILE_SIZE,
                                                       y * TILE_SIZE + TILE_SIZE,
                                                       MAX_DEPTH, TILE_SIZE));
-                (*(floor.end() - 1))->frames_in_texture = 4;
-                (*(floor.end() - 1))->selected_frame = rand() % 4;
+                (*(floor.end() - 1))->frames_in_texture = 8;
+                (*(floor.end() - 1))->selected_frame = rand() % 8;
                 (*(floor.end() - 1))->update_data();
             }
             if (!placed && *(tile_set.begin() + y * x_size + x) == 0) {
@@ -142,7 +154,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
     int map_grid_pf[x_size * y_size];
     int count = 0;
-    int dest = 15;
+    int dest = 0;
 
     while (count < dest) {
         int x = rand() % x_size;
@@ -152,7 +164,8 @@ int main(int /*argc*/, char* /*argv*/ []) {
                             new enemy(x * TILE_SIZE, y * TILE_SIZE + TILE_SIZE,
                                       0.0f, P_SPEED - 17, TILE_SIZE));
             (*(entities.end() - 1))->frames_in_texture = 4;
-            (*(entities.end() - 1))->collision_box.y = TILE_SIZE / 2;
+            //            (*(entities.end() - 1))->collision_box.y = TILE_SIZE /
+            //            2;
             dynamic_cast<enemy*>(*(entities.end() - 1))->map = map_grid_pf;
             dynamic_cast<enemy*>(*(entities.end() - 1))->destination.x =
                 hero->position.x;
@@ -178,8 +191,28 @@ int main(int /*argc*/, char* /*argv*/ []) {
     animated_block->frames_in_texture = 11;
     animated_block->loop_animation(0.06f);
 
-    int frames = 0;
-
+    /* load screen */
+    //    eng->GL_clear_color();
+    //    eng->render_ui(load_screen);
+    //    eng->render_text("LOADING.", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT -
+    //    100, 0,
+    //                     MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
+    //    eng->GL_swap_buffers();
+    //    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    //    eng->GL_clear_color();
+    //    eng->render_ui(load_screen);
+    //    eng->render_text("LOADING..", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT -
+    //    100, 0,
+    //                     MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
+    //    eng->GL_swap_buffers();
+    //    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    //    eng->GL_clear_color();
+    //    eng->render_ui(load_screen);
+    //    eng->render_text("LOADING...", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT -
+    //    100,
+    //                     0, MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
+    //    eng->GL_swap_buffers();
+    //    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     /* running game loop */
     while (!quit) {
         float delta_time = eng->GL_time() - prev_frame;
@@ -236,9 +269,9 @@ int main(int /*argc*/, char* /*argv*/ []) {
         hero->update_points();
         for (bullet* b : bullets) {
             if (b->position.x + TILE_SIZE < 0 ||
-                b->position.x > WINDOW_WIDTH / 2 + TILE_SIZE ||
+                b->position.x > VIRTUAL_WIDTH + TILE_SIZE ||
                 b->position.y + TILE_SIZE < 0 ||
-                b->position.y > WINDOW_HEIGHT / 2 + TILE_SIZE) {
+                b->position.y > VIRTUAL_HEIGHT + TILE_SIZE) {
                 delete *(bullets.begin() + i);
                 bullets.erase(bullets.begin() + i);
                 continue;
@@ -383,19 +416,25 @@ int main(int /*argc*/, char* /*argv*/ []) {
         if (!se.empty())
             eng->draw(manager.get_texture("explosion"), main_camera, nullptr);
 
-        eng->render_ui(ui);
-        int j = 0;
-        for (auto quad : non_material_quads) {
-            quad->update_data();
-            eng->add_object(quad, main_camera);
-            quad->alpha_channel -= delta_time * 5;
-            eng->draw(manager.get_texture("hero"), main_camera, quad);
-            if (quad->alpha_channel <= 0.05f) {
-                delete *(non_material_quads.begin() + j);
-                non_material_quads.erase(non_material_quads.begin() + j);
+        //        eng->render_ui(ui);
+        for (auto quad = non_material_quads.begin();
+             quad != non_material_quads.end();) {
+            (*quad)->update_data();
+            eng->add_object(*quad, main_camera);
+            (*quad)->alpha_channel -= delta_time * 5;
+            eng->draw(manager.get_texture("hero"), main_camera, *quad);
+            if ((*quad)->alpha_channel <= 0.05f) {
+                delete *quad;
+                quad = non_material_quads.erase(quad);
                 continue;
             }
+            ++quad;
         }
+
+        l->position.x = hero->position.x + 6;
+        l->position.y = hero->position.y - 6;
+        l->position.z_index = hero->position.z_index - 1;
+        eng->render_light(l, main_camera);
 
         animated_block->update();
         eng->add_object(animated_block, main_camera);
@@ -405,7 +444,6 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
         /* dynamic sleep */
         float t = (eng->GL_time() - prev_frame) * 1000;
-        frames++;
 
         if (t > 1000 / FPS)
             std::cerr << "freeze" << std::endl;

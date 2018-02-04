@@ -9,6 +9,7 @@
 #define HEADERS_AUTOTILE_HXX_
 
 #include "engine.hxx"
+#include "game_constants.h"
 
 constexpr int default_tileset = 1, default_frame = 1;
 
@@ -45,6 +46,10 @@ void autotile(int** map_grid, CHL::instance*** grid, int x_size, int y_size) {
                         grid[y - 1][x]->selected_tileset = 0;
                         grid[y - 1][x]->selected_frame = 2;
                     }
+
+                    grid[y - 1][x]->collision_box_offset =
+                        CHL::point(0, TILE_SIZE / 2);
+                    grid[y - 1][x]->collision_box.y = TILE_SIZE / 2;
                 }
                 if (bottom &&
                     grid[y + 1][x]->selected_tileset == default_tileset &&

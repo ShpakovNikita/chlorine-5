@@ -28,6 +28,7 @@ bullet::~bullet() {
 }
 
 void bullet::move(float dt) {
+    position.z_index = position.y;
     float path = speed * dt;
 
     position.y -= path * std::sin(alpha);

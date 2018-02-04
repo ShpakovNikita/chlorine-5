@@ -71,7 +71,7 @@
     }
 
 namespace CHL {
-int FPS;
+
 static std::vector<float> quad_data{
     0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
     0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
@@ -99,6 +99,14 @@ static std::array<std::string, 18> event_names = {
     /// virtual console events
     "turn_off"};
 
+static std::string color_fragment =
+    "uniform vec4 color;"
+
+    "void main()"
+    "{"
+    "gl_FragColor = color;"
+    "}";
+
 static std::string fragment_glsl =
     "varying vec4 vertex_color;"
     "varying vec2 tex_coord;"
@@ -122,6 +130,47 @@ static std::string text_fragment_glsl =
     "gl_FragColor = sampled * vertex_color;"
     "}";
 
+static std::string light_fragment =
+    "uniform vec2 object;"
+    "uniform vec2 resolution;"
+    "uniform float time;"
+    "uniform float radius;"
+
+    "void main()"
+    "{"
+    "float r = 2.0 * radius;"
+
+    "vec2 delta = vec2 (( gl_FragCoord.x - object.x ), ( "
+    "gl_FragCoord.y - (resolution.y -object.y )));"
+    "float distance = sqrt( delta.x * delta.x + delta.y * delta.y) / "
+    "sqrt(resolution.x * resolution.x + resolution.y * resolution. y);"
+    "float k = r / resolution.x;"
+
+    "vec4 light = vec4(1.0, 1.0, 0.8 + sin(time) / 5.0, pow(0.1, distance / "
+    "k) - 0.1);"
+    "gl_FragColor = light;"
+    "}";
+
+static std::string light_vertex =
+    "attribute vec3 position;"
+
+    "uniform mat4 transform;"
+
+    "void main()"
+    "{"
+    "gl_Position = transform * vec4(position, 1.0);"
+    "}";
+
+static std::string color_vertex =
+    "attribute vec3 position;"
+
+    "uniform mat4 transform;"
+
+    "void main()"
+    "{"
+    "gl_Position = transform * vec4(position, 1.0);"
+    "}";
+
 static std::string vertex_glsl =
     "attribute vec3 position;"
     "attribute vec2 texCoord;"
@@ -131,11 +180,10 @@ static std::string vertex_glsl =
 
     "uniform vec4 our_color;"
     "uniform mat4 transform;"
-    "uniform mat4 projection;"
 
     "void main()"
     "{"
-    "gl_Position = projection * transform * vec4(position, 1.0);"
+    "gl_Position = transform * vec4(position, 1.0);"
     "vertex_color = our_color;"
     "tex_coord = vec2(texCoord.x, 1.0 - texCoord.y);"
     "}";
@@ -207,8 +255,11 @@ engine::~engine() {
     SDL_Quit();
 }
 
-static int t_size;
+static int t_size, w_t_size;
 static int w_w, w_h;
+static int virtual_w = 0;
+static int virtual_h = 0;
+static int FPS;
 
 bool check_collision(instance* one,
                      instance* two)    // AABB - AABB collision
@@ -217,12 +268,16 @@ bool check_collision(instance* one,
     float precision = 0.1f;
 
     bool collisionX =
-        one->position.x + one->collision_box.x > two->position.x + precision &&
-        two->position.x + two->collision_box.x > one->position.x + precision;
+        one->position.x + one->collision_box_offset.x + one->collision_box.x >
+            two->position.x + two->collision_box_offset.x + precision &&
+        two->position.x + two->collision_box.x + two->collision_box_offset.x >
+            one->position.x + one->collision_box_offset.x + precision;
     // Collision y-axis?
     bool collisionY =
-        one->position.y - one->collision_box.y < two->position.y - precision &&
-        two->position.y - two->collision_box.y < one->position.y - precision;
+        one->position.y - one->collision_box_offset.y - one->collision_box.y <
+            two->position.y - two->collision_box_offset.y - precision &&
+        two->position.y - two->collision_box_offset.y - two->collision_box.y <
+            one->position.y - one->collision_box_offset.y - precision;
 
     return collisionX && collisionY;
 }
@@ -287,17 +342,21 @@ void instance::get_points() {
                             alpha, glm::vec3(0.0f, 0.0f, 1.0f));
 
     float pixel_precision = 1.0f;
-    mesh_points[0].x = 0;
-    mesh_points[0].y = 0;
+    mesh_points[0].x = 0 + collision_box_offset.x;
+    mesh_points[0].y = 0 - collision_box_offset.y;
 
-    mesh_points[1].x = 0;
-    mesh_points[1].y = -collision_box.y + pixel_precision;
+    mesh_points[1].x = 0 + collision_box_offset.x;
+    mesh_points[1].y =
+        -collision_box.y - collision_box_offset.y + pixel_precision;
 
-    mesh_points[2].x = collision_box.x - pixel_precision;
-    mesh_points[2].y = -collision_box.y + pixel_precision;
+    mesh_points[2].x =
+        collision_box.x + collision_box_offset.x - pixel_precision;
+    mesh_points[2].y =
+        -collision_box.y - collision_box_offset.y + pixel_precision;
 
-    mesh_points[3].x = collision_box.x - pixel_precision;
-    mesh_points[3].y = 0;
+    mesh_points[3].x =
+        collision_box.x + collision_box_offset.x - pixel_precision;
+    mesh_points[3].y = 0 - collision_box_offset.y;
 
     for (int i = 0; i < 4; i++) {
         glm::vec4 vector =
@@ -464,9 +523,17 @@ life_form::life_form(float x, float y, float z, int _speed, int size)
     speed = _speed;
 }
 
-instance::~instance() {}    // TODO something
+instance::~instance() {
+    data.clear();
+}    // TODO something
 
 life_form::~life_form() {}
+
+light::light() {
+    radius = t_size / 2.0f;
+}
+
+light::~light() {}    // TODO something
 
 class wall : public instance {
    private:
@@ -486,11 +553,12 @@ class engine_impl final : public engine {
     SDL_Window* window = nullptr;
     GLuint shader_program;
     GLuint text_shader_program;
+    GLuint light_program;
+    GLuint color_program;
+
+    GLfloat light_rendered = false;
 
     std::vector<float> vertex_buffer;
-
-    int virtual_w = 0;
-    int virtual_h = 0;
 
     int _x = 0, _y = 0;
 
@@ -576,14 +644,14 @@ class engine_impl final : public engine {
         w_h = displayMode.h;
         w_w = displayMode.w;
 
+        //        w_h = height;
+        //        w_w = width;
+
         std::cout << w_w << " " << w_h << std::endl;
 
         window = SDL_CreateWindow("Chlorine-5", SDL_WINDOWPOS_CENTERED,
-                                  SDL_WINDOWPOS_CENTERED, width, height,
+                                  SDL_WINDOWPOS_CENTERED, w_w, w_h,
                                   SDL_WINDOW_OPENGL);
-
-        w_h = height;
-        w_w = width;
 
         if (window == nullptr) {
             const char* err_message = SDL_GetError();
@@ -595,6 +663,8 @@ class engine_impl final : public engine {
 
         SDL_GLContext gl_context = SDL_GL_CreateContext(window);
         assert(gl_context != nullptr);
+
+        SDL_GL_SetSwapInterval(1);
 
         /* Openal */
 
@@ -676,13 +746,35 @@ class engine_impl final : public engine {
         glBindAttribLocation(text_shader_program, 0, "position");
         glBindAttribLocation(text_shader_program, 1, "texCoord");
 
+        GLuint light_vertex_shader =
+            compile_shader(light_vertex.c_str(), GL_VERTEX_SHADER);
+
+        GLuint light_fragment_shader =
+            compile_shader(light_fragment.c_str(), GL_FRAGMENT_SHADER);
+
+        light_program =
+            create_shader_program(light_vertex_shader, light_fragment_shader);
+
+        glBindAttribLocation(light_program, 0, "position");
+
+        GLuint color_vertex_shader =
+            compile_shader(color_vertex.c_str(), GL_VERTEX_SHADER);
+
+        GLuint color_fragment_shader =
+            compile_shader(color_fragment.c_str(), GL_FRAGMENT_SHADER);
+
+        color_program =
+            create_shader_program(color_vertex_shader, color_fragment_shader);
+
+        glBindAttribLocation(color_program, 0, "position");
+
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
 
-        glAlphaFunc(GL_GREATER, 0.03);
+        glAlphaFunc(GL_GREATER, 0.001);
         glEnable(GL_ALPHA_TEST);
 
         t_size = size;
@@ -701,6 +793,8 @@ class engine_impl final : public engine {
     void GL_swap_buffers() final { SDL_GL_SwapWindow(window); }
     void GL_clear_color() final {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        light_rendered = false;
         GL_CHECK();
     }
 
@@ -719,10 +813,14 @@ class engine_impl final : public engine {
             vertex_buffer.insert(vertex_buffer.end(), f);
     }
 
-    void set_virtual_pixel(int _w, int _h) final {
+    void set_virtual_world(int _w, int _h) final {
         virtual_w = _w;
         virtual_h = _h;
-    };
+    }
+
+    void snap_tile_to_screen_pixels(int screen_pixels) final {
+        w_t_size = screen_pixels;
+    }
 
     void draw(texture* text, camera* cam, instance* inst) final {
         glUseProgram(shader_program);
@@ -754,7 +852,6 @@ class engine_impl final : public engine {
         //            glGetUniformLocation(shader_program, "our_color");
         //        glUniform4f(vertexColorLocation, red, 0.2f, 0.0f, 1.0f);
 
-        float k = (float)w_w / w_h, scale = 0.5f;
         glm::mat4 transform;
 
         transform = glm::translate(transform, glm::vec3(-1.0f, 1.0f, 0.0f));
@@ -764,6 +861,8 @@ class engine_impl final : public engine {
 
         if (cam != nullptr) {
             cam->update_center();
+            //            float h_tiles = (float)virtual_h / t_size,
+            //                  w_tiles = (float)virtual_w / t_size;
             transform = glm::scale(
                 transform, glm::vec3((float)virtual_w / cam->width,
                                      (float)virtual_h / cam->height, 1.0f));
@@ -787,12 +886,6 @@ class engine_impl final : public engine {
         GLint transformLoc = glGetUniformLocation(shader_program, "transform");
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE,
                            glm::value_ptr(transform));
-
-        glm::mat4 projection;
-        GLint projectionLoc =
-            glGetUniformLocation(shader_program, "projection");
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE,
-                           glm::value_ptr(projection));
 
         GL_CHECK();
         glDrawArrays(GL_TRIANGLES, 0, vertex_buffer.size() / STRIDE_ELEMENTS);
@@ -916,15 +1009,7 @@ class engine_impl final : public engine {
             glUniformMatrix4fv(transformLoc, 1, GL_FALSE,
                                glm::value_ptr(transform));
 
-            glm::mat4 projection;
-            GLint projectionLoc =
-                glGetUniformLocation(shader_program, "projection");
-            glUniformMatrix4fv(projectionLoc, 1, GL_FALSE,
-                               glm::value_ptr(projection));
-
             e->tex->bind();
-
-            std::cout << e->tex->alpha << std::endl;
 
             GL_CHECK();
             glUniform1i(glGetUniformLocation(shader_program, "our_texture"), 0);
@@ -934,6 +1019,9 @@ class engine_impl final : public engine {
             GL_CHECK();
             e->update_data();
             std::vector<float> vertices = e->get_data();
+            //            for (float v : vertices)
+            //                std::cout << v << " ";
+            //            std::cout << std::endl;
 
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 5 * 6,
                             vertices.data());
@@ -954,6 +1042,94 @@ class engine_impl final : public engine {
                             w_w - e->position.x - e->size.x + e->offset,
                             MIN_DEPTH, vec3(1.0f, 0.0f, 0.0f));
         }
+    }
+
+    void render_light(light* source, camera* cam) {
+        if (cam == nullptr)
+            return;
+
+        GL_CHECK();
+        GLuint vbo;
+        glGenBuffers(1, &vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        GL_CHECK();
+        std::vector<float> data = quad_data;
+        for (int i = 0; i < 6 * 5; i += STRIDE_ELEMENTS)
+            data[i + 2] =
+                glm::clamp(source->position.z_index, MAX_DEPTH, MIN_DEPTH) /
+                2.0f / MAX_DEPTH;
+
+        glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(data[0]),
+                     data.data(), GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
+                              STRIDE_ELEMENTS * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(0);
+        GL_CHECK();
+
+        if (!light_rendered) {
+            glUseProgram(color_program);
+            glm::mat4 transform;
+            transform =
+                glm::translate(transform, glm::vec3(-1.0f, -1.0f, 0.0f));
+            transform = glm::scale(transform, glm::vec3(2.0f, 2.0f, 1.0f));
+            GLuint transform_loc =
+                glGetUniformLocation(color_program, "transform");
+            glUniformMatrix4fv(transform_loc, 1, GL_FALSE,
+                               glm::value_ptr(transform));
+
+            GLuint color_loc = glGetUniformLocation(color_program, "color");
+            glUniform4f(color_loc, 0.0, 0.0, 0.0, 0.4);
+
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+            light_rendered = true;
+        }
+
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+        glm::mat4 transform;
+        transform = glm::translate(transform, glm::vec3(-1.0f, -1.0f, 0.0f));
+        transform = glm::scale(transform, glm::vec3(2.0f, 2.0f, 1.0f));
+
+        glUseProgram(light_program);
+
+        GLuint transform_loc = glGetUniformLocation(light_program, "transform");
+        glUniformMatrix4fv(transform_loc, 1, GL_FALSE,
+                           glm::value_ptr(transform));
+
+        GLint resolution_pos =
+            glGetUniformLocation(light_program, "resolution");
+        glUniform2f(resolution_pos, virtual_w, virtual_h);
+
+        GLint time_pos = glGetUniformLocation(light_program, "time");
+        glUniform1f(time_pos, GL_time());
+
+        GLint radius_pos = glGetUniformLocation(light_program, "radius");
+        glUniform1f(radius_pos, source->radius * w_w / virtual_w * 2.0f);
+
+        GLint object_pos = glGetUniformLocation(light_program, "object");
+        glUniform2f(
+            object_pos,
+            (source->position.x - cam->get_center().x) * w_w / cam->width,
+            (source->position.y - cam->get_center().y +
+             source->radius * virtual_h / w_h * 2.0f) *
+                    w_h / cam->height -
+                w_h / 2);
+
+        //        for (int i = 0; i < 6 * 5; i += STRIDE_ELEMENTS)
+        //            data[i + 2] =
+        //                glm::clamp(MIN_DEPTH, MAX_DEPTH, MIN_DEPTH) / 2.0f /
+        //                MAX_DEPTH;
+        //
+        //        glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(data[0]),
+        //                     data.data(), GL_STATIC_DRAW);
+
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glUseProgram(0);
+        GL_CHECK();
+        glDeleteBuffers(1, &vbo);
+        GL_CHECK();
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     void CHL_exit() final {

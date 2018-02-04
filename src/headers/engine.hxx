@@ -162,6 +162,7 @@ class instance {
 
     float alpha = 0;
     point rotation_point = point(0, 0);
+    point collision_box_offset = point(0, 0);
     point collision_box;
     int selected_frame = 0;
     int selected_tileset = 0;
@@ -198,6 +199,16 @@ class instance {
     int prev_tileset;
 };
 
+class light {
+   public:
+    light();
+    virtual ~light();
+    float radius;
+    vertex_2d position;
+    vec3 color;
+    float brightness = 1;
+};
+
 class life_form : public instance {
    public:
     life_form(float x, float y, float z, int _speed, int s);
@@ -229,7 +240,7 @@ class ui_element : public instance {
     void update_data() override;
     font* f = nullptr;
     std::string text = "";
-    int offset = 100;
+    int offset = 70;
 };
 
 instance* create_wall(float x, float y, float z, int size);
@@ -306,7 +317,9 @@ class engine {
                              int z_pos,
                              vec3 color) = 0;
     virtual void render_ui(user_interface*) = 0;
-    virtual void set_virtual_pixel(int, int) = 0;
+    virtual void render_light(light*, camera*) = 0;
+    virtual void set_virtual_world(int, int) = 0;
+    virtual void snap_tile_to_screen_pixels(int) = 0;
     //    virtual bool load_texture(std::string) = 0;
     virtual event_type get_event_type() = 0;
 };
