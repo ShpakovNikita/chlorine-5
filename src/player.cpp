@@ -17,7 +17,7 @@ CHL::camera* main_camera;
 player::player(float x, float y, float z_index, int speed, int size)
     : life_form(x, y, z_index, speed, size) {
     // TODO Auto-generated constructor stub
-    health = 500;
+    health = 5;
     shooting_point = CHL::point(15, -8);
     selected_frame = 0;
 
@@ -217,6 +217,7 @@ void player::blink_to(const CHL::point& p) {
 void player::fire() {
     if (shoot_delay <= 0.0f && !blinking) {
         shoot_delay = 0.4f;
+        shooting_point = calculate_shooting_point(this, shooting_alpha);
         bullets.insert(bullets.end(), new bullet(position.x + shooting_point.x,
                                                  position.y + shooting_point.y,
                                                  0.0f, 4, 2, 0, 2));

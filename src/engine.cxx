@@ -1071,25 +1071,6 @@ class engine_impl final : public engine {
         glEnableVertexAttribArray(0);
         GL_CHECK();
 
-        if (!light_rendered) {
-            glUseProgram(color_program);
-
-            glm::mat4 transform;
-            transform =
-                glm::translate(transform, glm::vec3(-1.0f, -1.0f, 0.0f));
-            transform = glm::scale(transform, glm::vec3(2.0f, 2.0f, 1.0f));
-            GLuint transform_loc =
-                glGetUniformLocation(color_program, "transform");
-            glUniformMatrix4fv(transform_loc, 1, GL_FALSE,
-                               glm::value_ptr(transform));
-
-            GLuint color_loc = glGetUniformLocation(color_program, "color");
-            glUniform4f(color_loc, 0.0, 0.0, 0.0, 0.4);
-
-            glDrawArrays(GL_TRIANGLES, 0, 6);
-            light_rendered = true;
-        }
-
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
         glm::mat4 transform;

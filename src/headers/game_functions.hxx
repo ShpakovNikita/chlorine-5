@@ -24,6 +24,13 @@ inline float calculate_alpha_precision(float a) {
     return a;
 }
 
+inline CHL::point calculate_shooting_point(CHL::instance* e, float a) {
+    float x = e->collision_box.x / 2.0f, y = -e->collision_box.y / 2.0f;
+    x += cos(a) * e->collision_box.x / 2.0f;
+    y -= sin(a) * e->collision_box.y / 2.0f;
+    return CHL::point(x, y);
+}
+
 template <typename T>
 inline int sign(T val) {
     return (T(0) < val) - (val < T(0));

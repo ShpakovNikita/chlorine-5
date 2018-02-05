@@ -49,6 +49,8 @@ enemy::enemy(float x, float y, float z, int _speed, int s)
 enemy::~enemy() {
     // TODO Auto-generated destructor stub
     std::cerr << "Enemy crushed!" << std::endl;
+    if (moving)
+        CHL::stop_s(steps_source);
 }
 
 void pathfind(enemy* e) {
@@ -65,7 +67,7 @@ void pathfind(enemy* e) {
     //              << e->destination.y / TILE_SIZE << std::endl;
 
     if (s >= 1) {
-        e->step_dest.y = (o_buff[0] / x_size) * TILE_SIZE - 4 + TILE_SIZE;
+        e->step_dest.y = (o_buff[0] / x_size) * TILE_SIZE - 2 + TILE_SIZE;
         e->step_dest.x =
             (o_buff[0] - x_size * (o_buff[0] / x_size)) * TILE_SIZE;
     }
@@ -86,7 +88,6 @@ float change_sprite(enemy* e) {
                                  e->position.y);
 
     if (a > (3 * M_PI_2 + M_PI_4) || a <= M_PI_4) {
-        e->shooting_point = CHL::point(15, -8);
         e->light_offset.x = 2;
         e->light_offset.y = 0;
         if (!e->moving) {
@@ -96,18 +97,16 @@ float change_sprite(enemy* e) {
             e->selected_tileset = 1;
         }
     } else if (a > M_PI_4 && a <= M_PI_2 + M_PI_4) {
-        e->shooting_point = CHL::point(e->size.x / 2 + 4, -e->size.x);
         e->light_offset.x = 0;
         e->light_offset.y = 0;
         if (!e->moving)
             e->selected_frame = 0;
         else {
             e->light_offset.y = -2;
-            e->light_offset.x = 1;
+            e->light_offset.x = 2;
             e->selected_tileset = 4;
         }
     } else if (a > M_PI_2 + M_PI_4 && a < M_PI + M_PI_4) {
-        e->shooting_point = CHL::point(1, -16);
         e->light_offset.x = -2;
         e->light_offset.y = 0;
         if (!e->moving)
@@ -117,14 +116,13 @@ float change_sprite(enemy* e) {
             e->selected_tileset = 2;
         }
     } else {
-        e->shooting_point = CHL::point(e->size.x / 2 - 4, -4);
         e->light_offset.x = 0;
         e->light_offset.y = 0;
         if (!e->moving)
             e->selected_frame = 1;
         else {
             e->light_offset.y = -2;
-            e->light_offset.x = 1;
+            e->light_offset.x = 2;
             e->selected_tileset = 3;
         }
     }
@@ -200,14 +198,12 @@ void enemy::move(float dt) {
 
     if ((delta_x != 0 || delta_y != 0) && !moving) {
         moving = true;
-        std::cout << "play anim" << std::endl;
         loop_animation(0.04f);
         CHL::play_always_s(steps_source);
     }
 
     if (delta_x == 0 && delta_y == 0 && moving) {
         moving = false;
-        std::cout << "stop anim" << std::endl;
         loop_animation(0.0f);
         selected_tileset = 0;
         CHL::stop_s(steps_source);
@@ -221,6 +217,7 @@ void enemy::move(float dt) {
 
     update_points();
     update();
+    position.z_index = position.y;
     visor_light->position.x = position.x + 6 + light_offset.x;
     visor_light->position.y = position.y - 6 + light_offset.y;
     if (shoot_delay > 0)
@@ -230,6 +227,8 @@ void enemy::move(float dt) {
 void enemy::fire() {
     if (shoot_delay <= 0.0f) {
         shoot_delay = 1;
+        shooting_point = calculate_shooting_point(this, shooting_alpha);
+
         bullets.insert(bullets.end(), new bullet(position.x + shooting_point.x,
                                                  position.y + shooting_point.y,
                                                  0.0f, 4, 2, 0, 2));

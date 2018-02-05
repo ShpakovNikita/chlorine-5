@@ -22,6 +22,8 @@
 #include "headers/collision_solves.hxx"
 #include "headers/player.h"
 
+#include "headers/display.h"
+
 #include "headers/game_constants.h"
 
 enum class mode { draw, look, idle };
@@ -62,22 +64,24 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
     user_interface* ui = new user_interface();
     user_interface* load_screen = new user_interface();
-    load_screen->add_instance(new ui_element(100, 200, MIN_DEPTH, 200, 40,
+    load_screen->add_instance(new ui_element(0, WINDOW_HEIGHT, MIN_DEPTH,
+                                             WINDOW_WIDTH, WINDOW_HEIGHT,
                                              manager.get_texture("load")));
-    ui_element* health_bar = new ui_element(100, 200, MIN_DEPTH, 200, 40,
+    ui_element* health_bar = new ui_element(80, 50, MIN_DEPTH, 200, 40,
                                             manager.get_texture("health"));
     health_bar->tilesets_in_texture = 6;
     health_bar->selected_tileset = 5;
-    ui->add_instance(new ui_element(
-        400, WINDOW_HEIGHT - 100, MIN_DEPTH, 1000, 350,
-        manager.get_texture("dialog"),
-        "When the world is doomed, there is only one hope... And you have to "
-        "be it. Save this city, and all your crimes will be forgiven.",
-        f));
+    //    ui->add_instance(new ui_element(
+    //        400, WINDOW_HEIGHT - 100, MIN_DEPTH, 1000, 350,
+    //        manager.get_texture("dialog"),
+    //        "When the world is doomed, there is only one hope... And you have
+    //        to " "be it. Save this city, and all your crimes will be
+    //        forgiven.", f));
 
     ui->add_instance(health_bar);
-    ui->add_instance(new ui_element(60, WINDOW_HEIGHT - 100, MIN_DEPTH, 350,
-                                    500, manager.get_texture("icon")));
+    //    ui->add_instance(new ui_element(60, WINDOW_HEIGHT - 100, MIN_DEPTH,
+    //    350,
+    //                                    500, manager.get_texture("icon")));
 
     DungeonGenerator generator(x_size, y_size);
     auto map = generator.Generate();
@@ -173,6 +177,8 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
     float prev_frame = eng->GL_time();
     bool quit = false;
+    bool win = false;
+    bool loose = false;
 
     std::vector<special_effect*> se;
 
@@ -181,33 +187,30 @@ int main(int /*argc*/, char* /*argv*/ []) {
     /* animation test */
     instance* animated_block =
         new instance(5 * TILE_SIZE - 4, 5 * TILE_SIZE + TILE_SIZE - 4,
-                     MIN_DEPTH, TILE_SIZE + 8, TILE_SIZE + 16);
+                     MIN_DEPTH, TILE_SIZE + 8, TILE_SIZE + 8);
     animated_block->frames_in_animation = 11;
     animated_block->frames_in_texture = 11;
     animated_block->loop_animation(0.06f);
 
     /* load screen */
-    //    eng->GL_clear_color();
-    //    eng->render_ui(load_screen);
-    //    eng->render_text("LOADING.", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT -
-    //    100, 0,
-    //                     MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
-    //    eng->GL_swap_buffers();
-    //    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    //    eng->GL_clear_color();
-    //    eng->render_ui(load_screen);
-    //    eng->render_text("LOADING..", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT -
-    //    100, 0,
-    //                     MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
-    //    eng->GL_swap_buffers();
-    //    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    //    eng->GL_clear_color();
-    //    eng->render_ui(load_screen);
-    //    eng->render_text("LOADING...", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT -
-    //    100,
-    //                     0, MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
-    //    eng->GL_swap_buffers();
-    //    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    eng->GL_clear_color();
+    eng->render_ui(load_screen);
+    eng->render_text("LOADING.", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT - 100, 0,
+                     MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
+    eng->GL_swap_buffers();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    eng->GL_clear_color();
+    eng->render_ui(load_screen);
+    eng->render_text("LOADING..", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT - 100, 0,
+                     MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
+    eng->GL_swap_buffers();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    eng->GL_clear_color();
+    eng->render_ui(load_screen);
+    eng->render_text("LOADING...", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT - 100,
+                     0, MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
+    eng->GL_swap_buffers();
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     /* running game loop */
     while (!quit) {
         float delta_time = (eng->GL_time() - prev_frame);
@@ -286,6 +289,8 @@ int main(int /*argc*/, char* /*argv*/ []) {
                         if (--entities[j]->health <= 0) {
                             hero->blink_to(point(entities[j]->position.x,
                                                  entities[j]->position.y));
+                            hero->health = std::min(hero->health + 1, 5);
+                            health_bar->selected_tileset = hero->health;
                             delete *(entities.begin() + j);
                             entities.erase(entities.begin() + j);
                             bool exit = true;
@@ -295,7 +300,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
                                 }
                             }
                             if (exit)
-                                quit = true;
+                                win = true;
                         }
 
                         se.insert(se.end(),
@@ -319,7 +324,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
                                       MIN_DEPTH, TILE_SIZE / 2 + 2));
                         (*(se.end() - 1))->frames_in_texture = 8;
                         if (--entities[j]->health <= 0) {
-                            quit = true;
+                            loose = true;
                         }
                         j = entities.size();
                         smth_destroyed = true;
@@ -402,7 +407,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
         if (!se.empty())
             eng->draw(manager.get_texture("explosion"), main_camera, nullptr);
 
-        //        eng->render_ui(ui);
+        eng->render_ui(ui);
         for (auto quad = non_material_quads.begin();
              quad != non_material_quads.end();) {
             (*quad)->update_data();
@@ -425,6 +430,16 @@ int main(int /*argc*/, char* /*argv*/ []) {
         animated_block->update();
         eng->add_object(animated_block, main_camera);
         eng->draw(manager.get_texture("obelisk"), main_camera, nullptr);
+
+        if (win) {
+            display::render_screen(eng.get(), manager.get_texture("load"), 5.0f,
+                                   manager.get_sound("blink_sound"));
+            break;
+        } else if (loose) {
+            display::render_screen(eng.get(), manager.get_texture("load"), 5.0f,
+                                   manager.get_sound("blink_sound"));
+            break;
+        }
 
         eng->GL_swap_buffers();
 
