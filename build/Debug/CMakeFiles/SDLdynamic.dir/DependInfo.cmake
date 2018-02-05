@@ -5,6 +5,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/bullet.cpp" "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/CMakeFiles/SDLdynamic.dir/bullet.cpp.obj"
+  "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/display.cpp" "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/CMakeFiles/SDLdynamic.dir/display.cpp.obj"
   "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/dungeon.cpp" "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj"
   "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/enemy.cpp" "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/CMakeFiles/SDLdynamic.dir/enemy.cpp.obj"
   "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/engine.cxx" "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/CMakeFiles/SDLdynamic.dir/engine.cxx.obj"

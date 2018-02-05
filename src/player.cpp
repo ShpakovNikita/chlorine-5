@@ -29,6 +29,7 @@ player::player(float x, float y, float z_index, int speed, int size)
     frames_in_animation = 12;
     tilesets_in_texture = 5;
 
+    collision_box.y -= 2;
     light_offset = CHL::point(0, 0);
     visor_light =
         new CHL::light(5.0f, CHL::point(0, 0), CHL::vec3(0.0f, 0.8f, 0.1f));

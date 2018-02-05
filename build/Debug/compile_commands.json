@@ -58,5 +58,10 @@
   "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
   "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\font.cxx.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\font.cxx",
   "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/font.cxx"
+},
+{
+  "directory": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug",
+  "command": "C:\\mingw-w64\\mingw64\\bin\\g++.exe    -g   -std=gnu++11 -o CMakeFiles\\SDLdynamic.dir\\display.cpp.obj -c C:\\Users\\Shaft\\Documents\\GitHub\\Chlorine-5\\src\\display.cpp",
+  "file": "C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/display.cpp"
 }
 ]

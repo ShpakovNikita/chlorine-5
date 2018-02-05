@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/SDLdynamic.dir/player.cpp.obj"
   "CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj"
   "CMakeFiles/SDLdynamic.dir/font.cxx.obj"
+  "CMakeFiles/SDLdynamic.dir/display.cpp.obj"
   "SDLdynamic.pdb"
   "SDLdynamic.exe"
   "SDLdynamic.exe.manifest"

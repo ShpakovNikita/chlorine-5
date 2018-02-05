@@ -14,8 +14,12 @@ namespace display {
 
 void render_screen(CHL::engine* eng,
                    CHL::texture* tex,
-                   float time,
-                   CHL::sound* snd /*nullptr for not playing anything*/);
+                   CHL::sound* snd /*nullptr for not playing anything*/,
+                   float x,
+                   float y,
+                   const std::string& text,
+                   CHL::font* f,
+                   const CHL::vec3& color);
 }
 
 #endif /* HEADERS_DISPLAY_H_ */

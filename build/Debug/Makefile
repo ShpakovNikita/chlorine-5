@@ -149,6 +149,33 @@ bullet.cpp.s:
 	$(MAKE) -f CMakeFiles\SDLdynamic.dir\build.make CMakeFiles/SDLdynamic.dir/bullet.cpp.s
 .PHONY : bullet.cpp.s
 
+display.obj: display.cpp.obj
+
+.PHONY : display.obj
+
+# target to build an object file
+display.cpp.obj:
+	$(MAKE) -f CMakeFiles\SDLdynamic.dir\build.make CMakeFiles/SDLdynamic.dir/display.cpp.obj
+.PHONY : display.cpp.obj
+
+display.i: display.cpp.i
+
+.PHONY : display.i
+
+# target to preprocess a source file
+display.cpp.i:
+	$(MAKE) -f CMakeFiles\SDLdynamic.dir\build.make CMakeFiles/SDLdynamic.dir/display.cpp.i
+.PHONY : display.cpp.i
+
+display.s: display.cpp.s
+
+.PHONY : display.s
+
+# target to generate assembly for a file
+display.cpp.s:
+	$(MAKE) -f CMakeFiles\SDLdynamic.dir\build.make CMakeFiles/SDLdynamic.dir/display.cpp.s
+.PHONY : display.cpp.s
+
 dungeon.obj: dungeon.cpp.obj
 
 .PHONY : dungeon.obj
@@ -458,6 +485,9 @@ help:
 	@echo ... bullet.obj
 	@echo ... bullet.i
 	@echo ... bullet.s
+	@echo ... display.obj
+	@echo ... display.i
+	@echo ... display.s
 	@echo ... dungeon.obj
 	@echo ... dungeon.i
 	@echo ... dungeon.s

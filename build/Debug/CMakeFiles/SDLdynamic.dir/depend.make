@@ -5,6 +5,13 @@ CMakeFiles/SDLdynamic.dir/bullet.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlori
 CMakeFiles/SDLdynamic.dir/bullet.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/bullet.h
 CMakeFiles/SDLdynamic.dir/bullet.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
+CMakeFiles/SDLdynamic.dir/display.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/display.cpp
+CMakeFiles/SDLdynamic.dir/display.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/bullet.h
+CMakeFiles/SDLdynamic.dir/display.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/display.h
+CMakeFiles/SDLdynamic.dir/display.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
+CMakeFiles/SDLdynamic.dir/display.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_constants.h
+CMakeFiles/SDLdynamic.dir/display.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/resource_manager.h
+
 CMakeFiles/SDLdynamic.dir/dungeon.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/dungeon.cpp
 
 CMakeFiles/SDLdynamic.dir/enemy.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/enemy.cpp
@@ -27,6 +34,7 @@ CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine
 CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/autotile.hxx
 CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/bullet.h
 CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/collision_solves.hxx
+CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/display.h
 CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/enemy.h
 CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 CMakeFiles/SDLdynamic.dir/game.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/game_constants.h

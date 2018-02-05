@@ -31,6 +31,7 @@ enemy::enemy(float x, float y, float z, int _speed, int s)
     step_dest.y = position.y;
 
     collision_box.x = TILE_SIZE / 2.0f + 2.0f;
+    collision_box.y -= 2;
 
     fire_source = CHL::create_new_source(manager.get_sound("shot_sound"), this);
     steps_source =

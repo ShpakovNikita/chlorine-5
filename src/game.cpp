@@ -52,12 +52,14 @@ int main(int /*argc*/, char* /*argv*/ []) {
     manager.add_texture("dialog", new texture("textures/dialog.png"));
     manager.add_texture("health", new texture("textures/health.png"));
     manager.add_texture("load", new texture("textures/load.png"));
-    manager.add_texture("icon", new texture("textures/icon.png"));
+    manager.add_texture("win", new texture("textures/win.png"));
+    manager.add_texture("loose", new texture("textures/loose.png"));
 
     manager.add_sound("start_music", new sound(SND_FOLDER + START_MUSIC));
     manager.add_sound("move_sound", new sound(SND_FOLDER + MOVE_SOUND));
     manager.add_sound("shot_sound", new sound(SND_FOLDER + "shot.wav"));
     manager.add_sound("blink_sound", new sound(SND_FOLDER + "blink.wav"));
+    manager.add_sound("quit_sound", new sound(SND_FOLDER + "quit.wav"));
 
     manager.get_sound("start_music")->volume(0.6f);
     manager.get_sound("start_music")->play_always();
@@ -160,11 +162,11 @@ int main(int /*argc*/, char* /*argv*/ []) {
         int x = rand() % x_size;
         int y = rand() % y_size;
         if (*(tile_set.begin() + y * x_size + x) != 1) {
-            entities.insert(entities.end(),
-                            new enemy(x * TILE_SIZE, y * TILE_SIZE + TILE_SIZE,
-                                      0.0f, P_SPEED, TILE_SIZE));
-            //            (*(entities.end() - 1))->collision_box.y = TILE_SIZE /
-            //            2;
+            entities.insert(
+                entities.end(),
+                new enemy(x * TILE_SIZE, y * TILE_SIZE + TILE_SIZE - 2, 0.0f,
+                          P_SPEED, TILE_SIZE));
+
             dynamic_cast<enemy*>(*(entities.end() - 1))->map = map_grid_pf;
             dynamic_cast<enemy*>(*(entities.end() - 1))->destination.x =
                 hero->position.x;
@@ -432,12 +434,18 @@ int main(int /*argc*/, char* /*argv*/ []) {
         eng->draw(manager.get_texture("obelisk"), main_camera, nullptr);
 
         if (win) {
-            display::render_screen(eng.get(), manager.get_texture("load"), 5.0f,
-                                   manager.get_sound("blink_sound"));
+            display::render_screen(eng.get(), manager.get_texture("win"),
+                                   manager.get_sound("quit_sound"),
+                                   WINDOW_WIDTH / 2 - 400, WINDOW_HEIGHT / 2,
+                                   "THE HOST HAS BEEN VANISHED", f,
+                                   vec3(0.325f, 0.196f, 0.713f));
             break;
         } else if (loose) {
-            display::render_screen(eng.get(), manager.get_texture("load"), 5.0f,
-                                   manager.get_sound("blink_sound"));
+            display::render_screen(
+                eng.get(), manager.get_texture("loose"),
+                manager.get_sound("quit_sound"), WINDOW_WIDTH / 2 - 300,
+                WINDOW_HEIGHT / 2 - 50, "THE HOPE HAS BEEN LOST", f,
+                vec3(1.0f, 0.0f, 0.0f));
             break;
         }
 
