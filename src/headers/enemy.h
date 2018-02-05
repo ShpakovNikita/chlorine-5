@@ -29,6 +29,7 @@ class enemy : public CHL::life_form {
 
     int* map;
     float shooting_alpha;
+    CHL::light* visor_light;
 
     void move(float) override;
 
@@ -41,9 +42,11 @@ class enemy : public CHL::life_form {
     friend void pathfind(enemy* e);
 
    private:
+    bool moving = false;
     float shoot_delay = 0;
     void (*state)(enemy*);
     CHL::point step_dest;
+    CHL::point light_offset;
     float delta_time;
 
     uint32_t fire_source = 0;

@@ -135,6 +135,7 @@ static std::string light_fragment =
     "uniform vec2 resolution;"
     "uniform float time;"
     "uniform float radius;"
+    "uniform vec3 color;"
 
     "void main()"
     "{"
@@ -146,7 +147,7 @@ static std::string light_fragment =
     "sqrt(resolution.x * resolution.x + resolution.y * resolution. y);"
     "float k = r / resolution.x;"
 
-    "vec4 light = vec4(1.0, 1.0, 0.8 + sin(time) / 5.0, pow(0.1, distance / "
+    "vec4 light = vec4(color.xyz, pow(0.1, distance / "
     "k) - 0.1);"
     "gl_FragColor = light;"
     "}";
@@ -529,8 +530,11 @@ instance::~instance() {
 
 life_form::~life_form() {}
 
-light::light() {
-    radius = t_size / 2.0f;
+light::light(float rad, point pos, vec3 col) {
+    radius = rad;
+    position = pos;
+    color = col;
+    std::cout << col.x << col.y << col.z << std::endl;
 }
 
 light::~light() {}    // TODO something
@@ -1054,10 +1058,10 @@ class engine_impl final : public engine {
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         GL_CHECK();
         std::vector<float> data = quad_data;
+
         for (int i = 0; i < 6 * 5; i += STRIDE_ELEMENTS)
             data[i + 2] =
-                glm::clamp(source->position.z_index, MAX_DEPTH, MIN_DEPTH) /
-                2.0f / MAX_DEPTH;
+                glm::clamp(MAX_DEPTH, MAX_DEPTH, MIN_DEPTH) / 2.0f / MAX_DEPTH;
 
         glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(data[0]),
                      data.data(), GL_STATIC_DRAW);
@@ -1069,6 +1073,7 @@ class engine_impl final : public engine {
 
         if (!light_rendered) {
             glUseProgram(color_program);
+
             glm::mat4 transform;
             transform =
                 glm::translate(transform, glm::vec3(-1.0f, -1.0f, 0.0f));
@@ -1116,13 +1121,9 @@ class engine_impl final : public engine {
                     w_h / cam->height -
                 w_h / 2);
 
-        //        for (int i = 0; i < 6 * 5; i += STRIDE_ELEMENTS)
-        //            data[i + 2] =
-        //                glm::clamp(MIN_DEPTH, MAX_DEPTH, MIN_DEPTH) / 2.0f /
-        //                MAX_DEPTH;
-        //
-        //        glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(data[0]),
-        //                     data.data(), GL_STATIC_DRAW);
+        GLuint color_loc = glGetUniformLocation(light_program, "color");
+        glUniform3f(color_loc, source->color.x, source->color.y,
+                    source->color.z);
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glUseProgram(0);

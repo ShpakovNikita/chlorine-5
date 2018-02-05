@@ -30,10 +30,20 @@ enemy::enemy(float x, float y, float z, int _speed, int s)
     step_dest.x = position.x;
     step_dest.y = position.y;
 
+    collision_box.x = TILE_SIZE / 2.0f + 2.0f;
+
     fire_source = CHL::create_new_source(manager.get_sound("shot_sound"), this);
     steps_source =
         CHL::create_new_source(manager.get_sound("move_sound"), this);
-    //    CHL::play_always_s(steps_source);
+    CHL::pitch_s(steps_source, 1 + (rand() % 100 - 50) / 300.0f);
+
+    visor_light =
+        new CHL::light(5.0f, CHL::point(0, 0), CHL::vec3(0.9, 0.0f, 0.1f));
+    light_offset = CHL::point(0, 0);
+
+    frames_in_texture = 12;
+    frames_in_animation = 12;
+    tilesets_in_texture = 5;
 }
 
 enemy::~enemy() {
@@ -77,16 +87,46 @@ float change_sprite(enemy* e) {
 
     if (a > (3 * M_PI_2 + M_PI_4) || a <= M_PI_4) {
         e->shooting_point = CHL::point(15, -8);
-        e->selected_frame = 0;
+        e->light_offset.x = 2;
+        e->light_offset.y = 0;
+        if (!e->moving) {
+            e->selected_frame = 3;
+        } else {
+            e->light_offset.x = 4;
+            e->selected_tileset = 1;
+        }
     } else if (a > M_PI_4 && a <= M_PI_2 + M_PI_4) {
         e->shooting_point = CHL::point(e->size.x / 2 + 4, -e->size.x);
-        e->selected_frame = 3;
+        e->light_offset.x = 0;
+        e->light_offset.y = 0;
+        if (!e->moving)
+            e->selected_frame = 0;
+        else {
+            e->light_offset.y = -2;
+            e->light_offset.x = 1;
+            e->selected_tileset = 4;
+        }
     } else if (a > M_PI_2 + M_PI_4 && a < M_PI + M_PI_4) {
         e->shooting_point = CHL::point(1, -16);
-        e->selected_frame = 1;
+        e->light_offset.x = -2;
+        e->light_offset.y = 0;
+        if (!e->moving)
+            e->selected_frame = 2;
+        else {
+            e->light_offset.x = 0;
+            e->selected_tileset = 2;
+        }
     } else {
         e->shooting_point = CHL::point(e->size.x / 2 - 4, -4);
-        e->selected_frame = 2;
+        e->light_offset.x = 0;
+        e->light_offset.y = 0;
+        if (!e->moving)
+            e->selected_frame = 1;
+        else {
+            e->light_offset.y = -2;
+            e->light_offset.x = 1;
+            e->selected_tileset = 3;
+        }
     }
     return a;
 }
@@ -153,9 +193,36 @@ void smart_move(enemy* e) {
 
 void enemy::move(float dt) {
     delta_time = dt;
+    delta_x = 0;
+    delta_y = 0;
 
     state(this);
+
+    if ((delta_x != 0 || delta_y != 0) && !moving) {
+        moving = true;
+        std::cout << "play anim" << std::endl;
+        loop_animation(0.04f);
+        CHL::play_always_s(steps_source);
+    }
+
+    if (delta_x == 0 && delta_y == 0 && moving) {
+        moving = false;
+        std::cout << "stop anim" << std::endl;
+        loop_animation(0.0f);
+        selected_tileset = 0;
+        CHL::stop_s(steps_source);
+    }
+
+    CHL::set_pos_s(steps_source, CHL::vec3(position.x, position.y, 0.0f));
+    float gain = 0.75 * CHL::calculate_gain(
+                            CHL::gain_algorithm::linear_distance, steps_source);
+
+    CHL::set_volume_s(steps_source, gain);
+
     update_points();
+    update();
+    visor_light->position.x = position.x + 6 + light_offset.x;
+    visor_light->position.y = position.y - 6 + light_offset.y;
     if (shoot_delay > 0)
         shoot_delay -= dt;
 }

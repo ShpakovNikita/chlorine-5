@@ -36,12 +36,12 @@ int main(int /*argc*/, char* /*argv*/ []) {
     eng->snap_tile_to_screen_pixels(1920 / 15.0f);
 
     font* f = new font("fonts/INVASION2000.ttf");
-    light* l = new light();
 
     /* loading textures */
 
     manager.add_texture("brick", new texture("textures/test.png"));
     manager.add_texture("hero", new texture("textures/hero.png"));
+    manager.add_texture("enemy", new texture("textures/enemy.png"));
     manager.add_texture("tank", new texture("textures/tank.png"));
     manager.add_texture("floor", new texture("textures/tiles.png"));
     manager.add_texture("bullet", new texture("textures/bullet.png"));
@@ -56,7 +56,9 @@ int main(int /*argc*/, char* /*argv*/ []) {
     manager.add_sound("move_sound", new sound(SND_FOLDER + MOVE_SOUND));
     manager.add_sound("shot_sound", new sound(SND_FOLDER + "shot.wav"));
     manager.add_sound("blink_sound", new sound(SND_FOLDER + "blink.wav"));
-    //    manager.get_sound("start_music")->play_always();
+
+    manager.get_sound("start_music")->volume(0.6f);
+    manager.get_sound("start_music")->play_always();
 
     user_interface* ui = new user_interface();
     user_interface* load_screen = new user_interface();
@@ -76,12 +78,6 @@ int main(int /*argc*/, char* /*argv*/ []) {
     ui->add_instance(health_bar);
     ui->add_instance(new ui_element(60, WINDOW_HEIGHT - 100, MIN_DEPTH, 350,
                                     500, manager.get_texture("icon")));
-
-    for (auto e : ui->user_interface_elements)
-        if (e == health_bar)
-            std::cout << "true" << std::endl;
-        else
-            std::cout << "false" << std::endl;
 
     DungeonGenerator generator(x_size, y_size);
     auto map = generator.Generate();
@@ -154,7 +150,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
     int map_grid_pf[x_size * y_size];
     int count = 0;
-    int dest = 0;
+    int dest = 5;
 
     while (count < dest) {
         int x = rand() % x_size;
@@ -162,8 +158,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
         if (*(tile_set.begin() + y * x_size + x) != 1) {
             entities.insert(entities.end(),
                             new enemy(x * TILE_SIZE, y * TILE_SIZE + TILE_SIZE,
-                                      0.0f, P_SPEED - 17, TILE_SIZE));
-            (*(entities.end() - 1))->frames_in_texture = 4;
+                                      0.0f, P_SPEED, TILE_SIZE));
             //            (*(entities.end() - 1))->collision_box.y = TILE_SIZE /
             //            2;
             dynamic_cast<enemy*>(*(entities.end() - 1))->map = map_grid_pf;
@@ -215,7 +210,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
     //    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     /* running game loop */
     while (!quit) {
-        float delta_time = eng->GL_time() - prev_frame;
+        float delta_time = (eng->GL_time() - prev_frame);
         prev_frame = eng->GL_time();
         event e;
 
@@ -364,22 +359,10 @@ int main(int /*argc*/, char* /*argv*/ []) {
         /* draw sprites */
 
         eng->GL_clear_color();
-        //        eng->render_text(
-        //            "KUNG FURY!!!!!!!!!! Class aptent taciti sociosqu ad
-        //            litora " "torquent per conubia nostra, per inceptos
-        //            himenaeos. Donec orci" "risus, dignissim vitae dolor eu,
-        //            vehicula sodales neque. Ut et " "efficitur neque. Quisque
-        //            sed finibus sem, sed laoreet metus. " "Donec tincidunt ut
-        //            neque a fringilla. Donec bibendum, enim et " "condimentum
-        //            lobortis, velit nunc semper magna, ut malesuada nibh"
-        //            "ipsum et diam. Curabitur aliquam, orci dictum congue
-        //            sodales, " "elit diam mollis orci, vel eleifend neque
-        //            tortor vitae felis. " "Morbi suscipit vel ipsum consequat
-        //            fermentum.", f, 400, 100, 400, MIN_DEPTH, vec3(1.0f, 0.0f,
-        //            0.0f));
 
         for (auto tile : floor)
             eng->add_object(tile, main_camera);
+        //        std::cout << eng->GL_time() - prev_frame << std::endl;
 
         if (!floor.empty())
             eng->draw(manager.get_texture("floor"), main_camera, nullptr);
@@ -402,11 +385,14 @@ int main(int /*argc*/, char* /*argv*/ []) {
         eng->draw(manager.get_texture("hero"), main_camera, nullptr);
 
         for (auto e : entities) {
-            if (dynamic_cast<enemy*>(e) != nullptr)
+            enemy* cast = dynamic_cast<enemy*>(e);
+            if (cast != nullptr) {
+                eng->render_light(cast->visor_light, main_camera);
                 eng->add_object(e, main_camera);
+            }
         }
         if (!entities.empty())
-            eng->draw(manager.get_texture("tank"), main_camera, nullptr);
+            eng->draw(manager.get_texture("enemy"), main_camera, nullptr);
 
         for (auto effect : se) {
             effect->update_frame();
@@ -431,10 +417,10 @@ int main(int /*argc*/, char* /*argv*/ []) {
             ++quad;
         }
 
-        l->position.x = hero->position.x + 6;
-        l->position.y = hero->position.y - 6;
-        l->position.z_index = hero->position.z_index - 1;
-        eng->render_light(l, main_camera);
+        //        std::cout << "-----\n" << eng->GL_time() - prev_frame <<
+        //        std::endl;
+        eng->render_light(hero->visor_light, main_camera);
+        //        std::cout << eng->GL_time() - prev_frame << std::endl;
 
         animated_block->update();
         eng->add_object(animated_block, main_camera);
@@ -446,10 +432,10 @@ int main(int /*argc*/, char* /*argv*/ []) {
         float t = (eng->GL_time() - prev_frame) * 1000;
 
         if (t > 1000 / FPS)
-            std::cerr << "freeze" << std::endl;
-        if (t < 1000 / FPS)
-            std::this_thread::sleep_for(
-                std::chrono::milliseconds(1000 / FPS - (int)t));
+            //            std::cerr << "freeze" << std::endl;
+            if (t < 1000 / FPS)
+                std::this_thread::sleep_for(
+                    std::chrono::milliseconds(1000 / FPS - (int)t));
     }
 
     eng->CHL_exit();

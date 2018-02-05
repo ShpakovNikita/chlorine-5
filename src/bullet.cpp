@@ -24,7 +24,7 @@ bullet::bullet(float x,
 }
 
 bullet::~bullet() {
-    std::cerr << "Destroyed bullet!" << std::endl;
+    //    std::cerr << "Destroyed bullet!" << std::endl;
 }
 
 void bullet::move(float dt) {

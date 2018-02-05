@@ -29,6 +29,10 @@ player::player(float x, float y, float z_index, int speed, int size)
     frames_in_animation = 12;
     tilesets_in_texture = 5;
 
+    light_offset = CHL::point(0, 0);
+    visor_light =
+        new CHL::light(5.0f, CHL::point(0, 0), CHL::vec3(0.0f, 0.8f, 0.1f));
+
     steps_source =
         CHL::create_new_source(manager.get_sound("move_sound"), this);
     blink_source =
@@ -67,6 +71,7 @@ float change_sprite(player* p, change_mode mode) {
 
     if (a > (3 * M_PI_2 + M_PI_4) || a <= M_PI_4) {
         p->shooting_point = CHL::point(15, -8);
+        p->light_offset.x = 2;
         if (!p->moving) {
             if (mode == change_mode::blink) {
                 p->selected_tileset = 1;
@@ -76,6 +81,7 @@ float change_sprite(player* p, change_mode mode) {
         }
     } else if (a > M_PI_4 && a <= M_PI_2 + M_PI_4) {
         p->shooting_point = CHL::point(p->size.x / 2 + 4, -p->size.x);
+        p->light_offset.x = 0;
         if (!p->moving) {
             if (mode == change_mode::blink) {
                 p->selected_tileset = 4;
@@ -85,6 +91,7 @@ float change_sprite(player* p, change_mode mode) {
         }
     } else if (a > M_PI_2 + M_PI_4 && a < M_PI + M_PI_4) {
         p->shooting_point = CHL::point(1, -16);
+        p->light_offset.x = -2;
         if (!p->moving) {
             if (mode == change_mode::blink) {
                 p->selected_tileset = 2;
@@ -94,6 +101,7 @@ float change_sprite(player* p, change_mode mode) {
         }
     } else {
         p->shooting_point = CHL::point(p->size.x / 2 - 4, -4);
+        p->light_offset.x = 0;
         if (!p->moving) {
             if (mode == change_mode::blink) {
                 p->selected_tileset = 3;
@@ -110,18 +118,22 @@ float check_registred_keys(player* p) {
 
     if (p->keys[p->key_up]) {
         p->selected_tileset = 4;
+        p->light_offset.x = 0;
         a = M_PI_2;
     }
     if (p->keys[p->key_down]) {
         p->selected_tileset = 3;
+        p->light_offset.x = 0;
         a = 3 * M_PI_2;
     }
     if (p->keys[p->key_left]) {
         p->selected_tileset = 2;
+        p->light_offset.x = -2;
         a = M_PI;
     }
     if (p->keys[p->key_right]) {
         p->selected_tileset = 1;
+        p->light_offset.x = 2;
         a = 2 * M_PI;
     }
     if (p->keys[p->key_up] && p->keys[p->key_down]) {
@@ -245,6 +257,9 @@ void player::move(float dt) {
     delta_x = 0;
     delta_y = 0;
 
+    visor_light->position.x = position.x + 6 + light_offset.x;
+    visor_light->position.y = position.y - 6 + light_offset.y;
+
     if (blinking) {
         float path = 6 * speed * dt;
         blinking_path -= path;
@@ -297,14 +312,12 @@ void player::move(float dt) {
 
     if ((delta_x != 0 || delta_y != 0) && !moving) {
         moving = true;
-        std::cout << "play anim" << std::endl;
         loop_animation(0.04f);
         CHL::play_always_s(steps_source);
     }
 
     if (delta_x == 0 && delta_y == 0 && moving) {
         moving = false;
-        std::cout << "stop anim" << std::endl;
         loop_animation(0.0f);
         selected_tileset = 0;
         CHL::stop_s(steps_source);

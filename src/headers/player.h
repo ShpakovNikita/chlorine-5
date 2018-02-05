@@ -19,6 +19,8 @@ class player : public CHL::life_form {
 
     float shooting_alpha = 0;
 
+    CHL::light* visor_light;
+
     friend float change_sprite(player*, change_mode);
     friend float check_registred_keys(player*);
     friend void do_actions(player*);
@@ -49,6 +51,8 @@ class player : public CHL::life_form {
     uint32_t fire_source = 0;
 
     float keys_registred = false;
+
+    CHL::point light_offset;
 
     float shoot_delay = 0.7f;
     float super_delay = 5.0f;

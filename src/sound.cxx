@@ -200,6 +200,10 @@ void sound::stop() {
     stop_s(al_source);
 }
 
+void sound::volume(float v) {
+    set_volume_s(al_source, v);
+}
+
 sound::~sound() {
     alDeleteBuffers(1, &al_buffer);
     alDeleteSources(1, &al_source);

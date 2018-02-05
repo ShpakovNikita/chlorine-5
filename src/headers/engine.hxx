@@ -78,7 +78,7 @@ struct vertex_2d {
 };
 
 struct vec3 {
-    vec3(int _x, int _y, int _z) : x(_x), y(_y), z(_z) {}
+    vec3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
     vec3() : x(0.0f), y(0.0f), z(0.0f) {}
     float x, y, z;
 };
@@ -201,10 +201,10 @@ class instance {
 
 class light {
    public:
-    light();
+    light(float rad, point pos, vec3 col);
     virtual ~light();
     float radius;
-    vertex_2d position;
+    point position;
     vec3 color;
     float brightness = 1;
 };
@@ -271,6 +271,7 @@ class sound {
     void play_always();
     void stop();
     void pause();
+    void volume(float v);
     ~sound();
 
     friend uint32_t create_new_source(sound*, instance*);
