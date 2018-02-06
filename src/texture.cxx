@@ -6,13 +6,12 @@
 #include "headers/picopng.hxx"
 
 namespace CHL {
-texture::texture() {}
 texture::texture(const std::string& path) {
     if (!load_texture(path))
         std::cerr << "Texture not found!" << std::endl;
 }
 texture::~texture() {
-    std::cerr << "clear" << std::endl;
+    glDeleteTextures(1, &tex);
 }
 
 bool texture::load_texture(const std::string& path) {
@@ -55,13 +54,6 @@ bool texture::load_texture(const std::string& path) {
 
     glTexImage2D(GL_TEXTURE_2D, mipmap_level, GL_RGBA, w, h, border, GL_RGBA,
                  GL_UNSIGNED_BYTE, &image[0]);
-
-    //        glGenerateMipmap(GL_TEXTURE_2D);
-    //        GL_CHECK();
-
-    //        float borderColor[] = {0.0f, 0.0f, 0.0f, 0.0f};
-    //        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR,
-    //        borderColor);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

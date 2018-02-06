@@ -1,20 +1,13 @@
-/*
- * special_effect.cpp
- *
- *  Created on: 13 янв. 2018 г.
- *      Author: Shaft
- */
-
 #include "headers/special_effect.h"
 
-special_effect::special_effect(float x, float y, float z, int size)
-    : instance(x, y, z, size) {
-    // TODO Auto-generated constructor stub
+special_effect::special_effect(float x, float y, float z, int _size)
+    : instance(x, y, z, _size) {
+    // TODO something nice
     delay = 60 / fps;
 }
 
 special_effect::~special_effect() {
-    // TODO Auto-generated destructor stub
+    // No code required here
 }
 
 void special_effect::update_frame() {

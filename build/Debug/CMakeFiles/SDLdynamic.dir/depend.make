@@ -55,7 +55,9 @@ CMakeFiles/SDLdynamic.dir/player.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlori
 CMakeFiles/SDLdynamic.dir/player.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/resource_manager.h
 CMakeFiles/SDLdynamic.dir/player.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/player.cpp
 
+CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/bullet.h
 CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
+CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/global_data.h
 CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/resource_manager.h
 CMakeFiles/SDLdynamic.dir/resource_manager.cpp.obj: C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/resource_manager.cpp
 

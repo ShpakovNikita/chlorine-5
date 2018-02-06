@@ -1,6 +1,9 @@
 
 .metadata
 bin/
+sounds/
+fonts/
+textures/
 tmp/
 *.tmp
 *.bak

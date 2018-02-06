@@ -285,6 +285,8 @@ iostream
 C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/resource_manager.cpp
 headers/resource_manager.h
 C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/resource_manager.h
+headers/global_data.h
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/global_data.h
 iostream
 -
 
@@ -295,14 +297,14 @@ AL/al.h
 -
 AL/alc.h
 -
-headers/engine.hxx
-C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 iostream
 -
 assert.h
 -
 math.h
 -
+headers/engine.hxx
+C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/headers/engine.hxx
 
 C:/Users/Shaft/Documents/GitHub/Chlorine-5/src/special_effect.cpp
 headers/special_effect.h

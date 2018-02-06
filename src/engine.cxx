@@ -41,9 +41,8 @@
 #include <windows.h>
 #endif
 
-#define NUM_BUFFERS 3
-#define BUFFER_SIZE 4096
-
+/*function for engine developers. Checking is everything is ok after some gl
+ * functions done their work.*/
 #define GL_CHECK()                                                  \
     {                                                               \
         const int err = glGetError();                               \
@@ -72,11 +71,13 @@
 
 namespace CHL {
 
+/*simple quad data with texture coordinates*/
 static std::vector<float> quad_data{
     0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f,
     0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f,
     1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 1.0f};
 
+/*binding struct SDL keys to our events*/
 struct bind {
     bind(SDL_Keycode k, std::string n, event pressed, event released)
         : key(k), name(n), event_pressed(pressed), event_released(released) {}
@@ -87,6 +88,7 @@ struct bind {
     event event_released;
 };
 
+/*printed names*/
 static std::array<std::string, 18> event_names = {
     /// input events
     "left_pressed", "left_released", "right_pressed", "right_released",
@@ -99,6 +101,8 @@ static std::array<std::string, 18> event_names = {
     /// virtual console events
     "turn_off"};
 
+/*I decided to put all shaders here, just for the simplicity of my engine for
+ * side users*/
 static std::string color_fragment =
     "uniform vec4 color;"
 
@@ -206,6 +210,7 @@ static std::string text_vertex_glsl =
     "   vertex_color = vec4(color, 1.0);"
     "}";
 
+/*bindings*/
 const std::array<bind, 8> bindings{
     bind{SDLK_w, "up", event::up_pressed, event::up_released},
     bind{SDLK_a, "left", event::left_pressed, event::left_released},
@@ -218,6 +223,7 @@ const std::array<bind, 8> bindings{
     bind{SDLK_ESCAPE, "select", event::select_pressed, event::select_released},
     bind{SDLK_RETURN, "start", event::start_pressed, event::start_released}};
 
+/*SDL version << operator*/
 std::ostream& operator<<(std::ostream& out, const SDL_version& v) {
     out << static_cast<int>(v.major) << '.';
     out << static_cast<int>(v.minor) << '.';
@@ -225,6 +231,7 @@ std::ostream& operator<<(std::ostream& out, const SDL_version& v) {
     return out;
 }
 
+/*custom event << operator*/
 std::ostream& operator<<(std::ostream& stream, const event e) {
     std::uint32_t value = static_cast<std::uint32_t>(e);
     std::uint32_t minimal = static_cast<std::uint32_t>(event::left_pressed);
@@ -237,6 +244,7 @@ std::ostream& operator<<(std::ostream& stream, const event e) {
     }
 }
 
+/*binding helper func*/
 static bool check_input(const SDL_Event& e, const bind*& result) {
     using namespace std;
 
@@ -256,7 +264,8 @@ engine::~engine() {
     SDL_Quit();
 }
 
-static int t_size, w_t_size;
+/*this variables are needed inside the engine*/
+static int t_size;
 static int w_w, w_h;
 static int virtual_w = 0;
 static int virtual_h = 0;
@@ -265,7 +274,7 @@ static int FPS;
 bool check_collision(instance* one,
                      instance* two)    // AABB - AABB collision
 {
-    // Collision x-axis?
+    // collision x-axis?
     float precision = 0.1f;
 
     bool collisionX =
@@ -273,7 +282,7 @@ bool check_collision(instance* one,
             two->position.x + two->collision_box_offset.x + precision &&
         two->position.x + two->collision_box.x + two->collision_box_offset.x >
             one->position.x + one->collision_box_offset.x + precision;
-    // Collision y-axis?
+    // collision y-axis?
     bool collisionY =
         one->position.y - one->collision_box_offset.y - one->collision_box.y <
             two->position.y - two->collision_box_offset.y - precision &&
@@ -294,6 +303,7 @@ camera::camera(int w, int h, int b_w, int b_h, instance* object) {
 camera::~camera() {}
 
 void camera::update_center() {
+    /*precision added to get rid of the annoyng tile breaking lines*/
     float precision = 0.01f;
     if (bind_object->position.x + t_size / 2 > width / 2 &&
         bind_object->position.x + t_size / 2 < border_width - width / 2)
@@ -336,7 +346,9 @@ instance::instance(float x, float y, float z, int size_x, int size_y)
     collision_box = point(size_x, size_y);
 }
 
-void instance::get_points() {
+void instance::update_points() {
+    update_data();
+
     glm::mat4 transform;
     transform = glm::rotate(transform,
                             /*(GLfloat)GL_time() * */
@@ -372,11 +384,7 @@ void instance::get_points() {
     }
 }
 
-void instance::update_points() {
-    update_data();
-    get_points();
-}
-
+/*update the animation*/
 void instance::update() {
     if ((animation_playing || animation_loop) && delay <= 0) {
         update_data();
@@ -409,7 +417,8 @@ void instance::loop_animation(float seconds_betweeen_frames) {
     loop_animation(seconds_betweeen_frames, selected_tileset);
 }
 
-void instance::loop_animation(float seconds_betweeen_frames, int tileset) {
+void instance::loop_animation(float seconds_betweeen_frames,
+                              int tileset /*tileset, from which we begin*/) {
     selected_tileset = tileset % tilesets_in_texture;
     delta_frame = seconds_betweeen_frames;
     delay = delta_frame * FPS;
@@ -420,6 +429,7 @@ std::vector<float> instance::get_data() {
     return data;
 }
 
+/*update texture and vertex coordinates of the instance*/
 void instance::update_data() {
     data = quad_data;
     float k_x = 1.0f / frames_in_texture;
@@ -457,6 +467,8 @@ void instance::update_data() {
     }
 }
 
+/*similar to the instance::update_data, but used to update coordinates for the
+ * window, not the virtual world.*/
 void ui_element::update_data() {
     data = quad_data;
     float k_x = 1.0f / frames_in_texture;
@@ -526,7 +538,7 @@ life_form::life_form(float x, float y, float z, int _speed, int size)
 
 instance::~instance() {
     data.clear();
-}    // TODO something
+}
 
 life_form::~life_form() {}
 
@@ -536,19 +548,7 @@ light::light(float rad, point pos, vec3 col) {
     color = col;
 }
 
-light::~light() {}    // TODO something
-
-class wall : public instance {
-   private:
-   public:
-    wall(float x, float y, float z_index, int size)
-        : instance(x, y, z_index, size) {}
-};
-
-instance* create_wall(float x, float y, float z, int size) {
-    instance* inst = new wall(x, y, z, size);
-    return inst;
-}
+light::~light() {}
 
 class engine_impl final : public engine {
    private:
@@ -559,16 +559,14 @@ class engine_impl final : public engine {
     GLuint light_program;
     GLuint color_program;
 
-    GLfloat light_rendered = false;
+    GLuint vbo;
 
-    std::vector<float> vertex_buffer;
+    std::vector<float>
+        vertex_buffer;    // buffer to store quads for render function
 
     int _x = 0, _y = 0;
 
-    void GL_unbind() {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);    // test
-        glBindVertexArray(0);
-    }
+    void GL_unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
     GLuint compile_shader(const GLchar* source, GLenum target) {
         GLuint shader = glCreateShader(target);
@@ -613,6 +611,7 @@ class engine_impl final : public engine {
 
    public:
     int CHL_init(int* width, int* height, int size, int fps) final {
+        /*print current SDL version*/
         SDL_version compiled = {0, 0, 0};
         SDL_version linked = {0, 0, 0};
 
@@ -652,6 +651,7 @@ class engine_impl final : public engine {
 
         std::cout << w_w << " " << w_h << std::endl;
 
+        /*creating window and setting context*/
         window = SDL_CreateWindow("Chlorine-5", SDL_WINDOWPOS_CENTERED,
                                   SDL_WINDOWPOS_CENTERED, w_w, w_h,
                                   SDL_WINDOW_OPENGL);
@@ -682,25 +682,25 @@ class engine_impl final : public engine {
 
         alGetError();    // clear error code
 
-        vec3 listenerPos(0, 0, 0);    // listeners position
-        vec3 listenerVel(0, 0, 0);    // listern's velocity
+        vec3 listener_pos(0, 0, 0);    // listeners position
+        vec3 listener_vel(0, 0, 0);    // listern's velocity
 
         // listeners orientation (forward, up)
-        float listenerOri[] = {0, 0, -1, 0, 1, 0};
+        float listener_ori[] = {0, 0, -1, 0, 1, 0};
 
-        alListener3f(AL_POSITION, listenerPos.x, listenerPos.y, listenerPos.z);
-        alListener3f(AL_VELOCITY, listenerVel.x, listenerVel.y, listenerVel.z);
-        alListenerfv(AL_ORIENTATION, listenerOri);
+        alListener3f(AL_POSITION, listener_pos.x, listener_pos.y,
+                     listener_pos.z);
+        alListener3f(
+            AL_VELOCITY, listener_vel.x, listener_vel.y,
+            listener_vel.z);    // if there will be doppler effect support
+        alListenerfv(AL_ORIENTATION, listener_ori);
+
         if (alGetError() != AL_NO_ERROR) {
             std::cerr << "openal error: " << std::endl;
             return EXIT_FAILURE;
         }
 
-        alDistanceModel(AL_EXPONENT_DISTANCE);
-
-        alDopplerFactor(5.0f);
-        alDopplerVelocity(50.0f);
-        /* Glew */
+            /* Glew */
 
 #ifndef __ANDROID__
         GLenum glew_init = glewInit();
@@ -722,9 +722,7 @@ class engine_impl final : public engine {
 
         std::cerr << "Gl:" << gl_major_ver << '.' << gl_minor_ver << std::endl;
 
-        // test
         glViewport(0, 0, *width, *height);
-        // test
 
         GLuint vertex_shader =
             compile_shader(vertex_glsl.c_str(), GL_VERTEX_SHADER);
@@ -781,6 +779,7 @@ class engine_impl final : public engine {
         glEnable(GL_ALPHA_TEST);
 
         t_size = size;
+        glGenBuffers(1, &vbo);
 
         return EXIT_SUCCESS;
     }
@@ -799,7 +798,6 @@ class engine_impl final : public engine {
     void GL_clear_color() final {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        light_rendered = false;
         GL_CHECK();
     }
 
@@ -807,10 +805,11 @@ class engine_impl final : public engine {
     event_type get_event_type() final { return e_type; }
 
     void add_object(instance* in, camera* cam) final {
-        if ((in->position.x + in->size.x < cam->get_center().x ||
-             in->position.x > cam->get_center().x + cam->width ||
-             in->position.y < cam->get_center().y ||
-             in->position.y - in->size.y > cam->get_center().y + cam->height)) {
+        if ((in->position.x + 2 * in->size.x < cam->get_center().x ||
+             in->position.x - in->size.x > cam->get_center().x + cam->width ||
+             in->position.y + in->size.y < cam->get_center().y ||
+             in->position.y - 2 * in->size.y >
+                 cam->get_center().y + cam->height)) {
             return;
         }
 
@@ -823,22 +822,14 @@ class engine_impl final : public engine {
         virtual_h = _h;
     }
 
-    void snap_tile_to_screen_pixels(int screen_pixels) final {
-        w_t_size = screen_pixels;
-    }
-
-    void draw(texture* text, camera* cam, instance* inst) final {
+    void render(texture* text, camera* cam, instance* inst) final {
         glUseProgram(shader_program);
 
         text->bind();
 
         glUniform1i(glGetUniformLocation(shader_program, "our_texture"), 0);
-
-        GL_CHECK();
-        GLuint vbo;
-        glGenBuffers(1, &vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        GL_CHECK();
+
         glBufferData(GL_ARRAY_BUFFER,
                      vertex_buffer.size() * sizeof(vertex_buffer[0]),
                      vertex_buffer.data(), GL_STATIC_DRAW);
@@ -846,16 +837,11 @@ class engine_impl final : public engine {
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
                               STRIDE_ELEMENTS * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(0);
-        GL_CHECK();
 
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE,
                               STRIDE_ELEMENTS * sizeof(GLfloat),
                               (GLvoid*)(3 * sizeof(GLfloat)));
         glEnableVertexAttribArray(1);
-        GL_CHECK();
-        //        GLint vertexColorLocation =
-        //            glGetUniformLocation(shader_program, "our_color");
-        //        glUniform4f(vertexColorLocation, red, 0.2f, 0.0f, 1.0f);
 
         glm::mat4 transform;
 
@@ -866,8 +852,7 @@ class engine_impl final : public engine {
 
         if (cam != nullptr) {
             cam->update_center();
-            //            float h_tiles = (float)virtual_h / t_size,
-            //                  w_tiles = (float)virtual_w / t_size;
+
             transform = glm::scale(
                 transform, glm::vec3((float)virtual_w / cam->width,
                                      (float)virtual_h / cam->height, 1.0f));
@@ -892,12 +877,11 @@ class engine_impl final : public engine {
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE,
                            glm::value_ptr(transform));
 
-        GL_CHECK();
         glDrawArrays(GL_TRIANGLES, 0, vertex_buffer.size() / STRIDE_ELEMENTS);
         vertex_buffer.clear();
         glUseProgram(0);
         text->unbind();
-        glDeleteBuffers(1, &vbo);
+        GL_CHECK();
     }
 
     virtual void render_text(const std::string& text,
@@ -907,8 +891,6 @@ class engine_impl final : public engine {
                              float offset,
                              int z_pos,
                              vec3 color) final {
-        GLuint vbo;
-        glGenBuffers(1, &vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 5, nullptr,
                      GL_DYNAMIC_DRAW);
@@ -937,8 +919,7 @@ class engine_impl final : public engine {
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE,
                            glm::value_ptr(transform));
 
-        // Iterate through all characters
-
+        // iterate through all characters
         float z = glm::clamp(z_pos, MAX_DEPTH, MIN_DEPTH) / 2.0f / MAX_DEPTH;
 
         std::string::const_iterator c;
@@ -951,11 +932,11 @@ class engine_impl final : public engine {
 
             GLfloat w = ch.size.x;
             GLfloat h = ch.size.y;
-            // Render glyph texture over quad
+            // render glyph texture over quad
             glBindTexture(GL_TEXTURE_2D, ch.texture_id);
             glUniform1i(
                 glGetUniformLocation(text_shader_program, "our_texture"), 0);
-            // Update content of VBO memory
+            // update content of VBO memory
             glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
             GLfloat vertices[6][5] = {
@@ -967,29 +948,27 @@ class engine_impl final : public engine {
 
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
-            // Render quad
+
             glDrawArrays(GL_TRIANGLES, 0, 6);
             x += (ch.advance >> 6);
             if (xpos > w_w - offset) {
                 y += 48.0f;
                 x = beginning_x;
             }
-            // Now advance cursors for next glyph (note that advance
+            // now advance cursors for next glyph (note that advance
             // is number of 1/64 pixels)
-            // Bitshift by 6 to get value in pixels (2^6 = 64)
+            // bitshift by 6 to get value in pixels (2^6 = 64)
         }
 
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glDeleteBuffers(1, &vbo);
         glUseProgram(0);
 
         glBindTexture(GL_TEXTURE_2D, 0);
+        GL_CHECK();
     }
 
     virtual void render_ui(user_interface* ui) {
         for (ui_element* e : ui->user_interface_elements) {
-            GLuint vbo;
-            glGenBuffers(1, &vbo);
             glBindBuffer(GL_ARRAY_BUFFER, vbo);
             glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * 6 * 5, nullptr,
                          GL_DYNAMIC_DRAW);
@@ -1000,11 +979,9 @@ class engine_impl final : public engine {
             glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat),
                                   (GLvoid*)(3 * sizeof(GLfloat)));
             glEnableVertexAttribArray(1);
-            GL_CHECK();
 
             glBindBuffer(GL_ARRAY_BUFFER, 0);
             glUseProgram(shader_program);
-            GL_CHECK();
 
             glm::mat4 transform;
             transform = glm::translate(transform, glm::vec3(-1.0f, 1.0f, 0.0f));
@@ -1016,53 +993,39 @@ class engine_impl final : public engine {
 
             e->tex->bind();
 
-            GL_CHECK();
             glUniform1i(glGetUniformLocation(shader_program, "our_texture"), 0);
-            GL_CHECK();
             // Update content of VBO memory
             glBindBuffer(GL_ARRAY_BUFFER, vbo);
-            GL_CHECK();
             e->update_data();
             std::vector<float> vertices = e->get_data();
-            //            for (float v : vertices)
-            //                std::cout << v << " ";
-            //            std::cout << std::endl;
 
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(float) * 5 * 6,
                             vertices.data());
             glBindBuffer(GL_ARRAY_BUFFER, 0);
-            GL_CHECK();
             // Render quad
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             glUseProgram(0);
-            GL_CHECK();
             glBindTexture(GL_TEXTURE_2D, 0);
-            GL_CHECK();
-            glDeleteBuffers(1, &vbo);
-            GL_CHECK();
             if (!e->text.empty())
                 render_text(e->text, e->f, e->position.x + e->offset,
                             e->position.y - e->size.y + e->offset,
                             w_w - e->position.x - e->size.x + e->offset,
                             MIN_DEPTH, vec3(1.0f, 0.0f, 0.0f));
         }
+        GL_CHECK();
     }
 
     void render_light(light* source, camera* cam) {
         if (cam == nullptr)
             return;
 
-        GL_CHECK();
-        GLuint vbo;
-        glGenBuffers(1, &vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        GL_CHECK();
         std::vector<float> data = quad_data;
 
         for (int i = 0; i < 6 * 5; i += STRIDE_ELEMENTS)
-            data[i + 2] =
-                glm::clamp(MAX_DEPTH, MAX_DEPTH, MIN_DEPTH) / 2.0f / MAX_DEPTH;
+            data[i + 2] = glm::clamp(MAX_DEPTH, MAX_DEPTH, MIN_DEPTH) / 2.0f /
+                          MAX_DEPTH;    // the lower layer is light layer
 
         glBufferData(GL_ARRAY_BUFFER, data.size() * sizeof(data[0]),
                      data.data(), GL_STATIC_DRAW);
@@ -1070,9 +1033,9 @@ class engine_impl final : public engine {
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
                               STRIDE_ELEMENTS * sizeof(GLfloat), (GLvoid*)0);
         glEnableVertexAttribArray(0);
-        GL_CHECK();
 
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        glBlendFunc(GL_SRC_ALPHA,
+                    GL_ONE);    // this will give us more realistic light effect
 
         glm::mat4 transform;
         transform = glm::translate(transform, glm::vec3(-1.0f, -1.0f, 0.0f));
@@ -1109,10 +1072,9 @@ class engine_impl final : public engine {
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
         glUseProgram(0);
-        GL_CHECK();
-        glDeleteBuffers(1, &vbo);
-        GL_CHECK();
+
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        GL_CHECK();
     }
 
     void CHL_exit() final {
@@ -1121,6 +1083,7 @@ class engine_impl final : public engine {
         return (void)EXIT_SUCCESS;
     }
 
+    /*intercept key inputs*/
     bool read_input(event& e) final {
         SDL_Event event;
         e_type = event_type::other;
@@ -1172,17 +1135,14 @@ class engine_impl final : public engine {
         return false;
     }
 
-    ~engine_impl() {
-        //        glDeleteVertexArrays(1, &vao);
-        //        glDeleteBuffers(1, &vbo);
-    }
+    ~engine_impl() { glDeleteBuffers(1, &vbo); }
 };
 
 user_interface::user_interface() {}
 
 user_interface::~user_interface() {
     std::vector<ui_element*>::iterator e = user_interface_elements.begin();
-    for (; e != user_interface_elements.end(); e++) {
+    for (; e != user_interface_elements.end(); ++e) {
         delete *e;
         user_interface_elements.erase(e);
     }
@@ -1217,6 +1177,7 @@ float triangle_area(point a, point b, point c) {
     return (a.x - c.x) * (b.y - c.y) - (a.y - c.y) * (b.x - c.x);
 }
 
+/*check for line intersection*/
 bool line_intersect(point a, point b, point c, point d, point* p) {
     float a1 = triangle_area(a, b, d);
     float a2 = triangle_area(a, b, c);
@@ -1238,6 +1199,7 @@ bool line_intersect(point a, point b, point c, point d, point* p) {
     return false;
 }
 
+/*for each line check intercection*/
 bool check_slow_collision(instance* one, instance* two, point* intersection_p) {
     if (std::fabs(one->position.x - two->position.x) > 3 * t_size &&
         std::fabs(one->position.y - two->position.y) > 3 * t_size)
@@ -1255,6 +1217,7 @@ bool check_slow_collision(instance* one, instance* two, point* intersection_p) {
     return false;
 }
 
+/*simple math functions*/
 float get_direction(float x1, float y1, float x2, float y2) {
     float dx = x1 - x2;
     float dy = y2 - y1;

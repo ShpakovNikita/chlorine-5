@@ -1,9 +1,10 @@
 #include "headers/resource_manager.h"
+#include "headers/global_data.h"
 
 #include <iostream>
 
 resource_manager::resource_manager() {
-    // there is no need for the code
+    // no need for code here
 }
 
 resource_manager::~resource_manager() {
