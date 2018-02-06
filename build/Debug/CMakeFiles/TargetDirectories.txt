@@ -1,3 +1,0 @@
-C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/CMakeFiles/SDLdynamic.dir
-C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/CMakeFiles/edit_cache.dir
-C:/Users/Shaft/Documents/GitHub/Chlorine-5/build/Debug/CMakeFiles/rebuild_cache.dir

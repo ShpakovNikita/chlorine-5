@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E remove -f CMakeFiles\SDLdynamic.dir/objects.a
-C:\mingw-w64\mingw64\bin\ar.exe cr CMakeFiles\SDLdynamic.dir/objects.a @CMakeFiles\SDLdynamic.dir\objects1.rsp
-C:\mingw-w64\mingw64\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\SDLdynamic.dir/objects.a -Wl,--no-whole-archive  -o SDLdynamic.exe -Wl,--out-implib,libSDLdynamic.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\SDLdynamic.dir\linklibs.rsp
