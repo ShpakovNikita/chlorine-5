@@ -11,7 +11,9 @@ texture::texture(const std::string& path) {
     if (!load_texture(path))
         std::cerr << "Texture not found!" << std::endl;
 }
-texture::~texture() {}
+texture::~texture() {
+    std::cerr << "clear" << std::endl;
+}
 
 bool texture::load_texture(const std::string& path) {
     std::vector<unsigned char> png_file_in_memory;

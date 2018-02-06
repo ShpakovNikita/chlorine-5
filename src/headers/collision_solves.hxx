@@ -1,12 +1,8 @@
 /*
- * collision_solves.hxx
- *
- *  Created on: 17 янв. 2018 г.
- *      Author: Shaft
+ * Collision solve algorithms. They are supplied outside the CHL engine.
  */
 
-#ifndef HEADERS_COLLISION_SOLVES_HXX_
-#define HEADERS_COLLISION_SOLVES_HXX_
+#pragma once
 
 #include "engine.hxx"
 #include "game_functions.hxx"
@@ -21,8 +17,9 @@ void solve_dynamic_to_dynamic_collision_fast(CHL::instance* one,
     one->position.x -= delta_x1;
     two->position.x -= delta_x2;
 
-    if (check_collision(one, two))
+    if (check_collision(one, two)) {
         y_col = true;
+    }
 
     one->position.x += delta_x1;
     two->position.x += delta_x2;
@@ -30,8 +27,9 @@ void solve_dynamic_to_dynamic_collision_fast(CHL::instance* one,
     one->position.y -= delta_y1;
     two->position.y -= delta_y2;
 
-    if (check_collision(one, two))
+    if (check_collision(one, two)) {
         x_col = true;
+    }
 
     one->position.x -= delta_x1;
     two->position.x -= delta_x2;
@@ -73,37 +71,39 @@ void solve_dynamic_to_static_collision_fast(CHL::instance* dyn,
     bool x_col = false, y_col = false;
     dyn->position.x -= delta_x;
 
-    if (check_collision(dyn, inst))
+    if (check_collision(dyn, inst)) {
         y_col = true;
+    }
 
     dyn->position.x += delta_x;
     dyn->position.y -= delta_y;
 
-    if (check_collision(dyn, inst))
+    if (check_collision(dyn, inst)) {
         x_col = true;
+    }
 
     dyn->position.x -= delta_x;
 
-    if (!y_col)
+    if (!y_col) {
         dyn->position.y += delta_y;
-    if (!x_col)
+    }
+    if (!x_col) {
         dyn->position.x += delta_x;
+    }
 
     while (y_col) {
-        dyn->position.y += sign(delta_y) * 0.05;
+        dyn->position.y += delta_y * 0.1;
         if (check_collision(dyn, inst)) {
-            dyn->position.y -= sign(delta_y) * 0.05;
+            dyn->position.y -= delta_y * 0.1;
             y_col = false;
         }
     }
 
     while (x_col) {
-        dyn->position.x += sign(delta_x) * 0.05;
+        dyn->position.x += delta_x * 0.1;
         if (check_collision(dyn, inst)) {
-            dyn->position.x -= sign(delta_x) * 0.05;
+            dyn->position.x -= delta_x * 0.1;
             x_col = false;
         }
     }
 }
-
-#endif /* HEADERS_COLLISION_SOLVES_HXX_ */

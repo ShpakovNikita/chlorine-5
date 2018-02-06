@@ -1,28 +1,23 @@
 /*
- * display.h
- *
- *  Created on: 5 февр. 2018 г.
- *      Author: Shaft
+ * Render helper functions.
  */
 
-#ifndef HEADERS_DISPLAY_H_
-#define HEADERS_DISPLAY_H_
+#pragma once
 
 #include "engine.hxx"
 
 namespace display {
 
-void render_screen(CHL::engine* eng,
-                   CHL::texture* tex,
-                   CHL::sound* snd /*nullptr for not playing anything*/,
-                   float x,
-                   float y,
-                   const std::string& text,
-                   CHL::font* f,
-                   const CHL::vec3& color,
-                   const CHL::event quit_event,
-                   int WINDOW_WIDTH,
-                   int WINDOW_HEIGHT);
+void render_screen(
+    CHL::engine* eng,
+    CHL::texture* tex,
+    CHL::sound* snd /*nullptr for not playing anything*/,
+    float x,
+    float y,
+    const std::string& text,
+    CHL::font* font,
+    const CHL::vec3& color,
+    const CHL::event quit_event /*pressing this button will break the loop*/,
+    int WINDOW_WIDTH,
+    int WINDOW_HEIGHT);
 }
-
-#endif /* HEADERS_DISPLAY_H_ */

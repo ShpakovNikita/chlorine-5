@@ -1,7 +1,9 @@
-#include "engine.hxx"
+/*
+ * Bullet base class for the game "Chlorine-5"
+ */
+#pragma once
 
-#ifndef HEADERS_BULLET_H_
-#define HEADERS_BULLET_H_
+#include "engine.hxx"
 
 enum class bullet_creator { enemy, ally, player, allmighty };
 
@@ -20,7 +22,6 @@ class bullet : public CHL::instance {
 
     bullet_creator creator = bullet_creator::allmighty;
 
+    /* update every frame */
     void move(float dt);
 };
-
-#endif

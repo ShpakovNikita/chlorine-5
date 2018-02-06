@@ -1,19 +1,21 @@
 /*
- * autotile.h
- *
- *  Created on: 16 янв. 2018 г.
- *      Author: Shaft
+ * This algorithm was created special for the template "tiles.png".
+ * Modify it as you need (including the resolution) and freely use
+ * with this algorithm.
  */
 
-#ifndef HEADERS_AUTOTILE_HXX_
-#define HEADERS_AUTOTILE_HXX_
+#pragma once
 
 #include "engine.hxx"
-#include "game_constants.h"
+#include "global_data.h"
 
 constexpr int default_tileset = 1, default_frame = 1;
 
-void autotile(int** map_grid, CHL::instance*** grid, int x_size, int y_size) {
+void autotile(
+    int** map_grid /*2d map. 1 - wall, 0 - ground*/,
+    CHL::instance*** grid /*2D map of CHL::instance*'s and nullptr's*/,
+    int x_size,
+    int y_size) {
     for (int y = 0; y < y_size; y++) {
         for (int x = 0; x < x_size; x++) {
             bool left_bonds = x - 1 >= 0;
@@ -365,14 +367,6 @@ void autotile(int** map_grid, CHL::instance*** grid, int x_size, int y_size) {
                         grid[y][x]->selected_tileset = 1;
                         grid[y][x]->selected_frame = 9;
                     }
-                    //                    } else if (map_grid[y - 1][x] == 0 &&
-                    //                               map_grid[y + 1][x] == 0 &&
-                    //                               map_grid[y][x + 1] == 1 &&
-                    //                               map_grid[y][x - 1] == 1) {
-                    //                        grid[y][x]->selected_tileset = 0;
-                    //                        grid[y][x]->selected_frame = 1;
-                    //                    }
-
                 } else {
                     if (vertical_bonds && right_bonds &&
                         map_grid[y + 1][x] == 0 && map_grid[y][x + 1] == 1 &&
@@ -409,9 +403,8 @@ void autotile(int** map_grid, CHL::instance*** grid, int x_size, int y_size) {
     for (int y = 0; y < y_size; y++) {
         for (int x = 0; x < x_size; x++) {
             if (grid[y][x] != nullptr)
+                /*update the texture coordinates*/
                 grid[y][x]->update_points();
         }
     }
 }
-
-#endif /* HEADERS_AUTOTILE_HXX_ */

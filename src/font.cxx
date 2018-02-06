@@ -10,7 +10,7 @@
 #include FT_FREETYPE_H
 
 namespace CHL {
-font::font(std::string path) {
+font::font(std::string path, uint32_t y_size) {
     FT_Library ft;
     if (FT_Init_FreeType(&ft))
         std::cerr << "ERROR::FREETYPE: Could not init FreeType Library"

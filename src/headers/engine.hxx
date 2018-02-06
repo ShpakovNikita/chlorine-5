@@ -9,7 +9,6 @@
 #define HEADERS_ENGINE_HXX_
 
 #define GLEW_BUILD
-
 #define MAX_DEPTH -10000
 #define MIN_DEPTH 10000
 #define STRIDE_ELEMENTS 5
@@ -92,7 +91,7 @@ struct character {
 
 class font {
    public:
-    font(std::string path);
+    font(std::string path, uint32_t y_size);
     virtual ~font();
     std::map<char, character> characters;
 };
@@ -161,7 +160,6 @@ class instance {
     float weight = 1.0f;
 
     float alpha = 0;
-    point rotation_point = point(0, 0);
     point collision_box_offset = point(0, 0);
     point collision_box;
     int selected_frame = 0;
@@ -264,6 +262,9 @@ float calculate_gain(gain_algorithm, uint32_t source);
 void delete_source(uint32_t source);
 void listener_update(const vec3&);
 
+class sound;
+uint32_t create_new_source(sound*, instance*);
+
 class sound {
    public:
     sound(const std::string&);
@@ -284,8 +285,6 @@ class sound {
     uint32_t al_buffer;
     uint32_t al_source;
 };
-
-uint32_t create_new_source(sound*, instance*);
 
 class user_interface {
    public:

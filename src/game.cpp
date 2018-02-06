@@ -24,7 +24,7 @@
 
 #include "headers/display.h"
 
-#include "headers/game_constants.h"
+#include "headers/global_data.h"
 
 enum class mode { draw, look, idle };
 
@@ -37,26 +37,26 @@ int main(int /*argc*/, char* /*argv*/ []) {
     eng->set_virtual_world(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     eng->snap_tile_to_screen_pixels(1920 / 15.0f);
 
-    font* f = new font("fonts/INVASION2000.ttf");
+    font* f = new font("fonts/INVASION2000.ttf", 48);
 
     /* loading textures */
 
-    manager.add_texture("brick", new texture("textures/test.png"));
-    manager.add_texture("hero", new texture("textures/hero.png"));
-    manager.add_texture("enemy", new texture("textures/enemy.png"));
-    manager.add_texture("tank", new texture("textures/tank.png"));
-    manager.add_texture("floor", new texture("textures/tiles.png"));
-    manager.add_texture("bullet", new texture("textures/bullet.png"));
-    manager.add_texture("explosion", new texture("textures/explosion.png"));
-    manager.add_texture("obelisk", new texture("textures/obelisk.png"));
-    manager.add_texture("dialog", new texture("textures/dialog.png"));
-    manager.add_texture("health", new texture("textures/health.png"));
-    manager.add_texture("load", new texture("textures/load.png"));
-    manager.add_texture("win", new texture("textures/win.png"));
-    manager.add_texture("loose", new texture("textures/loose.png"));
+    manager.add_texture("brick", new texture(TEX_FOLDER + "test.png"));
+    manager.add_texture("hero", new texture(TEX_FOLDER + "hero.png"));
+    manager.add_texture("enemy", new texture(TEX_FOLDER + "enemy.png"));
+    manager.add_texture("tank", new texture(TEX_FOLDER + "tank.png"));
+    manager.add_texture("floor", new texture(TEX_FOLDER + "tiles.png"));
+    manager.add_texture("bullet", new texture(TEX_FOLDER + "bullet.png"));
+    manager.add_texture("explosion", new texture(TEX_FOLDER + "explosion.png"));
+    manager.add_texture("obelisk", new texture(TEX_FOLDER + "obelisk.png"));
+    manager.add_texture("dialog", new texture(TEX_FOLDER + "dialog.png"));
+    manager.add_texture("health", new texture(TEX_FOLDER + "health.png"));
+    manager.add_texture("load", new texture(TEX_FOLDER + "load.png"));
+    manager.add_texture("win", new texture(TEX_FOLDER + "win.png"));
+    manager.add_texture("loose", new texture(TEX_FOLDER + "loose.png"));
 
-    manager.add_sound("start_music", new sound(SND_FOLDER + START_MUSIC));
-    manager.add_sound("move_sound", new sound(SND_FOLDER + MOVE_SOUND));
+    manager.add_sound("start_music", new sound(SND_FOLDER + "main.wav"));
+    manager.add_sound("move_sound", new sound(SND_FOLDER + "move.wav"));
     manager.add_sound("shot_sound", new sound(SND_FOLDER + "shot.wav"));
     manager.add_sound("blink_sound", new sound(SND_FOLDER + "blink.wav"));
     manager.add_sound("quit_sound", new sound(SND_FOLDER + "quit.wav"));

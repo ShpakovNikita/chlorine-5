@@ -1,28 +1,18 @@
 /*
- * game_constants.h
- *
- *  Created on: 17 янв. 2018 г.
- *      Author: Shaft
+ * Global game data for game "Chlorine-5"
  */
 #pragma once
 
 #include "engine.hxx"
 #include "bullet.h"
+#include "resource_manager.h"
 
 #include <string>
 #include <vector>
 #include <math.h>
-#include "resource_manager.h"
 
 const std::string SND_FOLDER = "sounds\\";
-
-const std::string START_MUSIC = "main.wav";
-const std::string IDLE_SOUND = "idle.wav";
-const std::string MOVE_SOUND = "move.wav";
-const std::string SHOT_SOUND = "shot.wav";
-
-const std::string VERTEX_FILE = "vertices.txt";
-const std::string SIN_FILE = "sin.txt";
+const std::string TEX_FOLDER = "textures\\";
 
 constexpr int VIRTUAL_WIDTH = 1024, VIRTUAL_HEIGHT = 640;
 

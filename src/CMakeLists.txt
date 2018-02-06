@@ -6,7 +6,7 @@ set(SOURCE game.cpp engine.cxx sound.cxx bullet.cpp headers/autotile.hxx
 texture.cxx headers/bullet.h headers/engine.hxx enemy.cpp headers/enemy.h 
 headers/picopng.hxx dungeon.cpp special_effect.cpp headers/special_effect.h
 headers/pathfinders.h pathfinders.cpp headers/collision_solves.hxx 
-headers/game_constants.h player.cpp headers/player.h headers/game_functions.hxx
+headers/global_data.h player.cpp headers/player.h headers/game_functions.hxx
 resource_manager.cpp headers/resource_manager.h font.cxx headers/display.h
 display.cpp)
 

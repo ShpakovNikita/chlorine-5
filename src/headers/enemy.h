@@ -1,57 +1,46 @@
 /*
- * enemy.h
- *
- *  Created on: 12 янв. 2018 г.
- *      Author: Shaft
+ * Enemy base class for the game "Chlorine-5"
  */
-
-#ifndef ENEMY_H_
-#define ENEMY_H_
+#pragma once
 
 #include "engine.hxx"
 
-enum class tree_states {
-    chase,
-    wander,
-    stall,
-    idle,
-};
-
-class enemy;
-
 class enemy : public CHL::life_form {
    public:
-    enemy(float x, float y, float z, int _speed, int s);
+    enemy(float x, float y, float z, int _speed, int _size);
+    enemy(float x, float y, float z, int _speed, int _size_x, int _size_y);
     virtual ~enemy();
 
     CHL::point destination;
-    CHL::point shooting_point;
-
-    int* map;
-    float shooting_alpha;
     CHL::light* visor_light;
 
-    void move(float) override;
+    int* map;
 
+    /*actions*/
+    void move(float) override;
     void fire();
 
-    friend void chase(enemy*);
-    friend void stall(enemy*);
-    friend void smart_move(enemy* e);
-    friend float change_sprite(enemy* e);
-    friend void pathfind(enemy* e);
+    /*decision tree states*/
+    friend void chase(enemy*, float dt);
+    friend void stall(enemy*, float dt);
+    friend void smart_move(enemy*, float dt);
+    friend float change_sprite(enemy*);
+    friend void pathfind(enemy*);
+
+    friend void do_actions(enemy*, float dt);
 
    private:
     bool moving = false;
-    float shoot_delay = 0;
-    void (*state)(enemy*);
+    float shoot_delay = 0.0f;
+
+    void (*state)(enemy*, float);
+
     CHL::point step_dest;
     CHL::point light_offset;
-    float delta_time;
-    float delta_find = 1.0f;
+    CHL::point shooting_point;
+    float delta_find = 0.0f;
+    float shooting_alpha;
 
     uint32_t fire_source = 0;
     uint32_t steps_source = 0;
 };
-
-#endif /* ENEMY_H_ */

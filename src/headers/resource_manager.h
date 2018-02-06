@@ -1,15 +1,11 @@
 /*
- * resource_manager.h
- *
- *  Created on: 20 янв. 2018 г.
- *      Author: Shaft
+ * Resource manager for game "Chlorine-5".
  */
+#pragma once
 
-#ifndef RESOURCE_MANAGER_H_
-#define RESOURCE_MANAGER_H_
+#include "engine.hxx"
 
 #include <map>
-#include "engine.hxx"
 
 class resource_manager {
    public:
@@ -26,5 +22,3 @@ class resource_manager {
     std::map<std::string, CHL::sound*> sounds;
     std::map<std::string, CHL::texture*> textures;
 };
-
-#endif /* RESOURCE_MANAGER_H_ */
