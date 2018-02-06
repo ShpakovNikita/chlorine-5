@@ -48,6 +48,7 @@ class enemy : public CHL::life_form {
     CHL::point step_dest;
     CHL::point light_offset;
     float delta_time;
+    float delta_find = 1.0f;
 
     uint32_t fire_source = 0;
     uint32_t steps_source = 0;

@@ -24,8 +24,6 @@ const std::string SHOT_SOUND = "shot.wav";
 const std::string VERTEX_FILE = "vertices.txt";
 const std::string SIN_FILE = "sin.txt";
 
-static int WINDOW_WIDTH = 1920, WINDOW_HEIGHT = 1080;
-
 constexpr int VIRTUAL_WIDTH = 1024, VIRTUAL_HEIGHT = 640;
 
 constexpr int TILE_SIZE = 16;

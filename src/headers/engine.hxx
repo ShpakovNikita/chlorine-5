@@ -62,7 +62,7 @@ enum class event {
 };
 
 struct point {
-    point(int _x, int _y) : x(_x), y(_y) {}
+    point(float _x, float _y) : x(_x), y(_y) {}
     point() : x(0.0f), y(0.0f) {}
     float x, y;
 };
@@ -217,6 +217,7 @@ class life_form : public instance {
     int speed;
     int health = 1;
     float delta_x = 0, delta_y = 0;
+    point velocity_impulse;
 };
 
 class ui_element : public instance {
@@ -304,7 +305,7 @@ class engine {
     virtual void GL_swap_buffers() = 0;
     virtual float GL_time() = 0;
 
-    virtual int CHL_init(int, int, int, int) = 0;
+    virtual int CHL_init(int*, int*, int, int) = 0;
     virtual bool read_input(event&) = 0;
     virtual void CHL_exit() = 0;
     virtual point get_mouse_pos(camera*) = 0;
@@ -323,6 +324,7 @@ class engine {
     virtual void snap_tile_to_screen_pixels(int) = 0;
     //    virtual bool load_texture(std::string) = 0;
     virtual event_type get_event_type() = 0;
+    virtual point get_window_params() = 0;
 };
 
 std::ostream& operator<<(std::ostream& stream, const event e);

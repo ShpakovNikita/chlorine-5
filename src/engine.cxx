@@ -534,7 +534,6 @@ light::light(float rad, point pos, vec3 col) {
     radius = rad;
     position = pos;
     color = col;
-    std::cout << col.x << col.y << col.z << std::endl;
 }
 
 light::~light() {}    // TODO something
@@ -613,7 +612,7 @@ class engine_impl final : public engine {
     }
 
    public:
-    int CHL_init(int width, int height, int size, int fps) final {
+    int CHL_init(int* width, int* height, int size, int fps) final {
         SDL_version compiled = {0, 0, 0};
         SDL_version linked = {0, 0, 0};
 
@@ -648,8 +647,8 @@ class engine_impl final : public engine {
         w_h = displayMode.h;
         w_w = displayMode.w;
 
-        //        w_h = height;
-        //        w_w = width;
+        *height = w_h;
+        *width = w_w;
 
         std::cout << w_w << " " << w_h << std::endl;
 
@@ -724,7 +723,7 @@ class engine_impl final : public engine {
         std::cerr << "Gl:" << gl_major_ver << '.' << gl_minor_ver << std::endl;
 
         // test
-        glViewport(0, 0, width, height);
+        glViewport(0, 0, *width, *height);
         // test
 
         GLuint vertex_shader =
@@ -793,6 +792,8 @@ class engine_impl final : public engine {
             _y * (float)virtual_h / w_h * ((float)cam->height / virtual_h) +
                 cam->get_center().y);
     }
+
+    point get_window_params() final { return point(w_w, w_h); }
 
     void GL_swap_buffers() final { SDL_GL_SwapWindow(window); }
     void GL_clear_color() final {

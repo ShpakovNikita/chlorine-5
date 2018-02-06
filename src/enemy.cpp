@@ -71,6 +71,9 @@ void pathfind(enemy* e) {
         e->step_dest.y = (o_buff[0] / x_size) * TILE_SIZE - 2 + TILE_SIZE;
         e->step_dest.x =
             (o_buff[0] - x_size * (o_buff[0] / x_size)) * TILE_SIZE;
+    } else {
+        e->step_dest.y = e->position.y;
+        e->step_dest.x = e->position.x;
     }
     //    for (int y = 0; y < y_size; y++) {
     //        for (int x = 0; x < x_size; x++)
@@ -133,6 +136,12 @@ float change_sprite(enemy* e) {
 void stall(enemy* e) {
     e->step_dest.x = e->destination.x;
     e->step_dest.y = e->destination.y + 8;
+
+    e->position.y += e->delta_y + e->velocity_impulse.y;
+    e->position.x += e->delta_x + e->velocity_impulse.x;
+
+    e->velocity_impulse = CHL::point(0, 0);
+
     if (CHL::get_distance(e->destination.x, e->destination.y, e->position.x,
                           e->position.y) > e->size.x * 5 ||
         !CHL::ray_cast(e, e->destination, bricks)) {
@@ -156,8 +165,10 @@ void chase(enemy* e) {
     e->delta_x = path * std::cos(a);
     e->delta_y = -path * std::sin(a);
 
-    e->position.y += e->delta_y;
-    e->position.x += e->delta_x;
+    e->position.y += e->delta_y + e->velocity_impulse.y;
+    e->position.x += e->delta_x + e->velocity_impulse.x;
+
+    e->velocity_impulse = CHL::point(0, 0);
 
     if (!CHL::ray_cast(e, e->destination, bricks)) {
         e->step_dest.x = e->position.x;
@@ -171,8 +182,10 @@ void chase(enemy* e) {
 }
 
 void smart_move(enemy* e) {
-    if (std::fabs(e->position.x - e->step_dest.x) < 3.0f &&
-        std::fabs(e->position.y - e->step_dest.y) < 3.0f) {
+    if ((std::fabs(e->position.x - e->step_dest.x) < 3.0f &&
+         std::fabs(e->position.y - e->step_dest.y) < 3.0f) ||
+        e->delta_find <= 0) {
+        e->delta_find = 1.0f;
         pathfind(e);
     }
     float path = e->speed * e->delta_time;
@@ -182,8 +195,10 @@ void smart_move(enemy* e) {
     e->delta_x = path * std::cos(a);
     e->delta_y = -path * std::sin(a);
 
-    e->position.y += e->delta_y;
-    e->position.x += e->delta_x;
+    e->position.y += e->delta_y + e->velocity_impulse.y;
+    e->position.x += e->delta_x + e->velocity_impulse.x;
+
+    e->velocity_impulse = CHL::point(0, 0);
 
     if (CHL::ray_cast(e, e->destination, bricks)) {
         e->state = chase;
@@ -223,6 +238,8 @@ void enemy::move(float dt) {
     visor_light->position.y = position.y - 6 + light_offset.y;
     if (shoot_delay > 0)
         shoot_delay -= dt;
+    if (delta_find > 0)
+        delta_find -= dt;
 }
 
 void enemy::fire() {

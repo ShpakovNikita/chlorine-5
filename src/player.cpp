@@ -17,7 +17,7 @@ CHL::camera* main_camera;
 player::player(float x, float y, float z_index, int speed, int size)
     : life_form(x, y, z_index, speed, size) {
     // TODO Auto-generated constructor stub
-    health = 5;
+    health = 500;
     shooting_point = CHL::point(15, -8);
     selected_frame = 0;
 
@@ -181,12 +181,9 @@ static float pitch_value = 1.0f;
 
 void player::blink() {
     if (blink_delay <= 0 && !blinking) {
-        std::cout << delay_after_blink << std::endl;
         if (delay_after_blink > 0) {
             pitch_value += 0.1f;
-            std::cout << pitch_value << std::endl;
         } else {
-            std::cout << pitch_value << std::endl;
             pitch_value = 1.0f;
         }
 
@@ -330,11 +327,14 @@ void player::move(float dt) {
         CHL::vec3(position.x + 50 * sign(precise(delta_x, 0.1)),
                   position.y + 50 * sign(precise(delta_y, 0.1)), 0.0f));
 
-    position.y += delta_y;
-    position.x += delta_x;
+    position.y += delta_y + velocity_impulse.y;
+    position.x += delta_x + velocity_impulse.x;
+
+    velocity_impulse = CHL::point(0, 0);
 
     if (position.x < 0 || position.x > VIRTUAL_WIDTH)
         position.x -= delta_x;
+
     if (position.y - TILE_SIZE < 0 || position.y > VIRTUAL_HEIGHT)
         position.y -= delta_y;
 

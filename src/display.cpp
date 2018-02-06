@@ -18,7 +18,10 @@ void render_screen(CHL::engine* eng,
                    float y,
                    const std::string& text,
                    CHL::font* f,
-                   const CHL::vec3& color) {
+                   const CHL::vec3& color,
+                   const CHL::event quit_event,
+                   int WINDOW_WIDTH,
+                   int WINDOW_HEIGHT) {
     float prev_frame = eng->GL_time();
     CHL::user_interface* ui = new CHL::user_interface();
     CHL::ui_element* element = new CHL::ui_element(
@@ -38,17 +41,10 @@ void render_screen(CHL::engine* eng,
         CHL::event e;
 
         while (eng->read_input(e)) {
-            switch (e) {
-                case CHL::event::turn_off:
-                    quit = true;
-                    break;
-                case CHL::event::select_pressed:
-                    quit = true;
-                    break;
-                default:
-                    break;
-            }
+            if (e == quit_event)
+                quit = true;
         }
+
         float t = (eng->GL_time() - prev_frame) * 1000;
 
         if (t < 1000 / FPS)

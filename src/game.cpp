@@ -32,8 +32,8 @@ int main(int /*argc*/, char* /*argv*/ []) {
     using namespace CHL;
     std::unique_ptr<engine, void (*)(engine*)> eng(create_engine(),
                                                    destroy_engine);
-
-    eng->CHL_init(WINDOW_WIDTH, WINDOW_HEIGHT, TILE_SIZE, FPS);
+    int WINDOW_WIDTH, WINDOW_HEIGHT;
+    eng->CHL_init(&WINDOW_WIDTH, &WINDOW_HEIGHT, TILE_SIZE, FPS);
     eng->set_virtual_world(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
     eng->snap_tile_to_screen_pixels(1920 / 15.0f);
 
@@ -149,8 +149,6 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
     autotile(map_grid, grid, x_size, y_size);
 
-    /* load background */
-
     /* place enemies */
     std::vector<enemy*> enemies;
 
@@ -200,24 +198,26 @@ int main(int /*argc*/, char* /*argv*/ []) {
     eng->render_text("LOADING.", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT - 100, 0,
                      MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
     eng->GL_swap_buffers();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
     eng->GL_clear_color();
     eng->render_ui(load_screen);
     eng->render_text("LOADING..", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT - 100, 0,
                      MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
     eng->GL_swap_buffers();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
     eng->GL_clear_color();
     eng->render_ui(load_screen);
     eng->render_text("LOADING...", f, WINDOW_WIDTH - 350, WINDOW_HEIGHT - 100,
                      0, MIN_DEPTH, vec3(1.0f, 1.0f, 1.0f));
     eng->GL_swap_buffers();
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
     /* running game loop */
     while (!quit) {
         float delta_time = (eng->GL_time() - prev_frame);
         prev_frame = eng->GL_time();
         event e;
+
+        std::cout << "log for the current frame: " << std::endl;
 
         while (eng->read_input(e)) {
             //            std::cout << e << std::endl;
@@ -247,7 +247,6 @@ int main(int /*argc*/, char* /*argv*/ []) {
         /* check collisions */
 
         /// player & enemy collision
-        int tst = 0;
         for (life_form* lf : entities) {
             lf->position.z_index = lf->position.y;
             enemy* e = dynamic_cast<enemy*>(lf);
@@ -262,7 +261,6 @@ int main(int /*argc*/, char* /*argv*/ []) {
                         lf, inst, lf->delta_x, lf->delta_y);
                 }
             }
-            tst++;
         }
 
         int i = 0;
@@ -434,18 +432,20 @@ int main(int /*argc*/, char* /*argv*/ []) {
         eng->draw(manager.get_texture("obelisk"), main_camera, nullptr);
 
         if (win) {
-            display::render_screen(eng.get(), manager.get_texture("win"),
-                                   manager.get_sound("quit_sound"),
-                                   WINDOW_WIDTH / 2 - 400, WINDOW_HEIGHT / 2,
-                                   "THE HOST HAS BEEN VANISHED", f,
-                                   vec3(0.325f, 0.196f, 0.713f));
+            display::render_screen(
+                eng.get(), manager.get_texture("win"),
+                manager.get_sound("quit_sound"), WINDOW_WIDTH / 2 - 400,
+                WINDOW_HEIGHT / 2, "THE HOST HAS BEEN VANISHED", f,
+                vec3(0.325f, 0.196f, 0.713f), event::select_pressed,
+                WINDOW_WIDTH, WINDOW_HEIGHT);
             break;
         } else if (loose) {
             display::render_screen(
                 eng.get(), manager.get_texture("loose"),
                 manager.get_sound("quit_sound"), WINDOW_WIDTH / 2 - 300,
                 WINDOW_HEIGHT / 2 - 50, "THE HOPE HAS BEEN LOST", f,
-                vec3(1.0f, 0.0f, 0.0f));
+                vec3(1.0f, 0.0f, 0.0f), event::select_pressed, WINDOW_WIDTH,
+                WINDOW_HEIGHT);
             break;
         }
 

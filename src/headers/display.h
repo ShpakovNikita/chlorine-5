@@ -19,7 +19,10 @@ void render_screen(CHL::engine* eng,
                    float y,
                    const std::string& text,
                    CHL::font* f,
-                   const CHL::vec3& color);
+                   const CHL::vec3& color,
+                   const CHL::event quit_event,
+                   int WINDOW_WIDTH,
+                   int WINDOW_HEIGHT);
 }
 
 #endif /* HEADERS_DISPLAY_H_ */
