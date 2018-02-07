@@ -561,6 +561,7 @@ class engine_impl final : public engine {
 
     GLuint vbo;
 
+    std::map<std::string, std::vector<float>> buffers;
     std::vector<float>
         vertex_buffer;    // buffer to store quads for render function
 
@@ -813,8 +814,31 @@ class engine_impl final : public engine {
             return;
         }
 
-        for (float f : in->get_data())
+        for (float f : in->get_data()) {
             vertex_buffer.insert(vertex_buffer.end(), f);
+        }
+    }
+
+    virtual void clear_buffer(const std::string& key) final {
+        if (buffers.find(key) == buffers.end()) {
+            std::cerr << "no buffer found" << std::endl;
+            return;
+        }
+
+        buffers[key].clear();
+    }
+
+    virtual void add_to_buffer(const std::string& key, instance* value) final {
+        if (key.empty()) {
+            std::cerr << "invalid buffer key" << std::endl;
+            return;
+        }
+
+        if (buffers.find(key) == buffers.end())
+            buffers.insert(std::make_pair(key, std::vector<float>()));
+
+        for (float f : value->get_data())
+            buffers[key].insert(buffers[key].end(), f);
     }
 
     void set_virtual_world(int _w, int _h) final {
@@ -822,7 +846,10 @@ class engine_impl final : public engine {
         virtual_h = _h;
     }
 
-    void render(texture* text, camera* cam, instance* inst) final {
+    void render(texture* text,
+                camera* cam,
+                instance* inst,
+                const std::string& buffer_name) final {
         glUseProgram(shader_program);
 
         text->bind();
@@ -830,9 +857,16 @@ class engine_impl final : public engine {
         glUniform1i(glGetUniformLocation(shader_program, "our_texture"), 0);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-        glBufferData(GL_ARRAY_BUFFER,
-                     vertex_buffer.size() * sizeof(vertex_buffer[0]),
-                     vertex_buffer.data(), GL_STATIC_DRAW);
+        if (buffer_name.empty()) {
+            glBufferData(GL_ARRAY_BUFFER,
+                         vertex_buffer.size() * sizeof(vertex_buffer[0]),
+                         vertex_buffer.data(), GL_STATIC_DRAW);
+
+        } else
+            glBufferData(
+                GL_ARRAY_BUFFER,
+                buffers[buffer_name].size() * sizeof(buffers[buffer_name][0]),
+                buffers[buffer_name].data(), GL_STATIC_DRAW);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
                               STRIDE_ELEMENTS * sizeof(GLfloat), (GLvoid*)0);
@@ -877,11 +911,21 @@ class engine_impl final : public engine {
         glUniformMatrix4fv(transformLoc, 1, GL_FALSE,
                            glm::value_ptr(transform));
 
-        glDrawArrays(GL_TRIANGLES, 0, vertex_buffer.size() / STRIDE_ELEMENTS);
-        vertex_buffer.clear();
+        if (buffer_name.empty())
+            glDrawArrays(GL_TRIANGLES, 0,
+                         vertex_buffer.size() / STRIDE_ELEMENTS);
+        else
+            glDrawArrays(GL_TRIANGLES, 0,
+                         buffers[buffer_name].size() / STRIDE_ELEMENTS);
+
         glUseProgram(0);
         text->unbind();
         GL_CHECK();
+    }
+
+    void render(texture* text, camera* cam, instance* inst) final {
+        render(text, cam, inst, "");
+        vertex_buffer.clear();
     }
 
     virtual void render_text(const std::string& text,

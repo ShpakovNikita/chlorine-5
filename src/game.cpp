@@ -213,6 +213,12 @@ int main(int /*argc*/, char* /*argv*/ []) {
     eng->GL_swap_buffers();
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
+    for (auto brick : bricks)
+        eng->add_to_buffer("bricks", brick);
+
+    for (auto tile : floor)
+        eng->add_to_buffer("floor", tile);
+
     /* running game loop */
     while (!quit) {
         /*calculate delta_time for each frame to move smoothly*/
@@ -220,7 +226,8 @@ int main(int /*argc*/, char* /*argv*/ []) {
         prev_frame = eng->GL_time();
         event e;
 
-        std::cout << "log for the current frame: " << std::endl;
+        std::cout << "log for the current frame: " << 1000 / FPS
+                  << " m_seconds per frame" << std::endl;
 
         while (eng->read_input(e)) {
             switch (e) {
@@ -303,7 +310,9 @@ int main(int /*argc*/, char* /*argv*/ []) {
                             delete *en;
                             entities.erase(en);
                             bool exit = true;
-                            for (auto inst : entities) {
+                            for (auto inst :
+                                 entities) {    // checking for
+                                                // enemies on the map
                                 if (dynamic_cast<enemy*>(inst) != nullptr) {
                                     exit = false;
                                 }
@@ -360,28 +369,35 @@ int main(int /*argc*/, char* /*argv*/ []) {
             continue;
         }
 
-        for (int j = 0; j < se.size(); j++) {
-            if (se[j]->end()) {
-                delete *(se.begin() + j);
-                se.erase(se.begin() + j);
+        for (auto s = se.begin(); s != se.end();) {
+            if ((*s)->end()) {
+                delete *s;
+                s = se.erase(s);
+                continue;
             }
+            ++s;
         }
+
+        float fixed_time = (eng->GL_time() - prev_frame) * 1000.0f;
+        std::cout << "time for processing: " << fixed_time << std::endl;
 
         /* render sprites */
 
         eng->GL_clear_color();
 
-        for (auto tile : floor)
-            eng->add_object(tile, main_camera);
-
         if (!floor.empty())
-            eng->render(manager.get_texture("floor"), main_camera, nullptr);
+            eng->render(manager.get_texture("floor"), main_camera, nullptr,
+                        "floor");
 
-        for (auto brick : bricks)
-            eng->add_object(brick, main_camera);
+        float floor_t = (eng->GL_time() - prev_frame) * 1000.0f - fixed_time;
+        std::cout << "time for rendering floor: " << floor_t << std::endl;
 
         if (!bricks.empty())
-            eng->render(manager.get_texture("brick"), main_camera, nullptr);
+            eng->render(manager.get_texture("brick"), main_camera, nullptr,
+                        "bricks");
+
+        float bricks_t = (eng->GL_time() - prev_frame) * 1000.0f - floor_t;
+        std::cout << "time for rendering bricks: " << bricks_t << std::endl;
 
         for (auto bullet : bullets) {
             bullet->move(delta_time);
@@ -390,6 +406,9 @@ int main(int /*argc*/, char* /*argv*/ []) {
 
         if (!bullets.empty())
             eng->render(manager.get_texture("bullet"), main_camera, nullptr);
+
+        float bullets_t = (eng->GL_time() - prev_frame) * 1000.0f - bricks_t;
+        std::cout << "time for rendering bullets: " << bullets_t << std::endl;
 
         eng->add_object(hero, main_camera);
         eng->render(manager.get_texture("hero"), main_camera, nullptr);
@@ -404,6 +423,8 @@ int main(int /*argc*/, char* /*argv*/ []) {
         if (!entities.empty())
             eng->render(manager.get_texture("enemy"), main_camera, nullptr);
 
+        float entites_t = (eng->GL_time() - prev_frame) * 1000.0f - bullets_t;
+        std::cout << "time for rendering entites: " << entites_t << std::endl;
         for (auto effect : se) {
             effect->update_frame();
             eng->add_object(effect, main_camera);
@@ -413,7 +434,7 @@ int main(int /*argc*/, char* /*argv*/ []) {
             eng->render(manager.get_texture("explosion"), main_camera, nullptr);
 
         eng->render_ui(ui);
-        for (auto quad = non_material_quads.begin();
+        for (auto quad = non_material_quads.begin();    // player fade effect
              quad != non_material_quads.end();) {
             (*quad)->update_data();
             eng->add_object(*quad, main_camera);
@@ -426,6 +447,9 @@ int main(int /*argc*/, char* /*argv*/ []) {
             }
             ++quad;
         }
+
+        float effects_t = (eng->GL_time() - prev_frame) * 1000.0f - entites_t;
+        std::cout << "time for rendering effects: " << effects_t << std::endl;
 
         eng->render_light(hero->visor_light, main_camera);
 
@@ -453,6 +477,9 @@ int main(int /*argc*/, char* /*argv*/ []) {
         }
 
         eng->GL_swap_buffers();
+        std::cout << "time for rendering: "
+                  << (eng->GL_time() - prev_frame) * 1000.0f - fixed_time
+                  << std::endl;
 
         /* dynamic sleep */
         float t = (eng->GL_time() - prev_frame) * 1000;

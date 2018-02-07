@@ -1,3 +1,7 @@
 
 .metadata
 headers/
+
+# Header files
+*.hxx
+*.h

@@ -1,19 +1,31 @@
 cmake_minimum_required(VERSION 3.2)
-project(SDLdynamic)
+project(Chlorine-5)
 
 set(CMAKE_CXX_STANDARD 11)
-set(SOURCE game.cpp engine.cxx sound.cxx bullet.cpp headers/autotile.hxx 
-texture.cxx headers/bullet.h headers/engine.hxx enemy.cpp headers/enemy.h 
-headers/picopng.hxx dungeon.cpp special_effect.cpp headers/special_effect.h
-headers/pathfinders.h pathfinders.cpp headers/collision_solves.hxx 
-headers/global_data.h player.cpp headers/player.h headers/game_functions.hxx
-resource_manager.cpp headers/resource_manager.h font.cxx headers/display.h
+
+set(SOURCE 
+game.cpp 
+engine.cxx 
+sound.cxx 
+bullet.cpp  
+texture.cxx 
+enemy.cpp 
+dungeon.cpp 
+special_effect.cpp 
+pathfinders.cpp
+player.cpp 
+resource_manager.cpp  
+font.cxx 
 display.cpp)
+
+#uncomment below for adding all sources automatically
+#FILE(GLOB SOURCE *.c *.cpp *.cxx)
 
 if(UNIX)
     set(PROJECT_LINK_LIB -lglew32 -lSDL2main -lSDL2 -lfreetype)
 else()
-    set(PROJECT_LINK_LIB -lmingw32 -lglew32 -lSDL2main -lSDL2 -mwindows -lopengl32 -lfreetype -lopenal32)
+    set(PROJECT_LINK_LIB -lmingw32 -lglew32 -lSDL2main -lSDL2 -mwindows 
+                                       -lopengl32 -lfreetype -lopenal32)
 endif(UNIX)
 
 
