@@ -71,7 +71,6 @@ local.properties
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -84,7 +83,6 @@ local.properties
 *.lib
 
 # Executables
-*.exe
 *.out
 *.app
 /Debug/
