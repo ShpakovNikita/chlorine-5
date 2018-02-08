@@ -4,11 +4,13 @@
  *  Created on: 5 февр. 2018 г.
  *      Author: Shaft
  */
-#include "headers/display.h"
+#include "include/display.h"
+
 #include <thread>
 #include <chrono>
 #include <iostream>
-#include "headers/global_data.h"
+
+#include "include/global_data.h"
 
 namespace display {
 void render_screen(CHL::engine* eng,

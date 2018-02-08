@@ -1,0 +1,9 @@
+
+.metadata
+src/
+
+# Source files
+*.cpp
+*.cxx
+/Debug/
+/Release/

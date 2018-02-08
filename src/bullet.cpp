@@ -5,7 +5,8 @@
  *      Author: Shaft
  */
 
-#include "headers/bullet.h"
+#include "include/bullet.h"
+
 #include <iostream>
 
 #include <math.h>

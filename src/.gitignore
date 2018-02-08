@@ -1,6 +1,6 @@
 
 .metadata
-headers/
+include/
 
 # Header files
 *.hxx

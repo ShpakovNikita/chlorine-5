@@ -1,4 +1,3 @@
-#include "headers/engine.hxx"
 #include <iostream>
 #include <map>
 
@@ -8,6 +7,7 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#include "include/engine.hxx"
 
 namespace CHL {
 font::font(std::string path, uint32_t y_size) {

@@ -1,4 +1,4 @@
-#include "headers/special_effect.h"
+#include "include/special_effect.h"
 
 special_effect::special_effect(float x, float y, float z, int _size)
     : instance(x, y, z, _size) {

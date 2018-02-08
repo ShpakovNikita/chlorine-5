@@ -11,20 +11,18 @@
 #include <chrono>
 #include <thread>
 
-#include "headers/engine.hxx"
 #include "dungeon.cpp"
 
-#include "headers/bullet.h"
-#include "headers/enemy.h"
-#include "headers/special_effect.h"
-#include "headers/autotile.hxx"
-#include "headers/pathfinders.h"
-#include "headers/collision_solves.hxx"
-#include "headers/player.h"
-
-#include "headers/display.h"
-
-#include "headers/global_data.h"
+#include "include/autotile.hxx"
+#include "include/bullet.h"
+#include "include/collision_solves.hxx"
+#include "include/display.h"
+#include "include/enemy.h"
+#include "include/engine.hxx"
+#include "include/global_data.h"
+#include "include/pathfinders.h"
+#include "include/player.h"
+#include "include/special_effect.h"
 
 enum class mode { render, look, idle };
 

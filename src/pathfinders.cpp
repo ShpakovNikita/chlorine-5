@@ -1,3 +1,5 @@
+#include "include/pathfinders.h"
+
 #include <vector>
 #include <queue>
 #include <tuple>
@@ -5,7 +7,6 @@
 #include <climits>
 #include <random>
 
-#include "headers/pathfinders.h"
 
 using namespace std;
 

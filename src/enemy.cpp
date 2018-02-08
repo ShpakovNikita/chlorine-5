@@ -1,9 +1,11 @@
-#include "headers/enemy.h"
+#include "include/enemy.h"
+
 #include <math.h>
 #include <iostream>
-#include "headers/pathfinders.h"
-#include "headers/game_functions.hxx"
-#include "headers/global_data.h"
+
+#include "include/game_functions.hxx"
+#include "include/global_data.h"
+#include "include/pathfinders.h"
 
 std::vector<CHL::instance*> non_material_quads;
 std::vector<CHL::life_form*> entities;

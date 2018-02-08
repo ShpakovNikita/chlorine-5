@@ -1,9 +1,10 @@
-#include "headers/engine.hxx"
 #include <GL/glew.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
 #include <iostream>
-#include "headers/picopng.hxx"
+
+#include "include/engine.hxx"
+#include "include/picopng.hxx"
 
 namespace CHL {
 texture::texture(const std::string& path) {

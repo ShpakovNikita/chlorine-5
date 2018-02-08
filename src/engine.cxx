@@ -4,7 +4,7 @@
  *  Created on: 24 нояб. 2017 г.
  *      Author: Shaft
  */
-#include "headers/engine.hxx"
+#include "include/engine.hxx"
 
 #include <GL/glew.h>
 #include <GL/glu.h>
@@ -569,6 +569,17 @@ class engine_impl final : public engine {
 
     void GL_unbind() { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
+    void bindAttributes(
+        GLuint program,
+        const std::vector<std::tuple<GLuint, const GLchar*>>& attributes) {
+        for (const auto& attr : attributes) {
+            GLuint loc = std::get<0>(attr);
+            const GLchar* name = std::get<1>(attr);
+            glBindAttribLocation(program, loc, name);
+            GL_CHECK();
+        }
+    }
+
     GLuint compile_shader(const GLchar* source, GLenum target) {
         GLuint shader = glCreateShader(target);
         glShaderSource(shader, 1, &source, nullptr);
@@ -725,6 +736,7 @@ class engine_impl final : public engine {
 
         glViewport(0, 0, *width, *height);
 
+        /*simple shader*/
         GLuint vertex_shader =
             compile_shader(vertex_glsl.c_str(), GL_VERTEX_SHADER);
 
@@ -733,9 +745,9 @@ class engine_impl final : public engine {
 
         shader_program = create_shader_program(vertex_shader, fragment_shader);
 
-        glBindAttribLocation(shader_program, 0, "position");
-        glBindAttribLocation(shader_program, 1, "texCoord");
+        bindAttributes(shader_program, {{0, "position"}, {1, "texCoord"}});
 
+        /*text shader*/
         GLuint text_vertex_shader =
             compile_shader(text_vertex_glsl.c_str(), GL_VERTEX_SHADER);
 
@@ -745,9 +757,9 @@ class engine_impl final : public engine {
         text_shader_program =
             create_shader_program(text_vertex_shader, text_fragment_shader);
 
-        glBindAttribLocation(text_shader_program, 0, "position");
-        glBindAttribLocation(text_shader_program, 1, "texCoord");
+        bindAttributes(text_shader_program, {{0, "position"}, {1, "texCoord"}});
 
+        /*light shader*/
         GLuint light_vertex_shader =
             compile_shader(light_vertex.c_str(), GL_VERTEX_SHADER);
 
@@ -757,8 +769,9 @@ class engine_impl final : public engine {
         light_program =
             create_shader_program(light_vertex_shader, light_fragment_shader);
 
-        glBindAttribLocation(light_program, 0, "position");
+        bindAttributes(light_program, {{0, "position"}});
 
+        /*color shader*/
         GLuint color_vertex_shader =
             compile_shader(color_vertex.c_str(), GL_VERTEX_SHADER);
 
@@ -768,7 +781,7 @@ class engine_impl final : public engine {
         color_program =
             create_shader_program(color_vertex_shader, color_fragment_shader);
 
-        glBindAttribLocation(color_program, 0, "position");
+        bindAttributes(color_program, {{0, "position"}});
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

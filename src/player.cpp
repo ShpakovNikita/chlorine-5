@@ -1,9 +1,9 @@
-#include "headers/player.h"
-#include "headers/game_functions.hxx"
-#include "headers/global_data.h"
+#include "include/player.h"
 
 #include <math.h>
 #include <iostream>
+#include "include/game_functions.hxx"
+#include "include/global_data.h"
 
 static float SHOOT_DELAY = 0.4f;
 static float SUPER_DELAY = 5.0f;
