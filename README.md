@@ -20,7 +20,7 @@ This light engine was created by Shpakov Nikita with the learning purpose. CHL e
 
 * [SDL2](https://www.libsdl.org/) - Main core lib for the CHL engine
 * [OpenAl](https://www.openal.org/downloads/) - Advanced 3d audio system
-* [OpenAl](http://glew.sourceforge.net/) - Loading openGL functions
+* [GLEW](http://glew.sourceforge.net/) - Loading openGL functions
 * [Truetype](https://www.freetype.org/) - Used to decrypt fonts.
 
 ## License
